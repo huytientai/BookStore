@@ -11,5 +11,18 @@ class Book extends Model
     public $primaryKey = 'id';
     public $timestamps = true;
 
+    protected $fillable = [
+        'name',
+        'desc',
+    ];
+
+    protected $perPage = 5;
+
+    public function saveBook($request)
+    {
+        $data = $request->all();
+        Book::create($data);
+    }
+
 
 }

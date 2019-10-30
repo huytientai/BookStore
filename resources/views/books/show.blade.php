@@ -1,6 +1,6 @@
 @extends('layouts.default')
 
-@section('title', 'Book list')
+@section('title', $book->name . ' book')
 
 @section('content')
     <h1>{{ $book->name }}</h1>

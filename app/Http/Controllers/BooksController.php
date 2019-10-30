@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
+    protected $book;
+
+    public function __construct(Book $book)
+    {
+        $this->book = $book;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,7 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
+        $books = $this->book->orderBy('name')->paginate();
         return view('books.index')->with('books', $books);
     }
 
@@ -25,7 +33,7 @@ class BooksController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.create');
     }
 
     /**
@@ -34,9 +42,13 @@ class BooksController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreBookRequest $request)
     {
+        $this->book->saveBook($request);
 
+        flash('add success')->success();
+
+        return redirect()->route('books.index');
     }
 
     /**
@@ -47,7 +59,7 @@ class BooksController extends Controller
      */
     public function show($id)
     {
-        $book = Book::find($id);
+        $book = $this->book->find($id);
         return view('books.show')->with('book', $book);
     }
 
