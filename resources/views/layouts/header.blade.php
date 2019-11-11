@@ -8,7 +8,17 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('users.index') }}">List
+                    <a class="nav-link" href="{{ route('books.index') }}">List Books
+                        <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('books.create') }}">Add Book</a>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav navbar-right">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('users.index') }}">List Users
                         <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">

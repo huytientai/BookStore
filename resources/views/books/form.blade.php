@@ -13,7 +13,7 @@
 <div class="form-group row">
     <label class="col-sm-2 col-form-label @error('desc') text-danger @enderror">Describe</label>
     <div class="col-sm-5">
-        <textarea class="form-control @error('desc') is-invalid @enderror" id="article-ckeditor" name="desc" value="{{ old('desc') ?? $book->desc ?? null }}"></textarea>
+        <textarea class="form-control @error('desc') is-invalid @enderror" id="article-ckeditor" name="desc">{{ old('desc') ?? $book->desc ?? null }}</textarea>
         @error('desc')
         <div class="text-danger">{{ $message }}</div>
         @enderror

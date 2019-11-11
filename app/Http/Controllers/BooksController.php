@@ -71,19 +71,23 @@ class BooksController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = $this->book->find($id);
+        return view('books.edit')->with('book', $book);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $this->book->updateBook($request);
+
+        flash('update success')->success();
+
+        return redirect()->route('books.index');
     }
 
     /**
@@ -94,6 +98,10 @@ class BooksController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->book->find($id)->delete();
+
+        flash('delete success')->error();
+
+        return redirect()->route('books.index');
     }
 }

@@ -24,5 +24,11 @@ class Book extends Model
         Book::create($data);
     }
 
+    public function updateBook($request)
+    {
+        $data = $request->all();
+        return $this->find($request->id)->update($data);
+
+    }
 
 }
