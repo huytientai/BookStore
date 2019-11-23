@@ -8,12 +8,12 @@ class loaisach extends Model
 {
     protected $table = 'loaisachs';
 
-    public $primaryKey = 'id';
+    public $primaryKey = 'typesofbook_id';
     public $timestamps = true;
 
     protected $fillable = [
-        'id',
-        'tenloaisach',
+        'typesofbook_id',
+        'nametype',
         'created_at',
         'updated_at'
     ];
