@@ -22,7 +22,7 @@ class Book extends Model
     public function saveBook($request)
     {
         $data = $request->all();
-//        dd($request->hasFile('image'));
+
         if ($request->hasFile('image')) {
             $clientImageName = pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME);
             $clientImageExtension = $request->image->getClientOriginalExtension();
