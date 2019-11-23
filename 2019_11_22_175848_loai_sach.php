@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class CreateBooksTable extends Migration
+class LoaiSach extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateBooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('loaisach', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name', 100);
-            $table->string('desc', 255)->nullable();
-            $table->string('image')->nullable();
+            $table->string('tenloaisach',50);
+            $table->timestamps('created_at');
+            $table->timestamps('updated_at');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateBooksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('loaisach');
     }
 }

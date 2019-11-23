@@ -1,7 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
@@ -19,10 +19,11 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Models\User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'username' => $faker->unique()->name,
+        'user_name' => $faker->unique()->name,
         'password' => Hash::make($faker->password),
+        'name' => $faker->name,
         'address' => $faker->address,
         'phone' => $faker->e164PhoneNumber,
+        'role' => array_rand(User::$roles),
     ];
 });

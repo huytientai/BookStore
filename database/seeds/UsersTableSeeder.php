@@ -18,10 +18,10 @@ class UsersTableSeeder extends Seeder
         factory(\App\Models\User::class, 10)->create();
 
         \App\Models\User::create([
+            'user_name' => 'admin',
+            'password' => Hash::make('admin'),
             'name' => 'admin',
-            'username' => 'admin',
-            'password' => Hash::make('123'),
-//            'role' => \App\Models\User::ADMIN,
+            'role' => \App\Models\User::ADMIN,
         ]);
     }
 }
