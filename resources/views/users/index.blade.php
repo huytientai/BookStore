@@ -35,7 +35,7 @@
                 <thead class="thead-light text-center">
                     <tr>
                         <th>STT</th>
-                        <th>Địa chỉ email</th>
+                        <th>Account</th>
                         <th>Tên</th>
                         <th>Địa chỉ</th>
                         <th>SĐT</th>
