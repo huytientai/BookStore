@@ -14,8 +14,8 @@ class LoaiSach extends Migration
     public function up()
     {
         Schema::create('loaisach', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('tenloaisach');
+            $table->bigIncrements('typesofbook_id');
+            $table->string('nametype');
             $table->timestamps();
         });
     }
