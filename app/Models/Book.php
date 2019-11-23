@@ -14,6 +14,7 @@ class Book extends Model
     protected $fillable = [
         'name',
         'desc',
+        'image',
     ];
 
     protected $perPage = 5;
@@ -21,6 +22,17 @@ class Book extends Model
     public function saveBook($request)
     {
         $data = $request->all();
+//        dd($request->hasFile('image'));
+        if ($request->hasFile('image')) {
+            $clientImageName = pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME);
+            $clientImageExtension = $request->image->getClientOriginalExtension();
+            $data['image'] = $clientImageName . '_' . time() . '.' . $clientImageExtension;
+            $request->file('image')->storeAs('public/BookImages',$data['image']);
+        }
+        else{
+            $data['image'] = 'no_image.jpg';
+        }
+
         Book::create($data);
     }
 
