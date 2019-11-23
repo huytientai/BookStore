@@ -20,3 +20,13 @@
     </div>
 </div>
 
+{{--image--}}
+<div class="form-group row">
+    <label for="image" class="col-md-2 col-form-label">Book Image</label>
+    <div class="col-md-5">
+        <input id="image" type="file" name="image">
+{{--        @if ($book->image)--}}
+{{--            <code>{{ $book->image }}</code>--}}
+{{--        @endif--}}
+    </div>
+</div>

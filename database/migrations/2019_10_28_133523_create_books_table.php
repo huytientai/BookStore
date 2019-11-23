@@ -17,6 +17,7 @@ class CreateBooksTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 100);
             $table->string('desc', 255)->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
