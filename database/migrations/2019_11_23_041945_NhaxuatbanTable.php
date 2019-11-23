@@ -15,11 +15,11 @@ class NhaxuatbanTable extends Migration
     {
         Schema::create('NhaxuatbanTable', function (Blueprint $table) {
             $table->increments('id');
-$table->string('nxb_ten');
-$table->string('nxb_diachi');
-$table->string('nxb_sdt');
-$table->string('nxb_email');
-$table->string('nxb_website');
+$table->string('ten');
+$table->string('diachi');
+$table->string('sdt');
+$table->string('email');
+$table->string('website');
             $table->timestamps();
         });
     }
