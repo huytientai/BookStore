@@ -12,10 +12,10 @@ class Tacgia extends Model
 	public $timestamps = true;
 	
 	protected $fillable = [
-		'tacgias_id',
-		'tacgias_name',
-		'tacgias_email',
-		'tacgias_sdt',
-		'tacgias_diachi'
+		'id',
+		'name',
+		'email',
+		'sdt',
+		'diachi'
 	];
 }
