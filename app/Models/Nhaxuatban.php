@@ -10,10 +10,10 @@ class Nhaxuatban extends Model
 	
 	protected $fillable = [
 		'id',
-		'nxb_ten',
-		'nxb_diachi',
-		'nxb_sdt',
-		'nxb_email',
-                'nxb_website'
+		'ten',
+		'diachi',
+		'sdt',
+		'email',
+        'website'
 	];
 }
