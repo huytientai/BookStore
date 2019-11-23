@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class NhaxuatbanTable extends Seeder
+class NhaxuatbanTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,7 +12,7 @@ class NhaxuatbanTable extends Seeder
     public function run()
     {
         //
-\App\Models\Nhaxuatban::truncate();
+        \App\Models\Nhaxuatban::truncate();
         factory(\App\Models\Nhaxuatban::class, 10)->create();
     }
 }
