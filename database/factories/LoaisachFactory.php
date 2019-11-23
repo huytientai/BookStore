@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(loaisach::class, function (Faker $faker) {
     return [
-        'tenloaisach' => $faker->name,
+        'nametype' => $faker->name,
     ];
 });
