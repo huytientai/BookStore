@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class LoaiSach extends Migration
+class CreateLoaisachsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class LoaiSach extends Migration
      */
     public function up()
     {
-        Schema::create('loaisach', function (Blueprint $table) {
+        Schema::create('loaisachs', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class LoaiSach extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('loaisach');
+        Schema::dropIfExists('loaisachs');
     }
 }
