@@ -13,6 +13,7 @@ class BooksController extends Controller
     public function __construct(Book $book)
     {
         $this->book = $book;
+        $this->middleware('auth')->except(['index']);
     }
 
     /**
