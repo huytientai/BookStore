@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class loaisach extends Model
+class Loaisach extends Model
 {
     protected $table = 'loaisachs';
 
@@ -12,7 +12,6 @@ class loaisach extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'id',
         'name',
     ];
 

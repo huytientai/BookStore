@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\loaisach;
+use App\Models\Loaisach;
 use Faker\Generator as Faker;
 
-$factory->define(loaisach::class, function (Faker $faker) {
+$factory->define(Loaisach::class, function (Faker $faker) {
     return [
         'name' => $faker->name   
      ];
