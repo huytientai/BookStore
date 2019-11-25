@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 class Book extends Model
 {
@@ -27,10 +28,10 @@ class Book extends Model
             $clientImageName = pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME);
             $clientImageExtension = $request->image->getClientOriginalExtension();
             $data['image'] = $clientImageName . '_' . time() . '.' . $clientImageExtension;
-            $request->file('image')->storeAs('public/BookImages',$data['image']);
-        }
-        else{
-            $data['image'] = 'no_image.jpg';
+
+            $request->file('image')->storeAs('public/book_images', $data['image']);
+        } else {
+            $data['image'] = null;
         }
 
         Book::create($data);
@@ -39,8 +40,18 @@ class Book extends Model
     public function updateBook($request)
     {
         $data = $request->all();
-        return $this->find($request->id)->update($data);
 
+        if ($request->hasFile('image')) {
+            $clientImageName = pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME);
+            $clientImageExtension = $request->image->getClientOriginalExtension();
+            $data['image'] = $clientImageName . '_' . time() . '.' . $clientImageExtension;
+
+            $request->file('image')->storeAs('public/book_images', $data['image']);
+        } else {
+            $data['image'] = $this->find($request->id)->image;
+        }
+
+        return $this->find($request->id)->update($data);
     }
 
 }
