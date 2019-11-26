@@ -15,7 +15,7 @@ class User extends Authenticatable
     public $primaryKey = 'id';
     public $timestamps = true;
 
-    protected $perPage = 20;
+    protected $perPage = 10;
 
     protected $fillable = [
         'user_name',

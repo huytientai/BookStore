@@ -14,7 +14,7 @@
                         @if($book->image)
                             <img style="width: 100%" src="/storage/book_images/{{ $book->image }}">
                         @else
-                            <img style="width: 100%" src="/storage/no_image.jpg">
+                            <img style="width: 100%" src="/img/no_image.jpg">
                         @endif
                     </div>
 

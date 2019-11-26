@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.admin')
 
 @section('title', 'Danh sách người dùng')
 
@@ -41,7 +41,7 @@
                         <th>SĐT</th>
                         <th width="120">Role</th>
                         @can('admin')
-                            <th width="170">Hành động</th>
+                            <th width="230">Hành động</th>
                         @endcan
                     </tr>
                 </thead>

@@ -25,3 +25,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/users', 'UsersController')->middleware(['auth', 'manager']);
 
 Route::resource('/books', 'BooksController');
+
