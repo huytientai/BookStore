@@ -17,8 +17,8 @@ class CreateTacgiasTable extends Migration
             $table->increments('id');
 			$table->string('name');
 			$table->string('email');
-			$table->string('sdt');
-			$table->string('diachi');
+			$table->string('phone');
+			$table->string('address');
             $table->timestamps();
         });
     }
