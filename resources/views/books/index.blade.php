@@ -11,11 +11,13 @@
             <div class="card card-body bg-light">
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
-                        @if($book->image)
-                            <img style="width: 100%" src="/storage/book_images/{{ $book->image }}">
-                        @else
-                            <img style="width: 100%" src="/img/no_image.jpg">
-                        @endif
+                        <a href="/books/{{$book->id}}">
+                            @if($book->image)
+                                <img style="width: 100%" src="/storage/book_images/{{ $book->image }}">
+                            @else
+                                <img style="width: 100%" src="/img/no_image.jpg">
+                            @endif
+                        </a>
                     </div>
 
                     <div class="col-md-8">

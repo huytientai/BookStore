@@ -26,3 +26,6 @@ Route::resource('/users', 'UsersController')->middleware(['auth', 'manager']);
 
 Route::resource('/books', 'BooksController');
 
+Route::get('test', function (){
+    return view('exam.index');
+});
