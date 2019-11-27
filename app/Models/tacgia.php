@@ -15,7 +15,7 @@ class tacgia extends Model
 		'id',
 		'name',
 		'email',
-		'sdt',
-		'diachi'
+		'phone',
+		'address'
 	];
 }
