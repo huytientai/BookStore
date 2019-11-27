@@ -9,7 +9,7 @@ $factory->define(Tacgia::class, function (Faker $faker) {
     return [
 		'name' => $faker->unique()->name,
 		'email' => $faker->unique()->safeEmail,
-		'sdt' => $faker->phoneNumber,
-		'diachi' => $faker->address
+		'phone' => $faker->phoneNumber,
+		'address' => $faker->address
     ];
 });
