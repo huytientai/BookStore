@@ -22,8 +22,7 @@
     <link rel="icon" type="image/png" href="{{ asset('img/favicon.png') }}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>
-{{--        @yield('title')--}}
-    aa
+        @yield('title')
     </title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport'/>
     <!--     Fonts and icons     -->
@@ -166,9 +165,18 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                                 <a class="dropdown-item" href="{{ route('home') }}">Profile</a>
-                                <a class="dropdown-item" href="#">Settings</a>
+                                <a class="dropdown-item" href="{{ route('users.create') }}">Create User</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{{ route('logout') }}">Log out</a>
+{{--                                <a class="dropdown-item" href="{{ route('logout') }}">Log out</a>--}}
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
                             </div>
                         </li>
                     </ul>
@@ -176,7 +184,9 @@
             </div>
         </nav>
         <!-- End Navbar -->
+        <div class="content">
         @yield('content')
+        </div>
 
         <footer class="footer">
             <div class="container-fluid">
