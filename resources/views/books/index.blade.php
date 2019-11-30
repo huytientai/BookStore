@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('Layouts.default')
 
 @section('title', 'Book list')
 
@@ -10,7 +10,7 @@
         @foreach($books as $key => $book)
             <div class="card card-body bg-light">
                 <div class="row">
-                    <div class="col-md-4 col-sm-4">
+                    <div class="col-sm-2 col-sm-2">
                         <a href="/books/{{$book->id}}">
                             @if($book->image)
                                 <img style="width: 100%" src="/storage/book_images/{{ $book->image }}">
@@ -20,7 +20,7 @@
                         </a>
                     </div>
 
-                    <div class="col-md-8">
+                    <div class="col-sm-4">
                         <div>
                             <h3>{{ $books->firstItem() + $key }} . <a href="/books/{{$book->id}}"> {{ $book->name }}</a>
                             </h3>
