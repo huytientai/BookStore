@@ -1,10 +1,8 @@
 @extends('layouts.default')
 
-@section('title', 'Book list')
+@section('title', $loaisach->name)
 
 @section('content')
-    @include('flash::message')
-
     <h1>Books</h1>
     @if(count($books)>0)
         @foreach($books as $key => $book)
@@ -34,6 +32,4 @@
         @endforeach
     @endif
     {!! $books->links() !!}
-
-
 @endsection

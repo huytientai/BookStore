@@ -9,6 +9,18 @@
     </div>
 </div>
 
+{{--Loai sach--}}
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label">Chọn Loai Sach</label>
+    <div class="col-sm-5">
+        <select class="browser-default custom-select mr-sm-0" name="loaisach_id">
+            @foreach(\App\Models\Loaisach::pluck('name', 'id')->toArray() as $key => $value)
+                <option value="{{ $key }}" {{ ((old('loaisach_id') ?? $book->loaisach_id ?? 0) == $key) ? 'selected' : '' }}>{{ $value }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
 {{--describe--}}
 <div class="form-group row">
     <label class="col-sm-2 col-form-label @error('desc') text-danger @enderror">Describe</label>

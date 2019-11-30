@@ -25,7 +25,7 @@ class StoreBookRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100|unique:books,name,' . $this->id ?? '',
-            'desc' => 'nullable|max:255',
+            'desc' => 'nullable|max:3000',
         ];
     }
 }

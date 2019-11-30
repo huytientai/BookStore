@@ -26,6 +26,10 @@ Route::resource('/users', 'UsersController')->middleware(['auth', 'manager']);
 
 Route::resource('/books', 'BooksController');
 
-Route::get('test', function (){
+Route::resource('/loaisachs', 'LoaisachsController');
+Route::resource('/nhaxuatbans', 'NhaxuatbansController');
+Route::resource('/tacgias', 'TacgiasController');
+
+Route::get('test', function () {
     return view('exam.index');
 });
