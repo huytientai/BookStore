@@ -15,6 +15,10 @@ class Loaisach extends Model
         'name',
     ];
 
-    
+    protected $perPage = 5;
 
+    public function books()
+    {
+        return $this->hasMany('App\Models\Book');
+    }
 }

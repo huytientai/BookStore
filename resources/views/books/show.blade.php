@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="col-md-8 col-sm-8">
+        <br>
         @if($book->image)
             <img style="width: 100%" src="/storage/book_images/{{ $book->image }}">
         @else

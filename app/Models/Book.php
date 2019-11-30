@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\File;
 
 class Book extends Model
 {
@@ -14,6 +13,7 @@ class Book extends Model
 
     protected $fillable = [
         'name',
+        'loaisach_id',
         'desc',
         'image',
     ];
@@ -54,4 +54,13 @@ class Book extends Model
         return $this->find($request->id)->update($data);
     }
 
+    public function findLoaisach($id)
+    {
+        return $this->orderBy('name')->with('loaisach')->where('loaisach_id',$id);
+    }
+
+    public function loaisach()
+    {
+        return $this->belongsTo('App\Models\Loaisach');
+    }
 }
