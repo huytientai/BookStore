@@ -18,4 +18,10 @@ class tacgia extends Model
 		'phone',
 		'address'
 	];
+	protected $perPage = 5;
+
+    public function books()
+    {
+        return $this->hasMany('App\Models\Book');
+    }
 }
