@@ -49,6 +49,17 @@ class LoaisachsTableSeeder extends Seeder
             'id' => '10', 'name' => 'sách hạt giống tâm hồn', 'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
 
-
+        \App\Models\Loaisach::create([
+            'id' => '11', 'name' => 'EDUCATION', 'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+        ]);
+        \App\Models\Loaisach::create([
+            'id' => '12', 'name' => 'ADVENTURE', 'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+        ]);
+        \App\Models\Loaisach::create([
+            'id' => '13', 'name' => 'CHILDREN', 'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+        ]);
+        \App\Models\Loaisach::create([
+            'id' => '14', 'name' => 'COOK', 'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+        ]);
     }
 }

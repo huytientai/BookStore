@@ -13,31 +13,31 @@
                     <ul class="meninmenu d-flex justify-content-start">
                         <li class="drop with--one--item"><a href="index.html">Home</a></li>
 
-                        <li class="drop"><a href="shop-grid.html">Books</a>
+                        <li class="drop"><a href="/books">Books</a>
                             <div class="megamenu mega03">
                                 <ul class="item item03">
-                                    <li class="title">Categories</li>
-                                    <li><a href="shop-grid.html">Biography </a></li>
-                                    <li><a href="shop-grid.html">Business </a></li>
-                                    <li><a href="shop-grid.html">Cookbooks </a></li>
-                                    <li><a href="shop-grid.html">Health & Fitness </a></li>
-                                    <li><a href="shop-grid.html">History </a></li>
+                                    <li><a class="title" href="/loaisachs">Categories</a></li>
+                                    <li><a href="/loaisachs/1">truyện cười </a></li>
+                                    <li><a href="/loaisachs/2">truyện trinh thám </a></li>
+                                    <li><a href="/loaisachs/3">truyện cổ tích </a></li>
+                                    <li><a href="/loaisachs/4">truyện ngụ ngôn </a></li>
+                                    <li><a href="/loaisachs/5">sách tâm lý </a></li>
                                 </ul>
                                 <ul class="item item03">
-                                    <li style="opacity: 0" class="title">Categories</li>
-                                    <li><a href="shop-grid.html">Mystery</a></li>
-                                    <li><a href="shop-grid.html">Religion & Inspiration</a></li>
-                                    <li><a href="shop-grid.html">Romance</a></li>
-                                    <li><a href="shop-grid.html">Fiction/Fantasy</a></li>
-                                    <li><a href="shop-grid.html">Sleeveless</a></li>
+                                    <li><a class="title">Customer Favourite</a></li>
+                                    <li><a href="#">Mystery</a></li>
+                                    <li><a href="#">Religion & Inspiration</a></li>
+                                    <li><a href="#">Romance</a></li>
+                                    <li><a href="#">Fiction/Fantasy</a></li>
+                                    <li><a href="#">Sleeveless</a></li>
                                 </ul>
                                 <ul class="item item03">
-                                    <li style="opacity: 0" class="title">Categories</li>
-                                    <li><a href="shop-grid.html">Science </a></li>
-                                    <li><a href="shop-grid.html">Fiction/Fantasy</a></li>
-                                    <li><a href="shop-grid.html">Self-Improvemen</a></li>
-                                    <li><a href="shop-grid.html">Home & Garden</a></li>
-                                    <li><a href="shop-grid.html">Humor Books</a></li>
+                                    <li><a class="title">Collections</a></li>
+                                    <li><a href="#">Science </a></li>
+                                    <li><a href="#">Fiction/Fantasy</a></li>
+                                    <li><a href="#">Self-Improvemen</a></li>
+                                    <li><a href="#">Home & Garden</a></li>
+                                    <li><a href="#">Humor Books</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -52,7 +52,9 @@
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                     <li class="shop_search"><a class="search__active" href="#"></a></li>
                     <li class="wishlist"><a href="#"></a></li>
-                    <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">4</span></a>
+                    <li class="shopcart"><a class="cartbox_active" href="#">
+{{--                            <span class="product_qun">4</span>--}}
+                        </a>
                         <!-- Start Shopping Cart -->
 {{--                        <div class="block-minicart minicart__active">--}}
 {{--                            <div class="minicart-content-wrapper">--}}
@@ -190,9 +192,9 @@
                                 <li><a href="team.html">Team Page</a></li>
                             </ul>
                         </li>
-                        <li><a href="shop-grid.html">Shop</a>
+                        <li><a href="#">Shop</a>
                             <ul>
-                                <li><a href="shop-grid.html">Shop Grid</a></li>
+                                <li><a href="#">Shop Grid</a></li>
                                 <li><a href="single-product.html">Single Product</a></li>
                             </ul>
                         </li>
