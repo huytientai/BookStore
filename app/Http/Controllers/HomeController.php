@@ -28,7 +28,6 @@ class HomeController extends Controller
     public function index()
     {
         $b1 = $this->book->findLoaisach(11)->get();
-//        dd($b1[1]->image);
 
         return view('home')->with('b1', $b1);
     }
