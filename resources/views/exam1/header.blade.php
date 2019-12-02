@@ -12,32 +12,7 @@
                 <nav class="mainmenu__nav">
                     <ul class="meninmenu d-flex justify-content-start">
                         <li class="drop with--one--item"><a href="index.html">Home</a></li>
-                        <li class="drop"><a href="#">Shop</a>
-                            <div class="megamenu mega03">
-                                <ul class="item item03">
-                                    <li class="title">Shop Layout</li>
-                                    <li><a href="shop-grid.html">Shop Grid</a></li>
-                                    <li><a href="single-product.html">Single Product</a></li>
-                                </ul>
-                                <ul class="item item03">
-                                    <li class="title">Shop Page</li>
-                                    <li><a href="my-account.html">My Account</a></li>
-                                    <li><a href="cart.html">Cart Page</a></li>
-                                    <li><a href="checkout.html">Checkout Page</a></li>
-                                    <li><a href="wishlist.html">Wishlist Page</a></li>
-                                    <li><a href="error404.html">404 Page</a></li>
-                                    <li><a href="faq.html">Faq Page</a></li>
-                                </ul>
-                                <ul class="item item03">
-                                    <li class="title">Bargain Books</li>
-                                    <li><a href="shop-grid.html">Bargain Bestsellers</a></li>
-                                    <li><a href="shop-grid.html">Activity Kits</a></li>
-                                    <li><a href="shop-grid.html">B&N Classics</a></li>
-                                    <li><a href="shop-grid.html">Books Under $5</a></li>
-                                    <li><a href="shop-grid.html">Bargain Books</a></li>
-                                </ul>
-                            </div>
-                        </li>
+
                         <li class="drop"><a href="shop-grid.html">Books</a>
                             <div class="megamenu mega03">
                                 <ul class="item item03">
@@ -49,7 +24,7 @@
                                     <li><a href="shop-grid.html">History </a></li>
                                 </ul>
                                 <ul class="item item03">
-                                    <li class="title">Customer Favourite</li>
+                                    <li style="opacity: 0" class="title">Categories</li>
                                     <li><a href="shop-grid.html">Mystery</a></li>
                                     <li><a href="shop-grid.html">Religion & Inspiration</a></li>
                                     <li><a href="shop-grid.html">Romance</a></li>
@@ -57,7 +32,7 @@
                                     <li><a href="shop-grid.html">Sleeveless</a></li>
                                 </ul>
                                 <ul class="item item03">
-                                    <li class="title">Collections</li>
+                                    <li style="opacity: 0" class="title">Categories</li>
                                     <li><a href="shop-grid.html">Science </a></li>
                                     <li><a href="shop-grid.html">Fiction/Fantasy</a></li>
                                     <li><a href="shop-grid.html">Self-Improvemen</a></li>
@@ -66,54 +41,9 @@
                                 </ul>
                             </div>
                         </li>
-                        <li class="drop"><a href="shop-grid.html">Kids</a>
-                            <div class="megamenu mega02">
-                                <ul class="item item02">
-                                    <li class="title">Top Collections</li>
-                                    <li><a href="shop-grid.html">American Girl</a></li>
-                                    <li><a href="shop-grid.html">Diary Wimpy Kid</a></li>
-                                    <li><a href="shop-grid.html">Finding Dory</a></li>
-                                    <li><a href="shop-grid.html">Harry Potter</a></li>
-                                    <li><a href="shop-grid.html">Land of Stories</a></li>
-                                </ul>
-                                <ul class="item item02">
-                                    <li class="title">More For Kids</li>
-                                    <li><a href="shop-grid.html">B&N Educators</a></li>
-                                    <li><a href="shop-grid.html">B&N Kids' Club</a></li>
-                                    <li><a href="shop-grid.html">Kids' Music</a></li>
-                                    <li><a href="shop-grid.html">Toys & Games</a></li>
-                                    <li><a href="shop-grid.html">Hoodies</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="drop"><a href="#">Pages</a>
-                            <div class="megamenu dropdown">
-                                <ul class="item item01">
-                                    <li><a href="about.html">About Page</a></li>
-                                    <li class="label2"><a href="portfolio.html">Portfolio</a>
-                                        <ul>
-                                            <li><a href="portfolio.html">Portfolio</a></li>
-                                            <li><a href="portfolio-details.html">Portfolio Details</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="my-account.html">My Account</a></li>
-                                    <li><a href="cart.html">Cart Page</a></li>
-                                    <li><a href="checkout.html">Checkout Page</a></li>
-                                    <li><a href="wishlist.html">Wishlist Page</a></li>
-                                    <li><a href="error404.html">404 Page</a></li>
-                                    <li><a href="faq.html">Faq Page</a></li>
-                                    <li><a href="team.html">Team Page</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="drop"><a href="blog.html">Blog</a>
-                            <div class="megamenu dropdown">
-                                <ul class="item item01">
-                                    <li><a href="blog.html">Blog Page</a></li>
-                                    <li><a href="blog-details.html">Blog Details</a></li>
-                                </ul>
-                            </div>
-                        </li>
+
+                        <li><a href="#">Tac Gia</a></li>
+                        <li><a href="#">Nha Xuat Ban</a></li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </nav>
@@ -122,147 +52,114 @@
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                     <li class="shop_search"><a class="search__active" href="#"></a></li>
                     <li class="wishlist"><a href="#"></a></li>
-                    <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">3</span></a>
+                    <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">4</span></a>
                         <!-- Start Shopping Cart -->
-                        <div class="block-minicart minicart__active">
-                            <div class="minicart-content-wrapper">
-                                <div class="micart__close">
-                                    <span>close</span>
-                                </div>
-                                <div class="items-total d-flex justify-content-between">
-                                    <span>3 items</span>
-                                    <span>Cart Subtotal</span>
-                                </div>
-                                <div class="total_amount text-right">
-                                    <span>$66.00</span>
-                                </div>
-                                <div class="mini_action checkout">
-                                    <a class="checkout__btn" href="cart.html">Go to Checkout</a>
-                                </div>
-                                <div class="single__items">
-                                    <div class="miniproduct">
-                                        <div class="item01 d-flex">
-                                            <div class="thumb">
-                                                <a href="product-details.html"><img src="{{ asset('img/product/sm-img/1.jpg') }}" alt="product images"></a>
-                                            </div>
-                                            <div class="content">
-                                                <h6><a href="product-details.html">Voyage Yoga Bag</a></h6>
-                                                <span class="prize">$30.00</span>
-                                                <div class="product_prize d-flex justify-content-between">
-                                                    <span class="qun">Qty: 01</span>
-                                                    <ul class="d-flex justify-content-end">
-                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item01 d-flex mt--20">
-                                            <div class="thumb">
-                                                <a href="product-details.html"><img src="{{ asset('img/product/sm-img/3.jpg') }}" alt="product images"></a>
-                                            </div>
-                                            <div class="content">
-                                                <h6><a href="product-details.html">Impulse Duffle</a></h6>
-                                                <span class="prize">$40.00</span>
-                                                <div class="product_prize d-flex justify-content-between">
-                                                    <span class="qun">Qty: 03</span>
-                                                    <ul class="d-flex justify-content-end">
-                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item01 d-flex mt--20">
-                                            <div class="thumb">
-                                                <a href="product-details.html"><img src="{{ asset('img/product/sm-img/2.jpg') }}" alt="product images"></a>
-                                            </div>
-                                            <div class="content">
-                                                <h6><a href="product-details.html">Compete Track Tote</a></h6>
-                                                <span class="prize">$40.00</span>
-                                                <div class="product_prize d-flex justify-content-between">
-                                                    <span class="qun">Qty: 03</span>
-                                                    <ul class="d-flex justify-content-end">
-                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mini_action cart">
-                                    <a class="cart__btn" href="cart.html">View and edit cart</a>
-                                </div>
-                            </div>
-                        </div>
+{{--                        <div class="block-minicart minicart__active">--}}
+{{--                            <div class="minicart-content-wrapper">--}}
+{{--                                <div class="micart__close">--}}
+{{--                                    <span>close</span>--}}
+{{--                                </div>--}}
+{{--                                <div class="items-total d-flex justify-content-between">--}}
+{{--                                    <span>3 items</span>--}}
+{{--                                    <span>Cart Subtotal</span>--}}
+{{--                                </div>--}}
+{{--                                <div class="total_amount text-right">--}}
+{{--                                    <span>$66.00</span>--}}
+{{--                                </div>--}}
+{{--                                <div class="mini_action checkout">--}}
+{{--                                    <a class="checkout__btn" href="cart.html">Go to Checkout</a>--}}
+{{--                                </div>--}}
+{{--                                <div class="single__items">--}}
+{{--                                    <div class="miniproduct">--}}
+{{--                                        <div class="item01 d-flex">--}}
+{{--                                            <div class="thumb">--}}
+{{--                                                <a href="product-details.html"><img src="{{ asset('img/product/sm-img/1.jpg') }}" alt="product images"></a>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="content">--}}
+{{--                                                <h6><a href="product-details.html">Voyage Yoga Bag</a></h6>--}}
+{{--                                                <span class="prize">$30.00</span>--}}
+{{--                                                <div class="product_prize d-flex justify-content-between">--}}
+{{--                                                    <span class="qun">Qty: 01</span>--}}
+{{--                                                    <ul class="d-flex justify-content-end">--}}
+{{--                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>--}}
+{{--                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>--}}
+{{--                                                    </ul>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="item01 d-flex mt--20">--}}
+{{--                                            <div class="thumb">--}}
+{{--                                                <a href="product-details.html"><img src="{{ asset('img/product/sm-img/3.jpg') }}" alt="product images"></a>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="content">--}}
+{{--                                                <h6><a href="product-details.html">Impulse Duffle</a></h6>--}}
+{{--                                                <span class="prize">$40.00</span>--}}
+{{--                                                <div class="product_prize d-flex justify-content-between">--}}
+{{--                                                    <span class="qun">Qty: 03</span>--}}
+{{--                                                    <ul class="d-flex justify-content-end">--}}
+{{--                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>--}}
+{{--                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>--}}
+{{--                                                    </ul>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="item01 d-flex mt--20">--}}
+{{--                                            <div class="thumb">--}}
+{{--                                                <a href="product-details.html"><img src="{{ asset('img/product/sm-img/2.jpg') }}" alt="product images"></a>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="content">--}}
+{{--                                                <h6><a href="product-details.html">Compete Track Tote</a></h6>--}}
+{{--                                                <span class="prize">$40.00</span>--}}
+{{--                                                <div class="product_prize d-flex justify-content-between">--}}
+{{--                                                    <span class="qun">Qty: 03</span>--}}
+{{--                                                    <ul class="d-flex justify-content-end">--}}
+{{--                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>--}}
+{{--                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>--}}
+{{--                                                    </ul>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="mini_action cart">--}}
+{{--                                    <a class="cart__btn" href="cart.html">View and edit cart</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                         <!-- End Shopping Cart -->
                     </li>
                     <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
                         <div class="searchbar__content setting__block">
                             <div class="content-inner">
                                 <div class="switcher-currency">
-                                    <strong class="label switcher-label">
-                                        <span>Currency</span>
-                                    </strong>
-                                    <div class="switcher-options">
-                                        <div class="switcher-currency-trigger">
-                                            <span class="currency-trigger">USD - US Dollar</span>
-                                            <ul class="switcher-dropdown">
-                                                <li>GBP - British Pound Sterling</li>
-                                                <li>EUR - Euro</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="switcher-currency">
-                                    <strong class="label switcher-label">
-                                        <span>Language</span>
-                                    </strong>
-                                    <div class="switcher-options">
-                                        <div class="switcher-currency-trigger">
-                                            <span class="currency-trigger">English01</span>
-                                            <ul class="switcher-dropdown">
-                                                <li>English02</li>
-                                                <li>English03</li>
-                                                <li>English04</li>
-                                                <li>English05</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="switcher-currency">
-                                    <strong class="label switcher-label">
-                                        <span>Select Store</span>
-                                    </strong>
-                                    <div class="switcher-options">
-                                        <div class="switcher-currency-trigger">
-                                            <span class="currency-trigger">Fashion Store</span>
-                                            <ul class="switcher-dropdown">
-                                                <li>Furniture</li>
-                                                <li>Shoes</li>
-                                                <li>Speaker Store</li>
-                                                <li>Furniture</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="switcher-currency">
-                                    <strong class="label switcher-label">
-                                        <span>My Account</span>
-                                    </strong>
-                                    <div class="switcher-options">
-                                        <div class="switcher-currency-trigger">
-                                            <div class="setting__menu">
-                                                <span><a href="#">Compare Product</a></span>
-                                                <span><a href="#">My Account</a></span>
-                                                <span><a href="#">My Wishlist</a></span>
-                                                <span><a href="#">Sign In</a></span>
-                                                <span><a href="#">Create An Account</a></span>
+                                    @guest()
+                                        <a class="label switcher-label">
+                                            <span>Sign In</span>
+                                        </a>
+                                        <a class="label switcher-label">
+                                            <span>Register</span>
+                                        </a>
+
+                                        {{--                                        <div class="switcher-options">--}}
+{{--                                            <div class="switcher-currency-trigger">--}}
+{{--                                                <span class="currency-trigger">Sign In</span>--}}
+{{--                                                <span class="currency-trigger">Register</span>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+                                    @else
+                                        <strong class="label switcher-label">
+                                            <span>Name</span>
+                                        </strong>
+                                        <div class="switcher-options">
+                                            <div class="switcher-currency-trigger">
+                                                <span class="currency-trigger">Your Cart</span>
+                                                <span class="currency-trigger">Profile</span>
+                                                <span class="currency-trigger">Log out</span>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endguest
                                 </div>
+
                             </div>
                         </div>
                     </li>

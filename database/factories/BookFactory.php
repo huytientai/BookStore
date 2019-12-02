@@ -10,5 +10,6 @@ $factory->define(Book::class, function (Faker $faker) {
         'name' => $faker->text(15),
         'desc' => $faker->paragraph,
         'loaisach_id' => \App\Models\Loaisach::all()->pluck('id')->random(),
+        'price' => 50,
     ];
 });
