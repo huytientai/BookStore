@@ -45,7 +45,13 @@
                         <aside class="wedget__categories poroduct--cat">
                             <h3 class="wedget__title">Book Categories</h3>
                             <ul>
-                                <li><a href="{{ route('books.index') }}">All<span>({{ count($loaisachs,1) }})</span></a></li>
+                                <li><a href="{{ route('books.index') }}">All<span>(@php
+                                                $x=0;
+                                                foreach ($loaisachs as $loaisach){
+                                                $x+=$loaisach->books_count;
+                                                }
+                                            echo $x;
+                                            @endphp)</span></a></li>
                                 @foreach($loaisachs as $loaisach)
                                     <li>
                                         <a href="{{ route('loaisachs.show', $loaisach->id) }}">{{ $loaisach->name }}
@@ -95,7 +101,13 @@
                                     <a class="nav-item nav-link active" data-toggle="tab" href="#nav-grid" role="tab"><i class="fa fa-th"></i></a>
                                     <a class="nav-item nav-link" data-toggle="tab" href="#nav-list" role="tab"><i class="fa fa-list"></i></a>
                                 </div>
-                                <p>Total {{ count($loaisachs,1) }} books</p>
+                                <p>Total @php
+                                        $x=0;
+                                        foreach ($loaisachs as $loaisach){
+                                        $x+=$loaisach->books_count;
+                                        }
+                                    echo $x;
+                                    @endphp books</p>
                                 <div class="orderby__wrapper"></div>
                             </div>
                         </div>
