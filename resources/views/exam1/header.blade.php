@@ -154,7 +154,6 @@
                                         </strong>
                                         <div class="switcher-options">
                                             <div class="switcher-currency-trigger">
-                                                <span class="currency-trigger">Your Cart</span>
                                                 <span class="currency-trigger">Profile</span>
                                                 <span class="currency-trigger">Log out</span>
                                             </div>
@@ -243,7 +242,7 @@
                             <h2>Buy <span>your </span></h2>
                             <h2>favourite <span>Book </span></h2>
                             <h2>from <span>Here </span></h2>
-                            <a class="shopbtn" href="#">shop now</a>
+{{--                            <a class="shopbtn" href="#">shop now</a>--}}
                         </div>
                     </div>
                 </div>
@@ -261,7 +260,7 @@
                             <h2>Buy <span>your </span></h2>
                             <h2>favourite <span>Book </span></h2>
                             <h2>from <span>Here </span></h2>
-                            <a class="shopbtn" href="#">shop now</a>
+{{--                            <a class="shopbtn" href="#">shop now</a>--}}
                         </div>
                     </div>
                 </div>

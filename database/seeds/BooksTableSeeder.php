@@ -12,6 +12,6 @@ class BooksTableSeeder extends Seeder
     public function run()
     {
         \App\Models\Book::truncate();
-        factory(\App\Models\Book::class, 10)->create();
+        factory(\App\Models\Book::class, 100)->create();
     }
 }

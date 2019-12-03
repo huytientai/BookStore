@@ -28,7 +28,10 @@ class HomeController extends Controller
     public function index()
     {
         $b1 = $this->book->findLoaisach(11)->get();
+//        $b2 = $this->book->findLoaisach(12)->get();
+//        $b3 = $this->book->findLoaisach(13)->get();
+//        $b4 = $this->book->findLoaisach(14)->get();
 
-        return view('home')->with('b1', $b1);
+        return view('home')->with(['b1' => $b1]);
     }
 }

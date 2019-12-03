@@ -17,6 +17,11 @@ class Loaisach extends Model
 
     protected $perPage = 5;
 
+    public function allLoaisach()
+    {
+        return $this->orderBy('name');
+    }
+
     public function books()
     {
         return $this->hasMany('App\Models\Book');

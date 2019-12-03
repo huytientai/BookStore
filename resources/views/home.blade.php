@@ -308,7 +308,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section__title text-center">
-                        <h2 class="title__be--2"><span class="color--theme">Books</span></h2>
+                        <h2 class="title__be--2">HOT <span class="color--theme">Books</span></h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered lebmid alteration in some ledmid form</p>
                     </div>
                 </div>
@@ -316,7 +316,7 @@
             <div class="row mt--50">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="product__nav nav justify-content-center" role="tablist">
-                        <a class="nav-item nav-link active" data-toggle="tab" href="#nav-all" role="tab">HOT</a>
+                        <a class="nav-item nav-link active" data-toggle="tab" href="#nav-all" role="tab">ALL</a>
                         <a class="nav-item nav-link" data-toggle="tab" href="#nav-biographic" role="tab">{{ $b1[0]->loaisach->name }}</a>
                         <a class="nav-item nav-link" data-toggle="tab" href="#nav-adventure" role="tab">ADVENTURE</a>
                         <a class="nav-item nav-link" data-toggle="tab" href="#nav-children" role="tab">CHILDREN</a>
