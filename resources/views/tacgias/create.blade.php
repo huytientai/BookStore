@@ -1,15 +1,15 @@
 @extends('layouts.default')
 
-@section('title', 'Add Book')
+@section('title', 'Add Tacgia')
 
 @section('content')
     <br>
-    <h1>Add Book</h1>
-    <form action="{{ route('books.store') }}" method="post" enctype="multipart/form-data">
+    <h1>Add Tacgia</h1>
+    <form action="{{ route('tacgias.store') }}" method="post" enctype="multipart/form-data">
         @csrf
-        @include('books.form')
+        @include('tacgias.form')
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">ADD BOOK</button>
+            <button type="submit" class="btn btn-primary">ADD TACGIA</button>
         </div>
     </form>
 

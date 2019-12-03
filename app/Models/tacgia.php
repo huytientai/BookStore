@@ -24,4 +24,21 @@ class tacgia extends Model
     {
         return $this->hasMany('App\Models\Book');
     }
+	
+	public function updateTacgia($request)
+    {
+        $data = $request->all();
+
+        
+
+        return $this->find($request->id)->update($data);
+    }
+	public function saveTacgia($request)
+    {
+        $data = $request->all();
+
+        
+
+        Tacgia::create($data);
+    }
 }
