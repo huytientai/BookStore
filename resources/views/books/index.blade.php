@@ -101,13 +101,7 @@
                                     <a class="nav-item nav-link active" data-toggle="tab" href="#nav-grid" role="tab"><i class="fa fa-th"></i></a>
                                     <a class="nav-item nav-link" data-toggle="tab" href="#nav-list" role="tab"><i class="fa fa-list"></i></a>
                                 </div>
-                                <p>Total @php
-                                        $x=0;
-                                        foreach ($loaisachs as $loaisach){
-                                        $x+=$loaisach->books_count;
-                                        }
-                                    echo $x;
-                                    @endphp books</p>
+                                <p>Total {{ $books->total() }} books</p>
                                 <div class="orderby__wrapper"></div>
                             </div>
                         </div>
