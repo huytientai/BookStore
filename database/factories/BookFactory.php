@@ -9,7 +9,7 @@ $factory->define(Book::class, function (Faker $faker) {
     return [
         'name' => $faker->text(15),
         'desc' => $faker->paragraph,
-        'loaisach_id' => \App\Models\Loaisach::all()->pluck('id')->random(),
+        'loaisach_id' => $faker->randomElement([11,12,13,14]),
         'price' => $faker->randomFloat(0.5,10,100),
     ];
 });

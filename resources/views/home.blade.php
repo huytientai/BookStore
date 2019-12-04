@@ -3,6 +3,8 @@
 @section('title', config('app.name','Home'))
 
 @section('content')
+    @include('flash::message')
+
     <section class="wn__product__area brown--color pt--80  pb--30">
         <div class="container">
             <div class="row">
@@ -329,15 +331,15 @@
                 <!-- Start Single Tab Content -->
                 <div class="row single__tab tab-pane fade show active" id="nav-all" role="tabpanel">
                     <div class="product__indicator--4 arrows_style owl-carousel owl-theme">
-                        @for($i=0; $i<10; $i=$i + 2)
+                        @for($i=0; $i<count($b0); $i=$i + 2)
                             <div class="single__product">
                                 <!-- Start Single Product -->
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                                     <div class="product product__style--3">
                                         <div class="product__thumb">
                                             <a class="first__img" href="single-product.html">
-                                                @if(isset($b1[$i]->image))
-                                                    <img src="/storage/book_images/{{ $b1[$i]->image }}">
+                                                @if(isset($b0[$i]->image))
+                                                    <img src="/storage/book_images/{{ $b0[$i]->image }}">
                                                 @else
                                                     <img src="/img/books/default_book.jpg">
                                                 @endif
@@ -347,10 +349,10 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="single-product.html">{{ $b1[$i]->name }}</a></h4>
+                                            <h4><a href="single-product.html">{{ $b0[$i]->name }}</a></h4>
                                             <ul class="prize d-flex">
-                                                <li>$50.00</li>
-                                                <li class="old_prize">$35.00</li>
+                                                <li>${{ $b0[$i]->price }}</li>
+{{--                                                <li class="old_prize">$35.00</li>--}}
                                             </ul>
                                             <div class="action">
                                                 <div class="actions_inner">
@@ -386,8 +388,8 @@
                                     <div class="product product__style--3">
                                         <div class="product__thumb">
                                             <a class="first__img" href="single-product.html">
-                                                @if(isset($b1[$i+1]->image))
-                                                    <img src="/storage/book_images/{{ $b1[$i+1]->image }}">
+                                                @if(isset($b0[$i+1]->image))
+                                                    <img src="/storage/book_images/{{ $b0[$i+1]->image }}">
                                                 @else
                                                     <img src="/img/books/default_book.jpg">
                                                 @endif
@@ -397,10 +399,10 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="single-product.html">{{ $b1[$i+1]->name }}</a></h4>
+                                            <h4><a href="single-product.html">{{ $b0[$i+1]->name }}</a></h4>
                                             <ul class="prize d-flex">
-                                                <li>$50.00</li>
-                                                <li class="old_prize">$35.00</li>
+                                                <li>${{ $b0[$i+1]->price }}</li>
+{{--                                                <li class="old_prize">$35.00</li>--}}
                                             </ul>
                                             <div class="action">
                                                 <div class="actions_inner">

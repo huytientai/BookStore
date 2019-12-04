@@ -27,7 +27,7 @@ class BooksController extends Controller
     public function index()
     {
         $loaisachs = $this->loaisach->allLoaisachCount();
-        $books = $this->book->orderBy('name')->paginate();
+        $books = $this->book->orderBy('name')->paginate(12);
 
         return view('books.index')->with(['books' => $books, 'loaisachs' => $loaisachs]);
     }

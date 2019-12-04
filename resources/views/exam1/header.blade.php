@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-6 col-sm-6 col-6 col-lg-2">
                 <div class="logo">
-                    <a href="index.html">
+                    <a href="{{ route('home') }}">
                         <img src="{{ asset('img/logo/logo.png') }}" alt="logo images">
                     </a>
                 </div>
@@ -11,7 +11,7 @@
             <div class="col-lg-8 d-none d-lg-block">
                 <nav class="mainmenu__nav">
                     <ul class="meninmenu d-flex justify-content-start">
-                        <li class="drop with--one--item"><a href="index.html">Home</a></li>
+                        <li class="drop with--one--item"><a href="{{ route('home') }}">Home</a></li>
 
                         <li class="drop"><a href="/books">Books</a>
                             <div class="megamenu mega03">
@@ -42,9 +42,9 @@
                             </div>
                         </li>
 
-                        <li><a href="#">Tac Gia</a></li>
-                        <li><a href="#">Nha Xuat Ban</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="{{ route('tacgias.index') }}">Tac Gia</a></li>
+                        <li><a href="{{ route('nhaxuatbans.index') }}">Nha Xuat Ban</a></li>
+                        <li><a href="{{ route('contact') }}">Contact</a></li>
                     </ul>
                 </nav>
             </div>
@@ -52,110 +52,40 @@
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                     <li class="shop_search"><a class="search__active" href="#"></a></li>
                     <li class="wishlist"><a href="#"></a></li>
-                    <li class="shopcart"><a class="cartbox_active" href="#">
-{{--                            <span class="product_qun">4</span>--}}
-                        </a>
-                        <!-- Start Shopping Cart -->
-{{--                        <div class="block-minicart minicart__active">--}}
-{{--                            <div class="minicart-content-wrapper">--}}
-{{--                                <div class="micart__close">--}}
-{{--                                    <span>close</span>--}}
-{{--                                </div>--}}
-{{--                                <div class="items-total d-flex justify-content-between">--}}
-{{--                                    <span>3 items</span>--}}
-{{--                                    <span>Cart Subtotal</span>--}}
-{{--                                </div>--}}
-{{--                                <div class="total_amount text-right">--}}
-{{--                                    <span>$66.00</span>--}}
-{{--                                </div>--}}
-{{--                                <div class="mini_action checkout">--}}
-{{--                                    <a class="checkout__btn" href="cart.html">Go to Checkout</a>--}}
-{{--                                </div>--}}
-{{--                                <div class="single__items">--}}
-{{--                                    <div class="miniproduct">--}}
-{{--                                        <div class="item01 d-flex">--}}
-{{--                                            <div class="thumb">--}}
-{{--                                                <a href="product-details.html"><img src="{{ asset('img/product/sm-img/1.jpg') }}" alt="product images"></a>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="content">--}}
-{{--                                                <h6><a href="product-details.html">Voyage Yoga Bag</a></h6>--}}
-{{--                                                <span class="prize">$30.00</span>--}}
-{{--                                                <div class="product_prize d-flex justify-content-between">--}}
-{{--                                                    <span class="qun">Qty: 01</span>--}}
-{{--                                                    <ul class="d-flex justify-content-end">--}}
-{{--                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>--}}
-{{--                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>--}}
-{{--                                                    </ul>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="item01 d-flex mt--20">--}}
-{{--                                            <div class="thumb">--}}
-{{--                                                <a href="product-details.html"><img src="{{ asset('img/product/sm-img/3.jpg') }}" alt="product images"></a>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="content">--}}
-{{--                                                <h6><a href="product-details.html">Impulse Duffle</a></h6>--}}
-{{--                                                <span class="prize">$40.00</span>--}}
-{{--                                                <div class="product_prize d-flex justify-content-between">--}}
-{{--                                                    <span class="qun">Qty: 03</span>--}}
-{{--                                                    <ul class="d-flex justify-content-end">--}}
-{{--                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>--}}
-{{--                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>--}}
-{{--                                                    </ul>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="item01 d-flex mt--20">--}}
-{{--                                            <div class="thumb">--}}
-{{--                                                <a href="product-details.html"><img src="{{ asset('img/product/sm-img/2.jpg') }}" alt="product images"></a>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="content">--}}
-{{--                                                <h6><a href="product-details.html">Compete Track Tote</a></h6>--}}
-{{--                                                <span class="prize">$40.00</span>--}}
-{{--                                                <div class="product_prize d-flex justify-content-between">--}}
-{{--                                                    <span class="qun">Qty: 03</span>--}}
-{{--                                                    <ul class="d-flex justify-content-end">--}}
-{{--                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>--}}
-{{--                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>--}}
-{{--                                                    </ul>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                <div class="mini_action cart">--}}
-{{--                                    <a class="cart__btn" href="cart.html">View and edit cart</a>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-                        <!-- End Shopping Cart -->
-                    </li>
+                    <li class="shopcart"><a class="cartbox_active" href="#"></a></li>
                     <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
                         <div class="searchbar__content setting__block">
                             <div class="content-inner">
                                 <div class="switcher-currency">
                                     @guest()
-                                        <a class="label switcher-label">
+                                        <a class="label switcher-label" href="{{ route('login') }}">
                                             <span>Sign In</span>
                                         </a>
-                                        <a class="label switcher-label">
+                                        <a class="label switcher-label" href="{{ route('register') }}">
                                             <span>Register</span>
                                         </a>
 
                                         {{--                                        <div class="switcher-options">--}}
-{{--                                            <div class="switcher-currency-trigger">--}}
-{{--                                                <span class="currency-trigger">Sign In</span>--}}
-{{--                                                <span class="currency-trigger">Register</span>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        {{--                                            <div class="switcher-currency-trigger">--}}
+                                        {{--                                                <span class="currency-trigger">Sign In</span>--}}
+                                        {{--                                                <span class="currency-trigger">Register</span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
                                     @else
                                         <strong class="label switcher-label">
-                                            <span>Name</span>
+                                            <span>{{ Auth::user()->name }}</span>
                                         </strong>
                                         <div class="switcher-options">
                                             <div class="switcher-currency-trigger">
-                                                <span class="currency-trigger">Profile</span>
-                                                <span class="currency-trigger">Log out</span>
+                                                @canany(['admin','staff'])
+                                                    <a class="currency-trigger" href="{{ route('users.index') }}">Manager</a>
+                                                @endcanany
+                                                <a class="currency-trigger" href="{{ route('users.show',Auth::user()->id) }}">Your Profile</a>
+                                                <a class="currency-trigger" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Log out</a>
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
                                             </div>
                                         </div>
                                     @endguest
@@ -242,7 +172,7 @@
                             <h2>Buy <span>your </span></h2>
                             <h2>favourite <span>Book </span></h2>
                             <h2>from <span>Here </span></h2>
-{{--                            <a class="shopbtn" href="#">shop now</a>--}}
+                            {{--                            <a class="shopbtn" href="#">shop now</a>--}}
                         </div>
                     </div>
                 </div>
@@ -260,7 +190,7 @@
                             <h2>Buy <span>your </span></h2>
                             <h2>favourite <span>Book </span></h2>
                             <h2>from <span>Here </span></h2>
-{{--                            <a class="shopbtn" href="#">shop now</a>--}}
+                            {{--                            <a class="shopbtn" href="#">shop now</a>--}}
                         </div>
                     </div>
                 </div>
