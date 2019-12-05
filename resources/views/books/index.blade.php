@@ -3,7 +3,6 @@
 @section('title', 'Book list')
 
 @section('content')
-    @include('flash::message')
 
     {{--    <h1>Books</h1>--}}
     {{--    @if(count($books)>0)--}}
@@ -39,6 +38,8 @@
     <!-- Start Shop Page -->
     <div class="page-shop-sidebar left--sidebar bg--white section-padding--lg">
         <div class="container">
+            @include('flash::message')
+
             <div class="row">
                 <div class="col-lg-3 col-12 order-2 order-lg-1 md-mt-40 sm-mt-40">
                     <div class="shop__sidebar">
@@ -117,10 +118,9 @@
                                                 <a class="first__img" href="{{ route('books.show', $book->id) }}"><img src="/storage/book_images/{{ $book->image }}"></a>
                                                 {{--                                        <a class="second__img animation1" href="single-product.html"><img src="{{ asset('img/books/2.jpg') }}" alt="product image"></a>--}}
                                             @else
-                                                <a class="first__img" href="single-product.html"><img src="{{ asset('img/default_book.jpg') }}"></a>
+                                                <a class="first__img" href="{{ route('books.show', $book->id) }}"><img src="{{ asset('img/default_book.jpg') }}"></a>
                                             @endif
                                             <div class="hot__box">
-                                                {{--                                                <span class="hot-label">BEST SALLER</span>--}}
                                             </div>
                                         </div>
                                         <div class="product__content content--center">
@@ -137,7 +137,7 @@
                                                             <a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
                                                         </li>
                                                         <li>
-                                                            <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
+                                                            <a class="wishlist" href="{{ route('carts.show', $book->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
                                                         <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
@@ -175,9 +175,9 @@
                                     <div class="list__view">
                                         <div class="thumb">
                                             @if(isset($book->image))
-                                                <a class="first__img" href="single-product.html"><img src="/storage/book_images/{{ $book->image }}" alt="product images"></a>
+                                                <a class="first__img" href="{{ route('books.show', $book->id) }}"><img src="/storage/book_images/{{ $book->image }}" alt="product images"></a>
                                             @else
-                                                <a class="first__img" href="single-product.html"><img src="/img/books/default_book.jpg" alt="product images"></a>
+                                                <a class="first__img" href="{{ route('books.show', $book->id) }}"><img src="/img/books/default_book.jpg" alt="product images"></a>
                                             @endif
                                         </div>
                                         <div class="content">
@@ -196,7 +196,7 @@
                                             </ul>
                                             <p> DESCRIBE: {!! substr($book->desc,0,250) . ' ...' !!}</p>
                                             <ul class="cart__action d-flex">
-                                                <li class="cart"><a href="cart.html">Add to cart</a></li>
+                                                <li class="cart"><a href="{{ route('carts.show', $book->id) }}">Add to cart</a></li>
                                                 <li class="wishlist"><a href="cart.html"></a></li>
                                                 <li class="compare"><a href="cart.html"></a></li>
                                             </ul>
