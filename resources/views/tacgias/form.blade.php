@@ -42,4 +42,25 @@
     </div>
 </div>
 
+{{--describe--}}
+<div class="form-group row">
+    <label class="col-sm-2 col-form-label @error('desc') text-danger @enderror">Describe</label>
+    <div class="col-sm-5">
+        <textarea class="form-control @error('desc') is-invalid @enderror" id="article-ckeditor" name="desc">{{ old('desc') ?? $tacgia->desc ?? null }}</textarea>
+        @error('desc')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+{{--image--}}
+<div class="form-group row">
+    <label for="image" class="col-md-2 col-form-label">Image</label>
+    <div class="col-md-5">
+        <input id="image" type="file" name="image">
+{{--        @if ($tacgia->image)--}}
+{{--            <code>{{ $tacgia->image }}</code>--}}
+{{--        @endif--}}
+    </div>
+</div>
 

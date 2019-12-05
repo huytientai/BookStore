@@ -16,7 +16,8 @@ class tacgia extends Model
 		'name',
 		'email',
 		'phone',
-		'address'
+		'address',
+		'desc'
 	];
 	protected $perPage = 5;
 

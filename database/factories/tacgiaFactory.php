@@ -10,6 +10,7 @@ $factory->define(Tacgia::class, function (Faker $faker) {
 		'name' => $faker->unique()->name,
 		'email' => $faker->unique()->safeEmail,
 		'phone' => $faker->phoneNumber,
-		'address' => $faker->address
+		'address' => $faker->address,
+		'desc' => $faker->paragraph
     ];
 });
