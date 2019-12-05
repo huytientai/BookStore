@@ -30,6 +30,6 @@ Route::resource('/loaisachs', 'LoaisachsController');
 Route::resource('/nhaxuatbans', 'NhaxuatbansController');
 Route::resource('/tacgias', 'TacgiasController');
 
-Route::get('/contact', function () {
-    return view('contact.index');
-})->name('contact');
+Route::get('/about', function () {
+    return view('about');
+})->name('about');

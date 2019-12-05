@@ -44,7 +44,7 @@
 
                         <li><a href="{{ route('tacgias.index') }}">Tac Gia</a></li>
                         <li><a href="{{ route('nhaxuatbans.index') }}">Nha Xuat Ban</a></li>
-                        <li><a href="{{ route('contact') }}">Contact</a></li>
+                        <li><a href="{{ route('about') }}">About Us</a></li>
                     </ul>
                 </nav>
             </div>
@@ -102,7 +102,7 @@
             <div class="col-lg-12 d-none">
                 <nav class="mobilemenu__nav">
                     <ul class="meninmenu">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{ route('home') }}">Home</a></li>
                         <li><a href="#">Pages</a>
                             <ul>
                                 <li><a href="about.html">About Page</a></li>

@@ -134,7 +134,6 @@ class UsersController extends Controller
      */
     public function update(StoreUserRequest $request)
     {
-//        dd($request);
         if (Gate::allows('admin', Auth::user())) {
             if ($this->user->updateUser($request)) {
                 flash('Cap nhat thanh cong')->success();
