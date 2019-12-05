@@ -29,6 +29,7 @@ Route::resource('/books', 'BooksController');
 Route::resource('/loaisachs', 'LoaisachsController');
 Route::resource('/nhaxuatbans', 'NhaxuatbansController');
 Route::resource('/tacgias', 'TacgiasController');
+Route::resource('/carts', 'CartsController')->middleware(['auth']);
 
 Route::get('/about', function () {
     return view('about');

@@ -65,8 +65,9 @@ class BooksController extends Controller
      */
     public function show($id)
     {
+        $loaisachs = $this->loaisach->allLoaisachCount();
         $book = $this->book->find($id);
-        return view('books.show')->with('book', $book);
+        return view('books.show')->with(['book'=> $book,'loaisachs' =>$loaisachs]);
     }
 
     /**

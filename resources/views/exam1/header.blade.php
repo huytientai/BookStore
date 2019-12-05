@@ -52,7 +52,7 @@
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                     <li class="shop_search"><a class="search__active" href="#"></a></li>
                     <li class="wishlist"><a href="#"></a></li>
-                    <li class="shopcart"><a class="cartbox_active" href="#"></a></li>
+                    <li class="shopcart"><a class="" href="{{ route('carts.index') }}"></a></li>
                     <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
                         <div class="searchbar__content setting__block">
                             <div class="content-inner">
@@ -64,13 +64,6 @@
                                         <a class="label switcher-label" href="{{ route('register') }}">
                                             <span>Register</span>
                                         </a>
-
-                                        {{--                                        <div class="switcher-options">--}}
-                                        {{--                                            <div class="switcher-currency-trigger">--}}
-                                        {{--                                                <span class="currency-trigger">Sign In</span>--}}
-                                        {{--                                                <span class="currency-trigger">Register</span>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        </div>--}}
                                     @else
                                         <strong class="label switcher-label">
                                             <span>{{ Auth::user()->name }}</span>

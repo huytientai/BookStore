@@ -3,10 +3,10 @@
 @section('title', config('app.name','Home'))
 
 @section('content')
-    @include('flash::message')
 
     <section class="wn__product__area brown--color pt--80  pb--30">
         <div class="container">
+            @include('flash::message')
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section__title text-center">
@@ -337,7 +337,7 @@
                                 <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                                     <div class="product product__style--3">
                                         <div class="product__thumb">
-                                            <a class="first__img" href="single-product.html">
+                                            <a class="first__img" href="{{ route('books.show', $b0[$i]->id) }}">
                                                 @if(isset($b0[$i]->image))
                                                     <img src="/storage/book_images/{{ $b0[$i]->image }}">
                                                 @else
@@ -352,16 +352,16 @@
                                             <h4><a href="single-product.html">{{ $b0[$i]->name }}</a></h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b0[$i]->price }}</li>
-{{--                                                <li class="old_prize">$35.00</li>--}}
+                                                {{--                                                <li class="old_prize">$35.00</li>--}}
                                             </ul>
                                             <div class="action">
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                                         </li>
                                                         <li>
-                                                            <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
+                                                            <a class="wishlist" href="{{ route('carts.show', $b1[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
                                                         <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
@@ -402,7 +402,7 @@
                                             <h4><a href="single-product.html">{{ $b0[$i+1]->name }}</a></h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b0[$i+1]->price }}</li>
-{{--                                                <li class="old_prize">$35.00</li>--}}
+                                                {{--                                                <li class="old_prize">$35.00</li>--}}
                                             </ul>
                                             <div class="action">
                                                 <div class="actions_inner">
