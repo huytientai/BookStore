@@ -37,8 +37,14 @@
                                         </td>
                                         <td class="product-quantity"><input type="number" value="{{ $cart->quantity }}">
                                         </td>
-                                        <td class="product-subtotal">$165.00</td>
-                                        <td class="product-remove"><a href="#">X</a></td>
+                                        <td class="product-subtotal">${{ $cart->book->price * $cart->quantity }}</td>
+                                        <td class="product-remove">
+                                            <form action="{{ route('carts.destroy', $cart->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">X</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
 

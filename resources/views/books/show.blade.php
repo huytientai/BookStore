@@ -35,6 +35,8 @@
     <!-- Start main Content -->
     <div class="maincontent bg--white pt--80 pb--55">
         <div class="container">
+            @include('flash::message')
+
             <div class="row">
                 <div class="col-lg-9 col-12">
                     <div class="wn__single__product">
@@ -80,15 +82,19 @@
                                     <div class="product__overview">
                                         <p>DESCRIBE: {!! substr($book->desc,0,250) . ' ...' !!}</p>
                                     </div>
-                                    <div class="box-tocart d-flex">
-                                        <span>Qty</span>
-                                        <input id="qty" class="input-text qty" name="qty" min="1" value="1" title="Qty" type="number">
-                                        <div class="addtocart__actions">
-                                            <button class="tocart" type="submit" title="Add to Cart">Add to Cart</button>
-                                        </div>
-                                        <div class="product-addto-links clearfix">
-                                            <a class="wishlist" href="#"></a>
-                                        </div>
+                                    <div class="box-tocart d-flex row">
+                                        <form action="{{ route('carts.store') }}" class="row" method="post">
+                                            <span>Qty</span>
+                                            @csrf
+                                            <input type="hidden" name="book_id" value="{{ $book->id }}">
+                                            <input id="qty" class="input-text qty" name="quantity" min="1" value="1" title="Qty" type="number">
+                                            <div class="addtocart__actions">
+                                                <button class="tocart" type="submit" title="Add to Cart">Add to Cart</button>
+                                            </div>
+                                        </form>
+                                        {{--                                        <div class="product-addto-links clearfix">--}}
+                                        {{--                                            <a class="wishlist" href="#"></a>--}}
+                                        {{--                                        </div>--}}
                                     </div>
                                     <div class="product_meta">
 											<span class="posted_in">Categories:

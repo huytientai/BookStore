@@ -26,7 +26,7 @@ class Cart extends Model
         if (!Book::find($book_id)) {
             return 0;
         }
-        $cart=$this->where('user_id', Auth::id())->where('book_id', $book_id)->first();
+        $cart = $this->where('user_id', Auth::id())->where('book_id', $book_id)->first();
         if (isset($cart) != null) {
             return 2;
         }
@@ -34,6 +34,19 @@ class Cart extends Model
         $data['user_id'] = Auth::id();
         $data['book_id'] = $book_id;
         $data['quantity'] = 1;
+
+        Cart::create($data);
+        return 1;
+    }
+
+    public function saveCart($request)
+    {
+        $cart = $this->where('user_id', Auth::id())->where('book_id', $request->book_id)->first();
+        if ($cart != null) {
+            return 0;
+        }
+        $data = $request->all();
+        $data['user_id'] = Auth::id();
 
         Cart::create($data);
         return 1;

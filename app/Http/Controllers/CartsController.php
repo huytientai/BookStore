@@ -35,7 +35,12 @@ class CartsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($this->cart->saveCart($request)) {
+            return redirect()->route('carts.index');
+        } else {
+            flash('Da ton tai trong gio')->success();
+            return redirect()->back();
+        }
     }
 
     /**
@@ -62,6 +67,11 @@ class CartsController extends Controller
             return redirect()->back();
         }
 
+    }
+
+    public function fullAdd(Request $request)
+    {
+        dd($request);
     }
 
     /**
@@ -95,6 +105,10 @@ class CartsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->cart->find($id)->delete();
+
+        flash('delete success')->error();
+
+        return redirect()->route('carts.index');
     }
 }
