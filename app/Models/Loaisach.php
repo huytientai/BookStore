@@ -21,4 +21,13 @@ class Loaisach extends Model
     {
         return $this->hasMany('App\Models\Book');
     }
+    public function findLoaisach($id)
+    {
+        return $this->orderBy('name')->with('loaisach')->where('loaisach_id',$id);
+    }
+
+    public function loaisach()
+    {
+        return $this->belongsTo('App\Models\Loaisach');
+    }
 }

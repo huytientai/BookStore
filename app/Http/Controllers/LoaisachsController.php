@@ -23,7 +23,8 @@ class LoaisachsController extends Controller
      */
     public function index()
     {
-        //
+        $loaisachs = $this->loaisach->orderBy('name')->paginate();
+        return view('loaisachs.index')->with('loaisachs', $loaisachs);
     }
 
     /**
@@ -33,7 +34,7 @@ class LoaisachsController extends Controller
      */
     public function create()
     {
-        //
+        return view('loaisachs.create');
     }
 
     /**
@@ -44,7 +45,11 @@ class LoaisachsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->loaisach->saveLoaisach($request);
+
+        flash('add success')->success();
+
+        return redirect()->route('loaisachs.index');
     }
 
     /**
@@ -69,7 +74,8 @@ class LoaisachsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $loaisach = $this->loaisach->find($id);
+        return view('loaisachs.edit')->with('loaisach', $loaisach);
     }
 
     /**
@@ -81,7 +87,11 @@ class LoaisachsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->loaisach->updateLoaisach($request);
+
+        flash('update success')->success();
+
+        return redirect()->route('loaisachs.index');
     }
 
     /**
@@ -92,6 +102,10 @@ class LoaisachsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->loaisach->find($id)->delete();
+
+        flash('delete success')->error();
+
+        return redirect()->route('loaisachs.index');
     }
 }
