@@ -6,7 +6,7 @@
     <div class="col-md-8 col-sm-8">
         <br>
         @if($tacgia->image)
-            <img style="width: 100%" src="/storage/book_images/{{ $book->image }}">
+            <img style="width: 100%" src="/storage/tacgia_images/{{ $tacgia->image }}">
         @else
             <img style="width: 70%" src="/img/no_image.jpg">
         @endif

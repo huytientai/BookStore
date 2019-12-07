@@ -13,7 +13,7 @@
                     <div class="col-md-4 col-sm-4">
                         <a href="/tacgias/{{$tacgia->id}}">
                             @if($tacgia->image)
-                                <img style="width: 100%" src="/storage/book_images/{{ $tacgia->image }}">
+                                <img style="width: 100%" src="/storage/tacgia_images/{{ $tacgia->image }}">
                             @else
                                 <img style="width: 100%" src="/img/no_image.jpg">
                             @endif
