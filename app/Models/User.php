@@ -176,4 +176,13 @@ class User extends Authenticatable
         return $user->delete();
     }
 
+    public function orders()
+    {
+        $this->hasMany('App\Models\Order');
+    }
+
+    public function orderdetails()
+    {
+        $this->hasMany('App\Models\Orderdetail');
+    }
 }

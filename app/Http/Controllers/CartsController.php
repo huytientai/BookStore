@@ -2,17 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Cart;
+use App\Models\Order;
+use App\Models\Orderdetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CartsController extends Controller
 {
     protected $cart;
+    protected $order;
+    protected $orderdetail;
+    protected $book;
 
-    public function __construct(Cart $cart)
+
+    public function __construct(Cart $cart, Order $order, Orderdetail $orderdetail, Book $book)
     {
         $this->cart = $cart;
+        $this->order = $order;
+        $this->orderdetail = $orderdetail;
+        $this->book = $book;
     }
 
     /**
@@ -69,11 +79,6 @@ class CartsController extends Controller
 
     }
 
-    public function fullAdd(Request $request)
-    {
-        dd($request);
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -86,7 +91,7 @@ class CartsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * order
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
@@ -94,7 +99,26 @@ class CartsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $books = $request->books;
+
+        $total = 0;
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            $total += $book->price * $value['quantity'];
+        }
+        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total]);
+
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            $data['order_id'] = $order->id;
+            $data['book_id'] = $book->id;
+            $data['sell_price'] = $book->price;
+            $data['quantity'] = $value['quantity'];
+            $this->orderdetail->create($data);
+        }
+
+        flash('Dat hang thanh cong')->success();
+        return redirect()->route('carts.index');
     }
 
     /**

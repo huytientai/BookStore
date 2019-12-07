@@ -36,6 +36,7 @@
                                         </td>
                                         <td class="product-quantity">
                                             <input type="number" class="book-quantity" min="1" value="{{ $cart->quantity }}">
+                                            <input type="hidden" class="book-id" name="book-id" value="{{ $cart->id }}">
                                         </td>
                                         <td class="product-subtotal">${{ $cart->book->price * $cart->quantity }}</td>
                                         <td class="product-remove">
@@ -66,13 +67,14 @@
                                 <li>Cart total</li>
                             </ul>
                             <ul class="cart__total__tk">
-                                <li>$70</li>
+                                <li>$</li>
                             </ul>
                         </div>
-                        <div class="cart__total__amount">
-                            <span>Order</span>
-                            {{--                            <span>$140</span>--}}
-                        </div>
+                        <form action="{{ route('carts.update', 1) }}" id="order-form" method="post">
+                            @csrf
+                            @method('PUT')
+                            <button type="button" class="btn cart__total__amount" style="width: 100%" onclick="order()">ORDER</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -92,6 +94,18 @@
             })
         }
 
+        var quantityInput = document.getElementsByClassName('book-quantity')
+        for (i = 0; i < quantityInput.length; i++) {
+            var input = quantityInput[i]
+            input.addEventListener('change', function (event) {
+                var value = event.target
+                if (isNaN(value.value) || value.value <= 0) {
+                    value.value = 1
+                }
+                updateCartTotal()
+            });
+        }
+
         function updateCartTotal() {
             var cartItemContainer = document.getElementsByClassName('each-cart')
             var total = 0
@@ -103,9 +117,66 @@
                 var quantity = quantityElement.value
                 var price = priceElement.innerText.replace('$', '')
 
+                cartItemContainer[i].getElementsByClassName('product-subtotal').item(0).innerHTML = '$' + quantity * price
                 total += quantity * price
             }
-            document.getElementsByClassName('cart__total__tk').item(0).getElementsByTagName('li').item(0).innerHTML ='$' + total
+            document.getElementsByClassName('cart__total__tk').item(0).getElementsByTagName('li').item(0).innerHTML = '$' + total
+        }
+
+
+        function order() {
+            var cartItemContainer = document.getElementsByClassName('each-cart')
+
+            if (cartItemContainer.length) {
+                for (var i = 0; i < cartItemContainer.length; i++) {
+                    // var book_id_input = document.createElement("input");
+                    // var quantity_input = document.createElement("input");
+                    //
+                    // var quantityElement = cartItemContainer[i].getElementsByClassName('book-quantity')[0];
+                    // var idElement = cartItemContainer[i].getElementsByClassName('book-id')[0];
+                    //
+                    // var quantity = quantityElement.value
+                    // var book_id = idElement.value
+                    //
+                    // book_id_input.setAttribute("type", "hidden");
+                    // var name = "book_id[]";
+                    //
+                    // book_id_input.setAttribute('name', name)
+                    // book_id_input.setAttribute("value", book_id);
+                    // document.getElementById("order-form").appendChild(book_id_input);
+                    //
+                    // quantity_input.setAttribute("type", "hidden");
+                    // name = "quantity[]"
+                    //
+                    // quantity_input.setAttribute('name', name)
+                    // quantity_input.setAttribute("value", quantity);
+                    // document.getElementById("order-form").appendChild(quantity_input);
+
+                    var input = document.createElement("input");
+                    var input1 = document.createElement("input");
+
+                    var quantityElement = cartItemContainer[i].getElementsByClassName('book-quantity')[0];
+                    var idElement = cartItemContainer[i].getElementsByClassName('book-id')[0];
+                    var quantity = quantityElement.value
+                    var book_id = idElement.value
+
+                    // set input
+                    input.setAttribute("type", "hidden");
+                    var name = "books[:i][id]"
+                    name = name.replace(':i', i)
+                    input.setAttribute("name", name);
+                    input.setAttribute("value", book_id);
+                    document.getElementById("order-form").appendChild(input);
+
+                    input1.setAttribute("type", "hidden");
+                    var name = "books[:i][quantity]"
+                    name = name.replace(':i', i)
+                    input1.setAttribute("name", name);
+                    input1.setAttribute("value", quantity);
+                    document.getElementById("order-form").appendChild(input1);
+                }
+                document.getElementById("order-form").submit();
+            }
         }
     </script>
 @endsection
