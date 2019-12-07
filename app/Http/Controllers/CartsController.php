@@ -105,6 +105,7 @@ class CartsController extends Controller
      */
     public function destroy($id)
     {
+        dd($id);
         $this->cart->find($id)->delete();
 
         flash('delete success')->error();

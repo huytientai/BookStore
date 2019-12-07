@@ -23,27 +23,23 @@
                                 </thead>
                                 <tbody>
                                 @foreach($carts as $cart)
-                                    <tr>
+                                    <tr class="each-cart">
                                         <td class="product-thumbnail">
                                             @if(isset($cart->book->image))
                                                 <a href="{{ route('books.show', $cart->book_id) }}"><img src="/storage/book_images/{{ $cart->book->image }}"></a>
                                             @else
                                                 <a href="{{ route('books.show', $cart->book_id) }}"><img src="/img/product/sm-3/1.jpg"></a>
-                                        </td>
-                                        @endif
+                                            @endif
                                         </td>
                                         <td class="product-name"><a href="#">{{ $cart->book->name }}</a></td>
                                         <td class="product-price"><span class="amount">${{ $cart->book->price }}</span>
                                         </td>
-                                        <td class="product-quantity"><input type="number" value="{{ $cart->quantity }}">
+                                        <td class="product-quantity">
+                                            <input type="number" class="book-quantity" min="1" value="{{ $cart->quantity }}">
                                         </td>
                                         <td class="product-subtotal">${{ $cart->book->price * $cart->quantity }}</td>
                                         <td class="product-remove">
-                                            <form action="{{ route('carts.destroy', $cart->id) }}" method="post">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">X</button>
-                                            </form>
+                                            <button type="button" class="btn btn-danger">X</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -82,4 +78,34 @@
             </div>
         </div>
     </div>
+
+    <script>
+        updateCartTotal()
+
+        var removeCartItemButtons = document.getElementsByClassName('btn-danger');
+        for (var i = 0; i < removeCartItemButtons.length; i++) {
+            var button = removeCartItemButtons[i];
+            button.addEventListener('click', function (event) {
+                var buttonClicked = event.target
+                buttonClicked.parentElement.parentElement.remove()
+                updateCartTotal()
+            })
+        }
+
+        function updateCartTotal() {
+            var cartItemContainer = document.getElementsByClassName('each-cart')
+            var total = 0
+
+            for (var i = 0; i < cartItemContainer.length; i++) {
+                var quantityElement = cartItemContainer[i].getElementsByClassName('book-quantity')[0];
+                var priceElement = cartItemContainer[i].getElementsByClassName('amount')[0];
+
+                var quantity = quantityElement.value
+                var price = priceElement.innerText.replace('$', '')
+
+                total += quantity * price
+            }
+            document.getElementsByClassName('cart__total__tk').item(0).getElementsByTagName('li').item(0).innerHTML ='$' + total
+        }
+    </script>
 @endsection
