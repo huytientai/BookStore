@@ -71,4 +71,13 @@ public function findNhaxuatban($id)
     {
         return $this->belongsTo('App\Models\Nhaxuatban');
     }
+public function findTacgia($id)
+    {
+        return $this->orderBy('name')->with('tacgia')->where('tacgia_id',$id);
+    }
+    public function tacgia()
+
+    {
+        return $this->belongsTo('App\Models\tacgia');
+    }
 }
