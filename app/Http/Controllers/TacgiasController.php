@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\tacgia;
 use Illuminate\Http\Request;
 
@@ -23,6 +24,8 @@ class TacgiasController extends Controller
     public function index()
     {
         //
+		$tacgias = $this->tacgia->orderBy('name')->paginate();
+        return view('tacgias.index')->with('tacgias', $tacgias);
     }
 
     /**
@@ -33,6 +36,7 @@ class TacgiasController extends Controller
     public function create()
     {
         //
+		return view('tacgias.create');
     }
 
     /**
@@ -44,6 +48,11 @@ class TacgiasController extends Controller
     public function store(Request $request)
     {
         //
+		$this->tacgia->saveTacgia($request);
+
+        flash('add success')->success();
+
+        return redirect()->route('tacgias.index');
     }
 
     /**
@@ -55,6 +64,10 @@ class TacgiasController extends Controller
     public function show($id)
     {
         //
+		$tacgia = $this->tacgia->find($id);
+        $book = new Book();
+        $books = $book->findTacgia($id)->paginate();
+        return view('tacgias.show')->with(['tacgia' => $tacgia, 'books' => $books]);
     }
 
     /**
@@ -66,6 +79,8 @@ class TacgiasController extends Controller
     public function edit($id)
     {
         //
+		$tacgia = $this->tacgia->find($id);
+        return view('tacgias.edit')->with('tacgia', $tacgia);
     }
 
     /**
@@ -75,9 +90,14 @@ class TacgiasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
+		$this->tacgia->updateTacgia($request);
+
+        flash('update success')->success();
+
+        return redirect()->route('tacgias.index');
     }
 
     /**
@@ -89,5 +109,10 @@ class TacgiasController extends Controller
     public function destroy($id)
     {
         //
+		$this->tacgia->find($id)->delete();
+
+        flash('delete success')->error();
+
+        return redirect()->route('tacgias.index');
     }
 }
