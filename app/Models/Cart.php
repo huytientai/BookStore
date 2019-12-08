@@ -52,6 +52,11 @@ class Cart extends Model
         return 1;
     }
 
+    public function removeCartOfUser()
+    {
+        $this->where('user_id',Auth::id())->delete();
+    }
+
     public function book()
     {
         return $this->belongsTo('App\Models\Book');

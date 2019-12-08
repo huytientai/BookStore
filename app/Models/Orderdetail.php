@@ -20,28 +20,13 @@ class Orderdetail extends Model
 
     protected $perPage = 10;
 
-    public function saveOrderdetail($request)
-    {
-        $data = $request->all();
-
-
-        Orderdetail::create($data);
-    }
-
-    public function updateOrderdetail($request)
-    {
-        $data = $request->all();
-
-        return $this->find($request->id)->update($data);
-    }
-
     public function user()
     {
-        $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User');
     }
 
-    public function books()
+    public function book()
     {
-        $this->hasMany('App\Models\Book');
+        return $this->belongsTo('App\Models\Book');
     }
 }

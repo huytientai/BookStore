@@ -33,7 +33,10 @@ class CartsController extends Controller
     public function index()
     {
         $carts = $this->cart->where('user_id', Auth::id())->orderBy('id')->get();
-        return view('carts.index')->with('carts', $carts);
+        $order = $this->order->where('user_id', Auth::id())->where('status', false)->orderBy('created_at', 'desc')->first();
+        $orderdetails=$this->orderdetail->where('order_id', $order->id)->get();
+
+        return view('carts.index')->with(['carts'=> $carts,'order'=>$order,'orderdetails'=>$orderdetails]);
     }
 
 
@@ -116,6 +119,8 @@ class CartsController extends Controller
             $data['quantity'] = $value['quantity'];
             $this->orderdetail->create($data);
         }
+
+        $this->cart->removeCartOfUser();
 
         flash('Dat hang thanh cong')->success();
         return redirect()->route('carts.index');

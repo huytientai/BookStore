@@ -6,6 +6,8 @@
 
     <div class="cart-main-area section-padding--lg bg--white">
         <div class="container">
+            @include('flash::message')
+
             <div class="row">
                 <div class="col-md-12 col-sm-12 ol-lg-12">
                     <form action="#">
@@ -31,7 +33,9 @@
                                                 <a href="{{ route('books.show', $cart->book_id) }}"><img src="/img/product/sm-3/1.jpg"></a>
                                             @endif
                                         </td>
-                                        <td class="product-name"><a href="#">{{ $cart->book->name }}</a></td>
+                                        <td class="product-name">
+                                            <a href="{{ route('books.show', $cart->book_id) }}">{{ $cart->book->name }}</a>
+                                        </td>
                                         <td class="product-price"><span class="amount">${{ $cart->book->price }}</span>
                                         </td>
                                         <td class="product-quantity">
@@ -78,6 +82,57 @@
                     </div>
                 </div>
             </div>
+
+
+            {{--                current order--}}
+            <br><br><br>
+            <hr>
+            <br>
+            <h2>Current Order</h2>
+            <br>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 ol-lg-12">
+                    <div class="table-content wnro__table table-responsive">
+                        <table>
+                            <thead>
+                            <tr class="title-top">
+                                <th class="product-thumbnail">Image</th>
+                                <th class="product-name">Product</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-quantity">Quantity</th>
+                                <th class="product-subtotal">Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($orderdetails as $orderdetail)
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        @if(isset($orderdetail->book->image))
+                                            <a href="{{ route('books.show', $orderdetail->book_id) }}"><img src="/storage/book_images/{{ $orderdetail->book->image }}"></a>
+                                        @else
+                                            <a href="{{ route('books.show', $orderdetail->book_id) }}"><img src="/img/product/sm-3/1.jpg"></a>
+                                        @endif
+                                    </td>
+                                    <td class="product-name">
+                                        <a href="{{ route('books.show', $orderdetail->book_id) }}">{{ $orderdetail->book->name }}</a>
+                                    </td>
+                                    <td class="product-price">
+                                        <span>${{ $orderdetail->sell_price }}</span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <span>{{ $orderdetail->quantity }}</span>
+                                    </td>
+                                    <td class="product-subtotal">${{ $orderdetail->sell_price * $orderdetail->quantity }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 
@@ -129,29 +184,6 @@
 
             if (cartItemContainer.length) {
                 for (var i = 0; i < cartItemContainer.length; i++) {
-                    // var book_id_input = document.createElement("input");
-                    // var quantity_input = document.createElement("input");
-                    //
-                    // var quantityElement = cartItemContainer[i].getElementsByClassName('book-quantity')[0];
-                    // var idElement = cartItemContainer[i].getElementsByClassName('book-id')[0];
-                    //
-                    // var quantity = quantityElement.value
-                    // var book_id = idElement.value
-                    //
-                    // book_id_input.setAttribute("type", "hidden");
-                    // var name = "book_id[]";
-                    //
-                    // book_id_input.setAttribute('name', name)
-                    // book_id_input.setAttribute("value", book_id);
-                    // document.getElementById("order-form").appendChild(book_id_input);
-                    //
-                    // quantity_input.setAttribute("type", "hidden");
-                    // name = "quantity[]"
-                    //
-                    // quantity_input.setAttribute('name', name)
-                    // quantity_input.setAttribute("value", quantity);
-                    // document.getElementById("order-form").appendChild(quantity_input);
-
                     var input = document.createElement("input");
                     var input1 = document.createElement("input");
 
@@ -179,4 +211,5 @@
             }
         }
     </script>
+
 @endsection

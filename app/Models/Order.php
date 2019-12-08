@@ -14,6 +14,7 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'total_price',
+        'status',
     ];
 
     protected $perPage = 10;
@@ -27,6 +28,11 @@ class Order extends Model
 
     public function user()
     {
-        $this->belongsTo('App\Models\User');
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function orderdetails()
+    {
+        return $this->hasMany('App\Models\Orderdetail');
     }
 }
