@@ -22,7 +22,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('/users', 'UsersController')->middleware(['auth', 'manager']);
+Route::resource('/users', 'UsersController')->middleware(['auth']);
 
 Route::resource('/books', 'BooksController');
 
@@ -30,6 +30,9 @@ Route::resource('/loaisachs', 'LoaisachsController');
 Route::resource('/nhaxuatbans', 'NhaxuatbansController');
 Route::resource('/tacgias', 'TacgiasController');
 
-Route::get('test', function () {
-    return view('exam.index');
-});
+//Route::post('/cart','CartsController@fullAdd')->name('fullAdd')->middleware(['auth']);
+Route::resource('/carts', 'CartsController')->middleware(['auth']);
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');

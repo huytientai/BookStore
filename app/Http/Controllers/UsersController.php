@@ -21,6 +21,7 @@ class UsersController extends Controller
     public function __construct(User $user)
     {
         $this->user = $user;
+//        $this->middleware()
     }
 
     /**
@@ -31,9 +32,13 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        $users = $this->user->getUsers($request->all());
+        if (Gate::allows('admin', Auth::user()) || Gate::allows('staff', Auth::user())) {
+            $users = $this->user->getUsers($request->all());
 
-        return view('users/index')->with('users', $users);
+            return view('users/index')->with('users', $users);
+        } else {
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -43,11 +48,15 @@ class UsersController extends Controller
      */
     public function create()
     {
-        if (Gate::allows('admin', Auth::user())) {
-            return view('users/create');
+        if (Gate::allows('admin', Auth::user()) || Gate::allows('staff', Auth::user())) {
+            if (Gate::allows('admin', Auth::user())) {
+                return view('users/create');
+            }
+            flash('Ban khong co quyen truy cap')->error();
+            return redirect()->route('users.index');
+        } else {
+            return redirect()->route('home');
         }
-        flash('Ban khong co quyen truy cap')->error();
-        return redirect()->route('users.index');
     }
 
     /**
@@ -58,19 +67,38 @@ class UsersController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        if (Gate::allows('staff', Auth::user())) {
-            flash('Ban khong co du quyen')->error();
+        if (Gate::allows('admin', Auth::user()) || Gate::allows('staff', Auth::user())) {
+            if (Gate::allows('staff', Auth::user())) {
+                flash('Ban khong co du quyen')->error();
+                return redirect()->route('users.index');
+            }
+
+            $user = $this->user->saveUser($request);
+
+            if ($user != null) {
+                //set success message
+                flash('add thanh cong')->success();
+            }
+
             return redirect()->route('users.index');
+        } else {
+            return redirect()->route('home');
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        if (Auth::user()->id == $id) {
+            return view('users.show');
         }
 
-        $user = $this->user->saveUser($request);
-
-        if ($user != null) {
-            //set success message
-            flash('add thanh cong')->success();
-        }
-
-        return redirect()->route('users.index');
+        return redirect()->route('home');
     }
 
     /**
@@ -81,18 +109,21 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        if (Gate::allows('staff', Auth::user())) {
+        if (Gate::allows('admin', Auth::user())) {
+            $user = $this->user->find($id);
+            if (!isset($user)) {
+                flash('cap nhat that bai')->error();
+                return redirect()->route('users.index');
+            }
+            return view('users/edit')->with('user', $user);
+        } elseif (Auth::user()->id == $id) {
+//            $user = $this->user->find($id);
+            return view('users/edit')->with('user', Auth::user());
+        } elseif (Gate::allows('staff', Auth::user())) {
             flash('Ban khong co du quyen')->error();
             return redirect()->route('users.index');
-        }
-
-        $user = $this->user->find($id);
-        if (!isset($user)) {
-            flash('cap nhat that bai')->error();
-            return redirect()->route('users.index');
-        }
-
-        return view('users/edit')->with('user', $user);
+        } else
+            return redirect()->route('home');
     }
 
     /**
@@ -103,18 +134,27 @@ class UsersController extends Controller
      */
     public function update(StoreUserRequest $request)
     {
-        if (Gate::allows('staff', Auth::user())) {
+        if (Gate::allows('admin', Auth::user())) {
+            if ($this->user->updateUser($request)) {
+                flash('Cap nhat thanh cong')->success();
+            } else {
+                flash('Cap nhat that bai')->error();
+            }
+            return redirect()->route('users.index');
+        } elseif (Auth::user()->id == $request->id) {
+            if ($this->user->updateUser($request)) {
+                flash('Cap nhat thanh cong')->success();
+            } else {
+                flash('Cap nhat that bai')->error();
+            }
+            return redirect()->route('users.show', Auth::id());
+        } elseif (Gate::allows('staff', Auth::user())) {
             flash('Ban khong co du quyen')->error();
             return redirect()->route('users.index');
-        }
-
-        if ($this->user->updateUser($request)) {
-            flash('Cap nhat thanh cong')->success();
         } else {
-            flash('Cap nhat that bai')->error();
+            return redirect()->route('home');
         }
 
-        return redirect()->route('users.index');
     }
 
     /**
@@ -125,18 +165,22 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        if (Gate::allows('staff', Auth::user())) {
-            flash('Ban khong co du quyen')->error();
+        if (Gate::allows('admin', Auth::user()) || Gate::allows('staff', Auth::user())) {
+
+            if (Gate::allows('staff', Auth::user())) {
+                flash('Ban khong co du quyen')->error();
+                return redirect()->route('users.index');
+            }
+
+            //Check if user exists before deleting
+            if ($this->user->deleteUser($id)) {
+                flash('Xoa thanh cong')->success();
+            } else {
+                flash('Xoa that bai')->error();
+            }
+
             return redirect()->route('users.index');
-        }
-
-        //Check if user exists before deleting
-        if ($this->user->deleteUser($id)) {
-            flash('Xoa thanh cong')->success();
-        } else {
-            flash('Xoa that bai')->error();
-        }
-
-        return redirect()->route('users.index');
+        } else
+            return redirect()->route('home');
     }
 }

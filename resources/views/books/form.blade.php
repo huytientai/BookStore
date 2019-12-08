@@ -42,3 +42,14 @@
 {{--        @endif--}}
     </div>
 </div>
+
+{{-- price --}}
+<div class="form-group row">
+    <label for="price" class="col-sm-2 col-form-label @error('price') text-danger @enderror">price</label>
+    <div class="col-sm-5">
+        <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') ?? $book->price ?? null }}">
+        @error('price')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>

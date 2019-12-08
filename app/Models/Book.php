@@ -16,6 +16,7 @@ class Book extends Model
         'loaisach_id',
         'desc',
         'image',
+        'price',
     ];
 
     protected $perPage = 5;

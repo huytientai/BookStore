@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookRequest;
 use App\Models\Book;
+use App\Models\Loaisach;
 use Illuminate\Http\Request;
 
 class BooksController extends Controller
 {
     protected $book;
+    protected $loaisach;
 
-    public function __construct(Book $book)
+    public function __construct(Book $book, Loaisach $loaisach)
     {
         $this->book = $book;
+        $this->loaisach = $loaisach;
         $this->middleware('auth')->except(['index', 'show']);
     }
 
@@ -23,8 +26,10 @@ class BooksController extends Controller
      */
     public function index()
     {
-        $books = $this->book->orderBy('name')->paginate();
-        return view('books.index')->with('books', $books);
+        $loaisachs = $this->loaisach->allLoaisachCount();
+        $books = $this->book->orderBy('name')->paginate(12);
+
+        return view('books.index')->with(['books' => $books, 'loaisachs' => $loaisachs]);
     }
 
     /**
@@ -60,8 +65,9 @@ class BooksController extends Controller
      */
     public function show($id)
     {
+        $loaisachs = $this->loaisach->allLoaisachCount();
         $book = $this->book->find($id);
-        return view('books.show')->with('book', $book);
+        return view('books.show')->with(['book'=> $book,'loaisachs' =>$loaisachs]);
     }
 
     /**

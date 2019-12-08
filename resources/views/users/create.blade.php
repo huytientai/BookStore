@@ -4,6 +4,8 @@
 
 @section('content')
     <br>
+    <br>
+
     <h3>Đăng ký</h3>
     <form action="{{ route('users.store') }}" method="post">
         @csrf
@@ -12,4 +14,7 @@
             <button type="submit" class="btn btn-primary">Đăng ký</button>
         </div>
     </form>
+
+    <br>
+    <br>
 @endsection

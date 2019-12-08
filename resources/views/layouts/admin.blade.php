@@ -29,11 +29,9 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons"/>
 {{--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">--}}
 <!-- CSS Files -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{--    <link href="{{ asset('css/app.css') }}" rel="stylesheet">--}}
+    {{--    <script src="{{ asset('js/app.js') }}" defer></script>--}}
     <link href="{{ asset('css/material-dashboard.css?v=2.1.1') }}" rel="stylesheet"/>
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="{{ asset('demo/demo.css') }}" rel="stylesheet"/>
 </head>
 
 <body class="">
@@ -46,7 +44,7 @@
       -->
         <div class="logo">
             <a href="{{ route('books.index') }}" class="simple-text logo-normal">
-                BookBuy
+                BookStore
             </a>
         </div>
         <div class="sidebar-wrapper">
@@ -113,7 +111,7 @@
         <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
             <div class="container-fluid">
                 <div class="navbar-wrapper">
-                    <a class="navbar-brand" href="{{ route('books.index') }}">BookBuy</a>
+                    <a class="navbar-brand" href="{{ route('books.index') }}">BookStore</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="sr-only">Toggle navigation</span>
@@ -164,10 +162,10 @@
                                 </p>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                                <a class="dropdown-item" href="{{ route('home') }}">Profile</a>
+                                <a class="dropdown-item" href="{{ route('users.show', Auth::id()) }}">Your Profile</a>
                                 <a class="dropdown-item" href="{{ route('users.create') }}">Create User</a>
                                 <div class="dropdown-divider"></div>
-{{--                                <a class="dropdown-item" href="{{ route('logout') }}">Log out</a>--}}
+                                {{--                                <a class="dropdown-item" href="{{ route('logout') }}">Log out</a>--}}
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -185,7 +183,7 @@
         </nav>
         <!-- End Navbar -->
         <div class="content">
-        @yield('content')
+            @yield('content')
         </div>
 
         <footer class="footer">

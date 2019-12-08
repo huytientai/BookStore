@@ -18,6 +18,7 @@ class CreateBooksTable extends Migration
             $table->string('name', 100);
             $table->string('desc', 3000)->nullable();
             $table->string('image')->nullable();
+            $table->float('price');
             $table->timestamps();
         });
     }
