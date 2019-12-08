@@ -15,8 +15,7 @@ class Book extends Model
         'name',
         'loaisach_id',
         'desc',
-        'image',
-        'price',
+        'image'
     ];
 
     protected $perPage = 5;
@@ -64,14 +63,12 @@ class Book extends Model
     {
         return $this->belongsTo('App\Models\Loaisach');
     }
-	
-	public function findTacgia($id)
+public function findNhaxuatban($id)
     {
-        return $this->orderBy('name')->with('tacgia')->where('tacgia_id',$id);
+        return $this->orderBy('name')->with('nhaxuatban')->where('nhaxuatban_id',$id);
     }
-
-    public function tacgia()
+    public function nhaxuatban()
     {
-        return $this->belongsTo('App\Models\tacgia');
+        return $this->belongsTo('App\Models\Nhaxuatban');
     }
 }

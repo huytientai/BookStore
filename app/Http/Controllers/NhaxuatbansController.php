@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Nhaxuatban;
 use Illuminate\Http\Request;
 
@@ -23,6 +24,8 @@ class NhaxuatbansController extends Controller
     public function index()
     {
         //
+ $nhaxuatbans = $this->nhaxuatban->orderBy('name')->paginate();
+        return view('nhaxuatbans.index')->with('nhaxuatbans', $nhaxuatbans);
     }
 
     /**
@@ -33,6 +36,7 @@ class NhaxuatbansController extends Controller
     public function create()
     {
         //
+ return view('nhaxuatbans.create');
     }
 
     /**
@@ -43,6 +47,11 @@ class NhaxuatbansController extends Controller
      */
     public function store(Request $request)
     {
+ $this->nhaxuatban->saveNhaxuatban($request);
+
+        flash('add success')->success();
+
+        return redirect()->route('nhaxuatbans.index');
         //
     }
 
@@ -54,6 +63,10 @@ class NhaxuatbansController extends Controller
      */
     public function show($id)
     {
+ $nhaxuatban = $this->nhaxuatban->find($id);
+        $book = new Book();
+        $books = $book->findNhaxuatban($id)->paginate();
+        return view('nhaxuatbans.show')->with(['nhaxuatban' => $nhaxuatban, 'books' => $books]);
         //
     }
 
@@ -65,6 +78,8 @@ class NhaxuatbansController extends Controller
      */
     public function edit($id)
     {
+ $book = $this->nhaxuatban->find($id);
+        return view('nhaxuatbans.edit')->with('nhaxuatban', $nhaxuatban);
         //
     }
 
@@ -75,8 +90,13 @@ class NhaxuatbansController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+$this->nhaxuatban->updateNhaxuatban($request);
+
+        flash('update success')->success();
+
+        return redirect()->route('nhaxuatbans.index');
         //
     }
 
@@ -88,6 +108,11 @@ class NhaxuatbansController extends Controller
      */
     public function destroy($id)
     {
+ $this->nhaxuatban->find($id)->delete();
+
+        flash('delete success')->error();
+
+        return redirect()->route('nhaxuatbans.index');
         //
     }
 }

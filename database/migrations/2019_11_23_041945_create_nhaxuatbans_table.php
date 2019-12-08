@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class NhaxuatbanTable extends Migration
+class CreateNhaxuatbansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class NhaxuatbanTable extends Migration
      */
     public function up()
     {
-        Schema::create('NhaxuatbanTable', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('ten');
-            $table->string('diachi');
-            $table->string('sdt');
-            $table->string('email');
-            $table->string('website');
+        Schema::create('nhaxuatbans', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
+           
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class NhaxuatbanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('NhaxuatbanTable');
+        Schema::dropIfExists('nhaxuatbans');
     }
 }
