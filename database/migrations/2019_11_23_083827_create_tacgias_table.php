@@ -14,11 +14,13 @@ class CreateTacgiasTable extends Migration
     public function up()
     {
         Schema::create('tacgias', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
 			$table->string('name');
-			$table->string('email');
-			$table->string('phone');
-			$table->string('address');
+			$table->string('email')->nullable();
+			$table->string('phone')->nullable();
+			$table->string('address')->nullable();
+			$table->string('desc', 3000)->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }
