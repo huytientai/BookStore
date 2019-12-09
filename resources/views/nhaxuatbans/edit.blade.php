@@ -1,18 +1,18 @@
 @extends('layouts.default')
 
-@section('title', 'edit book')
+@section('title', 'edit nhaxuatban')
 
 @section('content')
     <br>
-    <h1>Edit Book</h1>
-    <form action="{{ route('books.update', $book->id) }}" method="post" enctype="multipart/form-data">
+    <h1>Edit Nhaxuatban</h1>
+    <form action="{{ route('nhaxuatbans.update', $nhaxuatban->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        <input type="hidden" name="id" value="{{ $book->id }}">
+        <input type="hidden" name="id" value="{{ $nhaxuatban->id }}">
 
-        @include('books.form')
+        @include('nhaxuatbans.form')
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">EDIT BOOK</button>
+            <button type="submit" class="btn btn-primary">EDIT NHAXUATBAN</button>
         </div>
     </form>
 

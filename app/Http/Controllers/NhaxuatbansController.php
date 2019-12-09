@@ -78,7 +78,7 @@ class NhaxuatbansController extends Controller
      */
     public function edit($id)
     {
- $book = $this->nhaxuatban->find($id);
+ $nhaxuatban = $this->nhaxuatban->find($id);
         return view('nhaxuatbans.edit')->with('nhaxuatban', $nhaxuatban);
         //
     }
