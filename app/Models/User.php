@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
@@ -146,6 +147,10 @@ class User extends Authenticatable
     {
         $data = $request->all();
 
+        if (Auth::id() == $request->id) {
+            $data['user_name'] = Auth::user()->user_name;
+        }
+
         if ($data['password']) {
             $data['password'] = Hash::make($data['password']);
         } else {
@@ -171,4 +176,13 @@ class User extends Authenticatable
         return $user->delete();
     }
 
+    public function orders()
+    {
+        $this->hasMany('App\Models\Order');
+    }
+
+    public function orderdetails()
+    {
+        $this->hasMany('App\Models\Orderdetail');
+    }
 }

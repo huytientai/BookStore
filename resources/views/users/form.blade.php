@@ -1,13 +1,18 @@
 {{--user name--}}
-<div class="form-group row">
-    <label for="user-name" class="col-sm-2 col-form-label @error('user_name') text-danger @enderror">User Name</label>
-    <div class="col-sm-5">
-        <input type="text" class="form-control @error('user_name') is-invalid @enderror" id="user-name" name="user_name" value="{{ old('user_name') ?? $user->user_name ?? null }}">
-        @error('user_name')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
+@can('admin')
+    <div class="form-group row">
+        <label for="user-name" class="col-sm-2 col-form-label @error('user_name') text-danger @enderror">User Name</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control @error('user_name') is-invalid @enderror" id="user-name" name="user_name" value="{{ old('user_name') ?? $user->user_name ?? null }}">
+            @error('user_name')
+            <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
     </div>
-</div>
+@endcan
+@cannot('admin')
+    <input type="hidden" name="user_name" value="{{ $user->user_name }}">
+@endcannot
 
 {{--Mật khẩu--}}
 <div class="form-group row">
@@ -65,17 +70,22 @@
 </div>
 
 {{--role--}}
-<div class="form-group row">
-    <label class="col-sm-2 col-form-label">Chọn quyền</label>
-    <div class="col-sm-5">
-        <select class="browser-default custom-select" name="role">
-            @php
-                $roles = \App\Models\User::$roles;
-            @endphp
+@can('admin')
+    <div class="form-group row @cannot('admin') hidden @endcannot">
+        <label class="col-sm-2 col-form-label">Chọn quyền</label>
+        <div class="col-sm-5">
+            <select class="browser-default custom-select" name="role">
+                @php
+                    $roles = \App\Models\User::$roles;
+                @endphp
 
-            @foreach($roles as $key => $value)
-                <option value="{{ $key }}" {{ ((old('role') ?? $user->role ?? 0) == $key) ? 'selected' : '' }}>{{ $value }}</option>
-            @endforeach
-        </select>
+                @foreach($roles as $key => $value)
+                    <option value="{{ $key }}" {{ ((old('role') ?? $user->role ?? 0) == $key) ? 'selected' : '' }}>{{ $value }}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
-</div>
+@endcan
+@cannot('admin')
+    <input type="hidden" name="role" value="3">
+@endcannot

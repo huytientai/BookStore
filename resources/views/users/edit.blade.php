@@ -1,8 +1,10 @@
-@extends('layouts.default')
+@extends('exam1.default')
 
 @section('title', 'Cập nhật người dùng')
 
 @section('content')
+    <br>
+    <br>
     <div class="container">
         <br>
         <h3>Cập nhật</h3>
@@ -17,4 +19,6 @@
             </div>
         </form>
     </div>
+    <br>
+    <br>
 @endsection
