@@ -90,48 +90,49 @@
             <br>
             <h2>Current Order</h2>
             <br>
-            <div class="row">
-                <div class="col-md-12 col-sm-12 ol-lg-12">
-                    <div class="table-content wnro__table table-responsive">
-                        <table>
-                            <thead>
-                            <tr class="title-top">
-                                <th class="product-thumbnail">Image</th>
-                                <th class="product-name">Product</th>
-                                <th class="product-price">Price</th>
-                                <th class="product-quantity">Quantity</th>
-                                <th class="product-subtotal">Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($orderdetails as $orderdetail)
-                                <tr>
-                                    <td class="product-thumbnail">
-                                        @if(isset($orderdetail->book->image))
-                                            <a href="{{ route('books.show', $orderdetail->book_id) }}"><img src="/storage/book_images/{{ $orderdetail->book->image }}"></a>
-                                        @else
-                                            <a href="{{ route('books.show', $orderdetail->book_id) }}"><img src="/img/product/sm-3/1.jpg"></a>
-                                        @endif
-                                    </td>
-                                    <td class="product-name">
-                                        <a href="{{ route('books.show', $orderdetail->book_id) }}">{{ $orderdetail->book->name }}</a>
-                                    </td>
-                                    <td class="product-price">
-                                        <span>${{ $orderdetail->sell_price }}</span>
-                                    </td>
-                                    <td class="product-quantity">
-                                        <span>{{ $orderdetail->quantity }}</span>
-                                    </td>
-                                    <td class="product-subtotal">${{ $orderdetail->sell_price * $orderdetail->quantity }}</td>
+            @if(isset($order))
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 ol-lg-12">
+                        <div class="table-content wnro__table table-responsive">
+                            <table>
+                                <thead>
+                                <tr class="title-top">
+                                    <th class="product-thumbnail">Image</th>
+                                    <th class="product-name">Product</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-quantity">Quantity</th>
+                                    <th class="product-subtotal">Total</th>
                                 </tr>
-                            @endforeach
-                            </tbody>
+                                </thead>
+                                <tbody>
+                                @foreach($orderdetails as $orderdetail)
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            @if(isset($orderdetail->book->image))
+                                                <a href="{{ route('books.show', $orderdetail->book_id) }}"><img src="/storage/book_images/{{ $orderdetail->book->image }}"></a>
+                                            @else
+                                                <a href="{{ route('books.show', $orderdetail->book_id) }}"><img src="/img/product/sm-3/1.jpg"></a>
+                                            @endif
+                                        </td>
+                                        <td class="product-name">
+                                            <a href="{{ route('books.show', $orderdetail->book_id) }}">{{ $orderdetail->book->name }}</a>
+                                        </td>
+                                        <td class="product-price">
+                                            <span>${{ $orderdetail->sell_price }}</span>
+                                        </td>
+                                        <td class="product-quantity">
+                                            <span>{{ $orderdetail->quantity }}</span>
+                                        </td>
+                                        <td class="product-subtotal">${{ $orderdetail->sell_price * $orderdetail->quantity }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
 
-                        </table>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-
+            @endif
 
         </div>
     </div>
