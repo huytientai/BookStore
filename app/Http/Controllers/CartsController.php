@@ -34,9 +34,14 @@ class CartsController extends Controller
     {
         $carts = $this->cart->where('user_id', Auth::id())->orderBy('id')->get();
         $order = $this->order->where('user_id', Auth::id())->where('status', false)->orderBy('created_at', 'desc')->first();
-        $orderdetails=$this->orderdetail->where('order_id', $order->id)->get();
 
-        return view('carts.index')->with(['carts'=> $carts,'order'=>$order,'orderdetails'=>$orderdetails]);
+        if ($order != null) {
+            $orderdetails = $this->orderdetail->where('order_id', $order->id)->get();
+        } else {
+            $orderdetails = null;
+        }
+
+        return view('carts.index')->with(['carts' => $carts, 'order' => $order, 'orderdetails' => $orderdetails]);
     }
 
 
