@@ -3,6 +3,15 @@
 @section('title', $loaisach->name)
 
 @section('content')
+@canany(['admin','staff'])
+        <a class="btn btn-primary" href="{{ route('loaisachs.edit', $loaisach->id) }}">Edit</a>
+        <form action="{{ route('loaisachs.destroy', $loaisach->id) }}" method="post">
+            @csrf
+            @method('DELETE')
+
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    @endcanany
     <h1>Books</h1>
     @if(count($books)>0)
         @foreach($books as $key => $book)
@@ -32,4 +41,5 @@
         @endforeach
     @endif
     {!! $books->links() !!}
+ 
 @endsection
