@@ -32,7 +32,7 @@ class HomeController extends Controller
 //        $b2 = $this->book->findLoaisach(12)->get();
 //        $b3 = $this->book->findLoaisach(13)->get();
 //        $b4 = $this->book->findLoaisach(14)->get();
-
-        return view('home')->with(['b0' => $b0, 'b1' => $b1]);
+        var_dump($b0);
+       // return view('home')->with(['b0' => $b0, 'b1' => $b1]);
     }
 }
