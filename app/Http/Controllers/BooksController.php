@@ -24,11 +24,14 @@ class BooksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $loaisachs = $this->loaisach->allLoaisachCount();
-        $books = $this->book->orderBy('name')->paginate(12);
-
+        if ($request->all() == null) {
+            $books = $this->book->orderBy('name')->paginate(12);
+        } else {
+            $books = $this->book->searchBook($request->all());
+        }
         return view('books.index')->with(['books' => $books, 'loaisachs' => $loaisachs]);
     }
 
@@ -67,7 +70,7 @@ class BooksController extends Controller
     {
         $loaisachs = $this->loaisach->allLoaisachCount();
         $book = $this->book->find($id);
-        return view('books.show')->with(['book'=> $book,'loaisachs' =>$loaisachs]);
+        return view('books.show')->with(['book' => $book, 'loaisachs' => $loaisachs]);
     }
 
     /**
