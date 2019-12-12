@@ -29,10 +29,10 @@ class HomeController extends Controller
     {
         $b0 = $this->book->orderBy('name')->limit(10)->get();
         $b1 = $this->book->findLoaisach(11)->limit(10)->get();
-//        $b2 = $this->book->findLoaisach(12)->get();
-//        $b3 = $this->book->findLoaisach(13)->get();
-//        $b4 = $this->book->findLoaisach(14)->get();
-        var_dump($b0);
-       // return view('home')->with(['b0' => $b0, 'b1' => $b1]);
+        $b2 = $this->book->findLoaisach(12)->limit(10)->get();
+        $b3 = $this->book->findLoaisach(13)->limit(10)->get();
+        $b4 = $this->book->findLoaisach(14)->limit(10)->get();
+
+        return view('home')->with(['b0' => $b0, 'b1' => $b1, 'b2' => $b2, 'b3' => $b3, 'b4' => $b4]);
     }
 }
