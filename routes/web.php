@@ -30,7 +30,6 @@ Route::resource('/loaisachs', 'LoaisachsController');
 Route::resource('/nhaxuatbans', 'NhaxuatbansController');
 Route::resource('/tacgias', 'TacgiasController');
 
-//Route::post('/cart','CartsController@fullAdd')->name('fullAdd')->middleware(['auth']);
 Route::resource('/carts', 'CartsController')->middleware(['auth']);
 
 Route::get('/about', function () {
