@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
         $this->call(TacgiaTableSeeder::class);
         $this->call(NhaxuatbanTableSeeder::class);
         $this->call(BooksTableSeeder::class);
+		$this->call(OrdersTableSeeder::class);
+		$this->call(OrderDetailsTableSeeder::class);
 
         Schema::enableForeignKeyConstraints();
     }

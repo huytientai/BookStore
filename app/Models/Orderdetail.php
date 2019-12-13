@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\ModelMPK;
 
-class Orderdetail extends Model
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
+class Orderdetail extends ModelMPK
 {
     protected $table = 'orderdetails';
 
-    public $primaryKey = 'id';
-    public $timestamps = true;
+    public $primaryKey = ['order_id', 'book_id'];
+    public $timestamps = false;
+	public $incrementing = false;
 
     protected $fillable = [
         'order_id',
@@ -17,6 +21,12 @@ class Orderdetail extends Model
         'sell_price',
         'quantity',
     ];
+	
+	 /*protected function setKeysForSaveQuery(Builder $query)
+            {
+                return $query->where('order_id', $this->getAttribute('order_id'))
+                             ->where('book_id', $this->getAttribute('book_id'));
+            }*/
 
     protected $perPage = 10;
 
