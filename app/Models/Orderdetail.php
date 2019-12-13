@@ -12,7 +12,7 @@ class Orderdetail extends ModelMPK
     protected $table = 'orderdetails';
 
     public $primaryKey = ['order_id', 'book_id'];
-    public $timestamps = true;
+    public $timestamps = false;
 	public $incrementing = false;
 
     protected $fillable = [
