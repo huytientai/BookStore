@@ -140,12 +140,47 @@
 
 <!-- Start Search Popup -->
 <div class="brown--color box-search-content search_active block-bg close__top">
-    <form id="search_mini_form" class="minisearch" action="#">
+    <form id="search_mini_form" class="minisearch" action="{{ route('books.index') }}">
         <div class="field__search">
-            <input type="text" placeholder="Search entire store here...">
-            <div class="action">
-                <a href="#"><i class="zmdi zmdi-search"></i></a>
+            <div class="row">
+                <div class="col-auto">
+                    <input class="form-control mr-sm-0" type="search" placeholder="book name" name="name" value="{{ request('name') }}">
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mr-sm-0" type="number" placeholder="min price" name="min_price" value="{{ request('min_price') }}">
+                </div>
+                <div class="col-auto">
+                    <input class="form-control mr-sm-0" type="number" placeholder="max price" name="max_price" value="{{ request('max_price') }}">
+                </div>
             </div>
+            <br>
+            <div class="row">
+                <div class="col-auto">
+                    <select class="browser-default custom-select mr-sm-0" name="loaisach_id">
+                        <option value="">book type</option>
+                        @foreach(\App\Models\Loaisach::pluck('name', 'id')->toArray() as $key => $value)
+                            <option value="{{ $key }}" {{ ((request('loaisach_id') ?? 0) == $key) ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <select class="browser-default custom-select mr-sm-0" name="tacgia_id">
+                        <option value="">Tac gia</option>
+                        @foreach(\App\Models\tacgia::pluck('name', 'id')->toArray() as $key => $value)
+                            <option value="{{ $key }}" {{ ((request('tacgia_id') ?? 0) == $key) ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <select class="browser-default custom-select mr-sm-0" name="nhaxuatban_id">
+                        <option value="">Nha xuat ban</option>
+                        @foreach(\App\Models\Nhaxuatban::pluck('name', 'id')->toArray() as $key => $value)
+                            <option value="{{ $key }}" {{ ((request('nhaxuatban_id') ?? 0) == $key) ? 'selected' : '' }}>{{ $value }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary my-2 my-sm-10 container d-flex justify-content-center" type="submit">Search</button>
         </div>
     </form>
     <div class="close__wrap">

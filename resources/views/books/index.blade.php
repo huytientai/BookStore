@@ -164,7 +164,7 @@
 
                                 <!-- End Single Product -->
                             </div>
-                            {!! $books->links() !!}
+                            {!! $books->appends(request()->input())->links() !!}
                         </div>
 
 
