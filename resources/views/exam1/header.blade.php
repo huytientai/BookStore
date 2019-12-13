@@ -42,6 +42,9 @@
                             </div>
                         </li>
 
+                        @canany(['admin','staff'])
+                            <li><a href="{{ route('loaisachs.index') }}">Book Type</a></li>
+                        @endcanany
                         <li><a href="{{ route('tacgias.index') }}">Tac Gia</a></li>
                         <li><a href="{{ route('nhaxuatbans.index') }}">Nha Xuat Ban</a></li>
                         <li><a href="{{ route('about') }}">About Us</a></li>

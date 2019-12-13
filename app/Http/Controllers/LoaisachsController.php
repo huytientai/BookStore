@@ -13,7 +13,7 @@ class LoaisachsController extends Controller
     public function __construct(Loaisach $loaisach)
     {
         $this->loaisach = $loaisach;
-        $this->middleware('auth')->except(['index', 'show']);
+        $this->middleware(['auth','manager'])->except(['index', 'show']);
     }
 
     /**
@@ -61,9 +61,10 @@ class LoaisachsController extends Controller
     public function show($id)
     {
         $loaisach = $this->loaisach->find($id);
+        $loaisachs = $this->loaisach->allLoaisachCount();
         $book = new Book();
-        $books = $book->findLoaisach($id)->paginate();
-        return view('loaisachs.show')->with(['loaisach' => $loaisach, 'books' => $books]);
+        $books = $book->findLoaisach($id)->paginate(12);
+        return view('loaisachs.show')->with(['main_loaisach' => $loaisach, 'books' => $books,'loaisachs' => $loaisachs]);
     }
 
     /**
