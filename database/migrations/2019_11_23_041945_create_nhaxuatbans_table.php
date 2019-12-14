@@ -18,7 +18,8 @@ class CreateNhaxuatbansTable extends Migration
             $table->string('name');
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
-           
+            $table->string('image')->nullable();
+
             $table->timestamps();
         });
     }

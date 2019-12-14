@@ -24,7 +24,7 @@ class NhaxuatbansController extends Controller
     public function index()
     {
         //
- $nhaxuatbans = $this->nhaxuatban->orderBy('name')->paginate();
+        $nhaxuatbans = $this->nhaxuatban->orderBy('name')->paginate();
         return view('nhaxuatbans.index')->with('nhaxuatbans', $nhaxuatbans);
     }
 
@@ -36,18 +36,18 @@ class NhaxuatbansController extends Controller
     public function create()
     {
         //
- return view('nhaxuatbans.create');
+        return view('nhaxuatbans.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
- $this->nhaxuatban->saveNhaxuatban($request);
+        $this->nhaxuatban->saveNhaxuatban($request);
 
         flash('add success')->success();
 
@@ -58,12 +58,12 @@ class NhaxuatbansController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
- $nhaxuatban = $this->nhaxuatban->find($id);
+        $nhaxuatban = $this->nhaxuatban->find($id);
         $book = new Book();
         $books = $book->findNhaxuatban($id)->paginate();
         return view('nhaxuatbans.show')->with(['nhaxuatban' => $nhaxuatban, 'books' => $books]);
@@ -73,12 +73,12 @@ class NhaxuatbansController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
- $nhaxuatban = $this->nhaxuatban->find($id);
+        $nhaxuatban = $this->nhaxuatban->find($id);
         return view('nhaxuatbans.edit')->with('nhaxuatban', $nhaxuatban);
         //
     }
@@ -86,13 +86,13 @@ class NhaxuatbansController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
-$this->nhaxuatban->updateNhaxuatban($request);
+        $this->nhaxuatban->updateNhaxuatban($request);
 
         flash('update success')->success();
 
@@ -103,12 +103,12 @@ $this->nhaxuatban->updateNhaxuatban($request);
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
- $this->nhaxuatban->find($id)->delete();
+        $this->nhaxuatban->find($id)->delete();
 
         flash('delete success')->error();
 
