@@ -36,7 +36,7 @@
                             <div class="action">
                                 <div class="actions_inner">
                                     <ul class="add_to_links">
-                                        <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                        <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                         </li>
                                         <li>
                                             <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
@@ -81,7 +81,7 @@
                             <div class="action">
                                 <div class="actions_inner">
                                     <ul class="add_to_links">
-                                        <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                        <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                         </li>
                                         <li>
                                             <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
@@ -125,7 +125,7 @@
                             <div class="action">
                                 <div class="actions_inner">
                                     <ul class="add_to_links">
-                                        <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                        <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                         </li>
                                         <li>
                                             <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
@@ -169,7 +169,7 @@
                             <div class="action">
                                 <div class="actions_inner">
                                     <ul class="add_to_links">
-                                        <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                        <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                         </li>
                                         <li>
                                             <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
@@ -213,7 +213,7 @@
                             <div class="action">
                                 <div class="actions_inner">
                                     <ul class="add_to_links">
-                                        <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                        <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                         </li>
                                         <li>
                                             <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
@@ -257,7 +257,7 @@
                             <div class="action">
                                 <div class="actions_inner">
                                     <ul class="add_to_links">
-                                        <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                        <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                         </li>
                                         <li>
                                             <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
@@ -349,7 +349,8 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b0[$i]->id) }}">{{ $b0[$i]->name }}</a></h4>
+                                            <h4><a href="{{ route('books.show', $b0[$i]->id) }}">{{ $b0[$i]->name }}</a>
+                                            </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b0[$i]->price }}</li>
                                             </ul>
@@ -398,7 +399,9 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b0[$i+1]->id) }}">{{ $b0[$i+1]->name }}</a></h4>
+                                            <h4>
+                                                <a href="{{ route('books.show', $b0[$i+1]->id) }}">{{ $b0[$i+1]->name }}</a>
+                                            </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b0[$i+1]->price }}</li>
                                                 {{--                                                <li class="old_prize">$35.00</li>--}}
@@ -407,7 +410,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b0[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
@@ -459,7 +462,8 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center">
-                                            <h4><a href="{{ route('books.show', $b1[$i]->id) }}">{{ $b1[$i]->name }}</a></h4>
+                                            <h4><a href="{{ route('books.show', $b1[$i]->id) }}">{{ $b1[$i]->name }}</a>
+                                            </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b1[$i]->price }}</li>
                                             </ul>
@@ -467,7 +471,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b1[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
@@ -509,7 +513,9 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center">
-                                            <h4><a href="{{ route('books.show', $b1[$i+1]->id) }}">{{ $b1[$i+1]->name }}</a></h4>
+                                            <h4>
+                                                <a href="{{ route('books.show', $b1[$i+1]->id) }}">{{ $b1[$i+1]->name }}</a>
+                                            </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b1[$i]->price }}</li>
                                             </ul>
@@ -517,7 +523,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b1[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
@@ -568,7 +574,8 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b2[$i]->id) }}">{{ $b2[$i]->name }}</a></h4>
+                                            <h4><a href="{{ route('books.show', $b2[$i]->id) }}">{{ $b2[$i]->name }}</a>
+                                            </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b2[$i]->price }}</li>
                                             </ul>
@@ -617,7 +624,9 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b2[$i+1]->id) }}">{{ $b2[$i+1]->name }}</a></h4>
+                                            <h4>
+                                                <a href="{{ route('books.show', $b2[$i+1]->id) }}">{{ $b2[$i+1]->name }}</a>
+                                            </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b2[$i+1]->price }}</li>
                                                 {{--                                                <li class="old_prize">$35.00</li>--}}
@@ -626,7 +635,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b2[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
@@ -678,7 +687,8 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b3[$i]->id) }}">{{ $b3[$i]->name }}</a></h4>
+                                            <h4><a href="{{ route('books.show', $b3[$i]->id) }}">{{ $b3[$i]->name }}</a>
+                                            </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b3[$i]->price }}</li>
                                             </ul>
@@ -727,7 +737,9 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b3[$i+1]->id) }}">{{ $b3[$i+1]->name }}</a></h4>
+                                            <h4>
+                                                <a href="{{ route('books.show', $b3[$i+1]->id) }}">{{ $b3[$i+1]->name }}</a>
+                                            </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b3[$i+1]->price }}</li>
                                                 {{--                                                <li class="old_prize">$35.00</li>--}}
@@ -736,7 +748,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b3[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
@@ -787,7 +799,8 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b4[$i]->id) }}">{{ $b4[$i]->name }}</a></h4>
+                                            <h4><a href="{{ route('books.show', $b4[$i]->id) }}">{{ $b4[$i]->name }}</a>
+                                            </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b4[$i]->price }}</li>
                                             </ul>
@@ -836,7 +849,9 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b4[$i+1]->id) }}">{{ $b4[$i+1]->name }}</a></h4>
+                                            <h4>
+                                                <a href="{{ route('books.show', $b4[$i+1]->id) }}">{{ $b4[$i+1]->name }}</a>
+                                            </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b4[$i+1]->price }}</li>
                                                 {{--                                                <li class="old_prize">$35.00</li>--}}
@@ -845,7 +860,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b4[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
@@ -962,15 +977,21 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/1.jpg') }}" alt="product image"></a>
+                    {{--                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/1.jpg') }}" alt="product image"></a>--}}
+                    @if(isset($best_books[0]->image))
+                        <a class="first__img" href="{{ route('books.show', $best_books[0]->id) }}"><img src="/storage/book_images/{{ $best_books[0]->image }}" alt="product image"></a>
+                    @else
+                        <a class="first__img" href="{{ route('books.show', $best_books[0]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>
+                    @endif
+
                 </div>
                 <div class="product__content content--center">
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
                                 <li>
-                                    <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
+                                    <a class="wishlist" href="{{ route('carts.show', $best_books[0]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
                                 <li>
@@ -994,15 +1015,20 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/2.jpg') }}" alt="product image"></a>
+{{--                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/2.jpg') }}" alt="product image"></a>--}}
+                    @if(isset($best_books[1]->image))
+                        <a class="first__img" href="{{ route('books.show', $best_books[1]->id) }}"><img src="/storage/book_images/{{ $best_books[1]->image }}" alt="product image"></a>
+                    @else
+                        <a class="first__img" href="{{ route('books.show', $best_books[1]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>
+                    @endif
                 </div>
                 <div class="product__content content--center">
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
                                 <li>
-                                    <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
+                                    <a class="wishlist" href="{{ route('carts.show', $best_books[1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
                                 <li>
@@ -1026,15 +1052,20 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/3.jpg') }}" alt="product image"></a>
+{{--                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/3.jpg') }}" alt="product image"></a>--}}
+                    @if(isset($best_books[2]->image))
+                        <a class="first__img" href="{{ route('books.show', $best_books[2]->id) }}"><img src="/storage/book_images/{{ $best_books[2]->image }}" alt="product image"></a>
+                    @else
+                        <a class="first__img" href="{{ route('books.show', $best_books[2]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>
+                    @endif
                 </div>
                 <div class="product__content content--center">
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
                                 <li>
-                                    <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
+                                    <a class="wishlist" href="{{ route('carts.show', $best_books[2]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
                                 <li>
@@ -1058,15 +1089,20 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/4.jpg') }}" alt="product image"></a>
+{{--                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/4.jpg') }}" alt="product image"></a>--}}
+                    @if(isset($best_books[3]->image))
+                        <a class="first__img" href="{{ route('books.show', $best_books[3]->id) }}"><img src="/storage/book_images/{{ $best_books[3]->image }}" alt="product image"></a>
+                    @else
+                        <a class="first__img" href="{{ route('books.show', $best_books[3]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>
+                    @endif
                 </div>
                 <div class="product__content content--center">
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
                                 <li>
-                                    <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
+                                    <a class="wishlist" href="{{ route('carts.show', $best_books[3]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
                                 <li>
@@ -1091,12 +1127,17 @@
             <div class="product product__style--3">
                 <div class="product__thumb">
                     <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/5.jpg') }}" alt="product image"></a>
+{{--                    @if(isset($best_books[4]->image))--}}
+{{--                        <a class="first__img" href="{{ route('books.show', $best_books[4]->id) }}"><img src="/storage/book_images/{{ $best_books[4]->image }}" alt="product image"></a>--}}
+{{--                    @else--}}
+{{--                        <a class="first__img" href="{{ route('books.show', $best_books[4]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>--}}
+{{--                    @endif--}}
                 </div>
                 <div class="product__content content--center">
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
                                 <li>
                                     <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
@@ -1122,15 +1163,19 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/6.jpg') }}" alt="product image"></a>
+                    @if(isset($best_books[4]->image))
+                        <a class="first__img" href="{{ route('books.show', $best_books[4]->id) }}"><img src="/storage/book_images/{{ $best_books[4]->image }}" alt="product image"></a>
+                    @else
+                        <a class="first__img" href="{{ route('books.show', $best_books[4]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>
+                    @endif
                 </div>
                 <div class="product__content content--center">
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
                                 <li>
-                                    <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
+                                    <a class="wishlist" href="{{ route('carts.show', $best_books[4]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
                                 <li>
@@ -1154,15 +1199,19 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/7.jpg') }}" alt="product image"></a>
+                    @if(isset($best_books[5]->image))
+                        <a class="first__img" href="{{ route('books.show', $best_books[5]->id) }}"><img src="/storage/book_images/{{ $best_books[5]->image }}" alt="product image"></a>
+                    @else
+                        <a class="first__img" href="{{ route('books.show', $best_books[5]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>
+                    @endif
                 </div>
                 <div class="product__content content--center">
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
                                 <li>
-                                    <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
+                                    <a class="wishlist" href="{{ route('carts.show', $best_books[5]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
                                 <li>
@@ -1186,15 +1235,19 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/8.jpg') }}" alt="product image"></a>
+                    @if(isset($best_books[6]->image))
+                        <a class="first__img" href="{{ route('books.show', $best_books[6]->id) }}"><img src="/storage/book_images/{{ $best_books[6]->image }}" alt="product image"></a>
+                    @else
+                        <a class="first__img" href="{{ route('books.show', $best_books[6]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>
+                    @endif
                 </div>
                 <div class="product__content content--center">
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
                                 <li>
-                                    <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
+                                    <a class="wishlist" href="{{ route('carts.show', $best_books[6]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
                                 <li>

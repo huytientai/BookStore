@@ -43,6 +43,8 @@ class HomeController extends Controller
         $id = $this->book->findLoaisach(14)->pluck('id');
         $b4 = Orderdetail::whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
-        return view('home')->with(['b0' => $b0, 'b1' => $b1, 'b2' => $b2, 'b3' => $b3, 'b4' => $b4]);
+        $best_books = Orderdetail::groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(7)->get()->pluck('book');
+
+        return view('home')->with(['b0' => $b0, 'b1' => $b1, 'b2' => $b2, 'b3' => $b3, 'b4' => $b4, 'best_books' => $best_books]);
     }
 }
