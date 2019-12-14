@@ -900,7 +900,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section__title text-center">
-                        <h2 class="title__be--2">Our <span class="color--theme">Blog</span></h2>
+                        <h2 class="title__be--2">Tac Gia</span></h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered lebmid alteration in some ledmid form</p>
                     </div>
                 </div>
@@ -909,15 +909,16 @@
                 <div class="col-md-6 col-lg-4 col-sm-12">
                     <div class="post__itam">
                         <div class="content">
-                            <h3><a href="blog-details.html">International activities of the Frankfurt Book </a></h3>
-                            <p>We are proud to announce the very first the edition of the frankfurt news.We are proud to announce the very first of edition of the fault frankfurt news for us.</p>
+                            @if(isset($tacgias[0]->image))
+                                <a href="{{ route('tacgias.show', $tacgias[0]->id) }}"><img src="/storage/tacgia_images/{{ $tacgias[0]->image }}"></a>
+                            @else
+                                <a href="{{ route('tacgias.show', $tacgias[0]->id) }}"><img src="/img/tacgias/default.jpg"></a>
+                            @endif
                             <div class="post__time">
-                                <span class="day">Dec 06, 18</span>
+                                <span>{{ $tacgias[0]->name }}</span>
+
                                 <div class="post-meta">
-                                    <ul>
-                                        <li><a href="#"><i class="bi bi-love"></i>72</a></li>
-                                        <li><a href="#"><i class="bi bi-chat-bubble"></i>27</a></li>
-                                    </ul>
+                                    <span class="day">{{ $tacgias[0]->born }}</span>
                                 </div>
                             </div>
                         </div>
@@ -926,15 +927,16 @@
                 <div class="col-md-6 col-lg-4 col-sm-12">
                     <div class="post__itam">
                         <div class="content">
-                            <h3><a href="blog-details.html">Reading has a signficant info number of benefits</a></h3>
-                            <p>Find all the information you need to ensure your experience.Find all the information you need to ensure your experience . Find all the information you of.</p>
+                            @if(isset($tacgias[1]->image))
+                                <a href="{{ route('tacgias.show', $tacgias[1]->id) }}"><img src="/storage/tacgia_images/{{ $tacgias[1]->image }}"></a>
+                            @else
+                                <a href="{{ route('tacgias.show', $tacgias[1]->id) }}"><img src="/img/tacgias/default.jpg"></a>
+                            @endif
                             <div class="post__time">
-                                <span class="day">Mar 08, 18</span>
+                                <span>{{ $tacgias[1]->name }}</span>
+
                                 <div class="post-meta">
-                                    <ul>
-                                        <li><a href="#"><i class="bi bi-love"></i>72</a></li>
-                                        <li><a href="#"><i class="bi bi-chat-bubble"></i>27</a></li>
-                                    </ul>
+                                    <span class="day">{{ $tacgias[1]->born }}</span>
                                 </div>
                             </div>
                         </div>
@@ -943,15 +945,16 @@
                 <div class="col-md-6 col-lg-4 col-sm-12">
                     <div class="post__itam">
                         <div class="content">
-                            <h3><a href="blog-details.html">The London Book Fair is to be packed with exciting </a></h3>
-                            <p>The London Book Fair is the global area inon marketplace for rights negotiation.The year London Book Fair is the global area inon forg marketplace for rights.</p>
+                            @if(isset($tacgias[2]->image))
+                                <a href="{{ route('tacgias.show', $tacgias[2]->id) }}"><img src="/storage/tacgia_images/{{ $tacgias[2]->image }}"></a>
+                            @else
+                                <a href="{{ route('tacgias.show', $tacgias[2]->id) }}"><img src="/img/tacgias/default.jpg"></a>
+                            @endif
                             <div class="post__time">
-                                <span class="day">Nov 11, 18</span>
+                                <span>{{ $tacgias[2]->name }}</span>
+
                                 <div class="post-meta">
-                                    <ul>
-                                        <li><a href="#"><i class="bi bi-love"></i>72</a></li>
-                                        <li><a href="#"><i class="bi bi-chat-bubble"></i>27</a></li>
-                                    </ul>
+                                    <span class="day">{{ $tacgias[2]->born }}</span>
                                 </div>
                             </div>
                         </div>
@@ -1015,7 +1018,7 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-{{--                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/2.jpg') }}" alt="product image"></a>--}}
+                    {{--                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/2.jpg') }}" alt="product image"></a>--}}
                     @if(isset($best_books[1]->image))
                         <a class="first__img" href="{{ route('books.show', $best_books[1]->id) }}"><img src="/storage/book_images/{{ $best_books[1]->image }}" alt="product image"></a>
                     @else
@@ -1052,7 +1055,7 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-{{--                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/3.jpg') }}" alt="product image"></a>--}}
+                    {{--                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/3.jpg') }}" alt="product image"></a>--}}
                     @if(isset($best_books[2]->image))
                         <a class="first__img" href="{{ route('books.show', $best_books[2]->id) }}"><img src="/storage/book_images/{{ $best_books[2]->image }}" alt="product image"></a>
                     @else
@@ -1089,7 +1092,7 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-{{--                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/4.jpg') }}" alt="product image"></a>--}}
+                    {{--                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/4.jpg') }}" alt="product image"></a>--}}
                     @if(isset($best_books[3]->image))
                         <a class="first__img" href="{{ route('books.show', $best_books[3]->id) }}"><img src="/storage/book_images/{{ $best_books[3]->image }}" alt="product image"></a>
                     @else
@@ -1127,11 +1130,11 @@
             <div class="product product__style--3">
                 <div class="product__thumb">
                     <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/5.jpg') }}" alt="product image"></a>
-{{--                    @if(isset($best_books[4]->image))--}}
-{{--                        <a class="first__img" href="{{ route('books.show', $best_books[4]->id) }}"><img src="/storage/book_images/{{ $best_books[4]->image }}" alt="product image"></a>--}}
-{{--                    @else--}}
-{{--                        <a class="first__img" href="{{ route('books.show', $best_books[4]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>--}}
-{{--                    @endif--}}
+                    {{--                    @if(isset($best_books[4]->image))--}}
+                    {{--                        <a class="first__img" href="{{ route('books.show', $best_books[4]->id) }}"><img src="/storage/book_images/{{ $best_books[4]->image }}" alt="product image"></a>--}}
+                    {{--                    @else--}}
+                    {{--                        <a class="first__img" href="{{ route('books.show', $best_books[4]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>--}}
+                    {{--                    @endif--}}
                 </div>
                 <div class="product__content content--center">
                     <div class="action">

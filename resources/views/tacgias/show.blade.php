@@ -17,6 +17,10 @@
             <br>
             <h1>{{ $tacgia->name }}</h1>
             <br>
+            <h4> Born</h4>
+            <p>{!! $tacgia->born !!}</p>
+            <h4> Nationality</h4>
+            <p>{!! $tacgia->nationality !!}</p>
             <h4> Email</h4>
             <p>{!! $tacgia->email !!}</p>
             <h4> Phone</h4>

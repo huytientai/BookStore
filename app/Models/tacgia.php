@@ -14,6 +14,8 @@ class tacgia extends Model
 	protected $fillable = [
 		'id',
 		'name',
+        'born',
+        'nationality',
 		'email',
 		'phone',
 		'address',

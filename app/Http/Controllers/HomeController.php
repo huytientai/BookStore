@@ -4,22 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Orderdetail;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Models\tacgia;
 
 class HomeController extends Controller
 {
     protected $book;
+    protected $orderdetail;
+    protected $tacgia;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Book $book)
+    public function __construct(Book $book, Orderdetail $orderdetail, tacgia $tacgia)
     {
         $this->book = $book;
-//        $this->middleware('auth');
+        $this->orderdetail = $orderdetail;
+        $this->tacgia = $tacgia;
     }
 
     /**
@@ -29,22 +31,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $b0 = Orderdetail::groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+        $b0 = $this->orderdetail->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
         $id = $this->book->findLoaisach(11)->pluck('id');
-        $b1 = Orderdetail::whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+        $b1 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
         $id = $this->book->findLoaisach(12)->pluck('id');
-        $b2 = Orderdetail::whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+        $b2 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
         $id = $this->book->findLoaisach(13)->pluck('id');
-        $b3 = Orderdetail::whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+        $b3 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
         $id = $this->book->findLoaisach(14)->pluck('id');
-        $b4 = Orderdetail::whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+        $b4 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
-        $best_books = Orderdetail::groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(7)->get()->pluck('book');
+        $tacgias = $this->tacgia->limit(3)->get();
 
-        return view('home')->with(['b0' => $b0, 'b1' => $b1, 'b2' => $b2, 'b3' => $b3, 'b4' => $b4, 'best_books' => $best_books]);
+        $best_books = $this->orderdetail->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(7)->get()->pluck('book');
+
+        return view('home')->with(['b0' => $b0, 'b1' => $b1, 'b2' => $b2, 'b3' => $b3, 'b4' => $b4, 'tacgias' => $tacgias, 'best_books' => $best_books]);
     }
 }

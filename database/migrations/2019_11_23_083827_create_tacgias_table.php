@@ -16,6 +16,8 @@ class CreateTacgiasTable extends Migration
         Schema::create('tacgias', function (Blueprint $table) {
             $table->bigIncrements('id');
 			$table->string('name');
+			$table->string('born')->nullable();
+            $table->string('nationality')->nullable();
 			$table->string('email')->nullable();
 			$table->string('phone')->nullable();
 			$table->string('address')->nullable();

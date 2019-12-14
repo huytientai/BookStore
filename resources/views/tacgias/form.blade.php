@@ -9,6 +9,28 @@
     </div>
 </div>
 
+{{--born--}}
+<div class="form-group row">
+    <label for="born" class="col-sm-2 col-form-label @error('born') text-danger @enderror">Born</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control @error('born') is-invalid @enderror" id="born" name="born" value="{{ old('born') ?? $tacgia->born ?? null }}">
+        @error('born')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+{{--nationality--}}
+<div class="form-group row">
+    <label for="nationality" class="col-sm-2 col-form-label @error('nationality') text-danger @enderror">Nationality</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control @error('nationality') is-invalid @enderror" id="nationality" name="nationality" value="{{ old('nationality') ?? $tacgia->nationality ?? null }}">
+        @error('nationality')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
 {{--email--}}
 <div class="form-group row">
     <label class="col-sm-2 col-form-label @error('email') text-danger @enderror">Email</label>
