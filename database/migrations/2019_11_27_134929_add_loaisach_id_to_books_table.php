@@ -16,7 +16,7 @@ class AddLoaisachIdToBooksTable extends Migration
         Schema::table('books', function (Blueprint $table) {
             $table->unsignedBigInteger('loaisach_id');
 
-            $table->foreign('loaisach_id')->references('id')->on('loaisachs');
+            $table->foreign('loaisach_id')->references('id')->on('loaisachs')->onDelete('cascade');
         });
     }
 
