@@ -45,7 +45,7 @@ class HomeController extends Controller
         $id = $this->book->findLoaisach(14)->pluck('id');
         $b4 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
-        $tacgias = $this->tacgia->limit(3)->get();
+        $tacgias=$this->book->groupBy('tacgia_id')->orderByRaw('count(*) desc')->limit(3)->get()->pluck('tacgia');
 
         $best_books = $this->orderdetail->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(7)->get()->pluck('book');
 
