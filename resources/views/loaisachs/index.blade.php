@@ -5,8 +5,8 @@
 @section('content')
     <div class="cart-main-area section-padding--lg bg--white">
         <div class="container">
-            @include('flash::message')
             <br><br><br><br>
+            @include('flash::message')
 
             <h1>Loaisachs</h1>
             @if(count($loaisachs)>0)

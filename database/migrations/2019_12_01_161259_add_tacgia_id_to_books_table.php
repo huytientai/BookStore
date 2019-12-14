@@ -17,7 +17,7 @@ class AddTacgiaIdToBooksTable extends Migration
             //
 			$table->unsignedBigInteger('tacgia_id');
 
-            $table->foreign('tacgia_id')->references('id')->on('tacgias');
+            $table->foreign('tacgia_id')->references('id')->on('tacgias')->onDelete('cascade');
         });
     }
 
