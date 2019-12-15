@@ -20,6 +20,7 @@ class TacgiaTableSeeder extends Seeder
 			'email' => Str::random(10).'@gmail.com',
 			'phone' => '0977636696',
 			'address' => 'Hà Nội',
+             'image' => '1.jpg',
 			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
 		\App\Models\tacgia::create([
@@ -28,7 +29,8 @@ class TacgiaTableSeeder extends Seeder
 			'email' => Str::random(10).'@gmail.com',
 			'phone' => '0977636696',
 			'address' => 'Hà Nội',
-			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+            'image' => '2.jpg',
+            'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
 		\App\Models\tacgia::create([
             'id' => '3', 
@@ -36,7 +38,8 @@ class TacgiaTableSeeder extends Seeder
 			'email' => Str::random(10).'@gmail.com',
 			'phone' => '0986588767',
 			'address' => 'Hà Nội',
-			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+            'image' => '3.jpg',
+            'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
 		\App\Models\tacgia::create([
             'id' => '4', 
@@ -44,7 +47,8 @@ class TacgiaTableSeeder extends Seeder
 			'email' => Str::random(10).'@gmail.com',
 			'phone' => '0903864228',
 			'address' => 'TP. Hồ Chí Minh',
-			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+            'image' => '4.jpg',
+            'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
 		\App\Models\tacgia::create([
             'id' => '5', 
@@ -52,7 +56,8 @@ class TacgiaTableSeeder extends Seeder
 			'email' => Str::random(10).'@gmail.com',
 			'phone' => '0912492295',
 			'address' => 'Hà Nội',
-			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+            'image' => '5.jpg',
+            'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
 		\App\Models\tacgia::create([
             'id' => '6', 
@@ -60,7 +65,8 @@ class TacgiaTableSeeder extends Seeder
 			'email' => Str::random(10).'@gmail.com',
 			'phone' => '',
 			'address' => 'Nhật Bản',
-			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+            'image' => '6.jpg',
+            'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
 		\App\Models\tacgia::create([
             'id' => '7', 
@@ -68,7 +74,8 @@ class TacgiaTableSeeder extends Seeder
 			'email' => Str::random(10).'@gmail.com',
 			'phone' => '0903998399',
 			'address' => '',
-			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+            'image' => '7.jpg',
+            'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
 		\App\Models\tacgia::create([
             'id' => '8', 
@@ -76,7 +83,8 @@ class TacgiaTableSeeder extends Seeder
 			'email' => Str::random(10).'@gmail.com',
 			'phone' => '',
 			'address' => '',
-			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+            'image' => '8.jpg',
+            'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
 		\App\Models\tacgia::create([
             'id' => '9', 
@@ -84,7 +92,8 @@ class TacgiaTableSeeder extends Seeder
 			'email' => Str::random(10).'@gmail.com',
 			'phone' => '0907135688',
 			'address' => '',
-			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+            'image' => '9.jpg',
+            'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
 		\App\Models\tacgia::create([
             'id' => '10', 
@@ -92,7 +101,8 @@ class TacgiaTableSeeder extends Seeder
 			'email' => Str::random(10).'@gmail.com',
 			'phone' => '0918838146',
 			'address' => '',
-			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
+            'image' => '10.jpg',
+            'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
     }
 }
