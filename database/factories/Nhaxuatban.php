@@ -11,4 +11,7 @@ $factory->define(Nhaxuatban::class, function (Faker $faker) {
         'phone' => $faker->unique()->phoneNumber,
         
     ];
+})->afterCreating(\App\Models\Nhaxuatban::class, function (\App\Models\Nhaxuatban $nhaxuatban, Faker $faker) {
+    $nhaxuatban->image = $nhaxuatban->id . '.jpg';
+    $nhaxuatban->save();
 });

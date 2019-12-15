@@ -13,4 +13,7 @@ $factory->define(Tacgia::class, function (Faker $faker) {
 		'address' => $faker->address,
 		'desc' => $faker->paragraph
     ];
+})->afterCreating(\App\Models\tacgia::class, function (\App\Models\tacgia $tacgia, Faker $faker) {
+    $tacgia->image = $tacgia->id . '.jpg';
+    $tacgia->save();
 });

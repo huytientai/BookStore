@@ -14,4 +14,7 @@ $factory->define(Book::class, function (Faker $faker) {
 		'tacgia_id' => $faker->randomElement([1,2,3,4,5,6,7,8,9,10]),
         'nhaxuatban_id' => $faker->randomElement([1,2,3,4,5,6,7,8,9,10]),
     ];
+})->afterCreating(\App\Models\Book::class, function (\App\Models\Book $book, Faker $faker) {
+    $book->image = $book->id . '.jpg';
+    $book->save();
 });
