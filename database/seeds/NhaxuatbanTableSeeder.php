@@ -72,7 +72,7 @@ class NhaxuatbanTableSeeder extends Seeder
         ]);
         \App\Models\Nhaxuatban::create([
             'id' => '8',
-            'name' => 'Nhà xuất bản Tổng hợp thành phố Hồ Chí Minh',
+            'name' => 'Nhà xuất bản Trẻ',
             'address' => '63 Nguyễn Thị Minh Khai,Quận 1,TP.HCM',
             'phone' => '0978567455',
             'image' => '8.jpg',
@@ -80,7 +80,7 @@ class NhaxuatbanTableSeeder extends Seeder
         ]);
         \App\Models\Nhaxuatban::create([
             'id' => '9',
-            'name' => 'nhà xuất bản Trẻ',
+            'name' => 'nhà xuất bản Tri Thức',
             'address' => '161B Lý Chính Thắng, Quận 3, Thành phố Hồ Chí Minh',
             'phone' => '0956388769',
             'image' => '9.jpg',
@@ -88,7 +88,7 @@ class NhaxuatbanTableSeeder extends Seeder
         ]);
         \App\Models\Nhaxuatban::create([
             'id' => '10',
-            'name' => 'Nhà xuất bản Tư pháp',
+            'name' => 'Nhà xuất bản Đại Học Sư Phạm',
             'address' => 'số 35 Trần Quốc Toản, Hoàn Kiếm, Hà Nội',
             'phone' => '0988725679',
             'image' => '10.jpg',
