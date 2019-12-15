@@ -7,7 +7,7 @@
         <div class="container">
             <br><br><br>
             @canany(['admin','staff'])
-                <a class="btn btn-primary" href="{{ route('books.create') }}">Create Book</a>
+                <a class="btn btn-primary" href="{{ route('tacgias.create') }}">Create Tac gia</a>
                 <br><br>
             @endcanany
 

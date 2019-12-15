@@ -6,6 +6,10 @@
     <div class="cart-main-area section-padding--lg bg--white">
         <div class="container">
             <br><br><br><br>
+	    @canany(['admin','staff'])
+                                <a class="btn btn-primary" href="{{ route('loaisachs.create') }}">Create Loai sach</a>
+                                <br><br>
+                            @endcanany
             @include('flash::message')
 
             <h1>Loaisachs</h1>
