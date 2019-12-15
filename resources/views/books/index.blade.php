@@ -97,6 +97,11 @@
                 <div class="col-lg-9 col-12 order-1 order-lg-2">
                     <div class="row">
                         <div class="col-lg-12">
+                            @canany(['admin','staff'])
+                                <a class="btn btn-primary" href="{{ route('books.create') }}">Create Book</a>
+                                <br><br>
+                            @endcanany
+
                             <div class="shop__list__wrapper d-flex flex-wrap flex-md-nowrap justify-content-between">
                                 <div class="shop__list nav justify-content-center" role="tablist">
                                     <a class="nav-item nav-link active" data-toggle="tab" href="#nav-grid" role="tab"><i class="fa fa-th"></i></a>

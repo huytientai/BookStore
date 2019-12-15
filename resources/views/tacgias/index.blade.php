@@ -5,9 +5,13 @@
 @section('content')
     <div class="cart-main-area section-padding--lg bg--white">
         <div class="container">
-            <br><br><br><br>
-            @include('flash::message')
+            <br><br><br>
+            @canany(['admin','staff'])
+                <a class="btn btn-primary" href="{{ route('books.create') }}">Create Book</a>
+                <br><br>
+            @endcanany
 
+            @include('flash::message')
             <h1>Tác giả</h1>
             @if(count($tacgias)>0)
                 @foreach($tacgias as $key => $tacgia)

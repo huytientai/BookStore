@@ -6,6 +6,11 @@
     <div class="maincontent bg--white pt--80 pb--55">
         <div class="container">
             <br>
+            @canany(['admin','staff'])
+                <a class="btn btn-primary" href="{{ route('books.create') }}">Create Book</a>
+                <br><br>
+            @endcanany
+
             @include('flash::message')
 
             <h1>Nhà xuất bản</h1>
