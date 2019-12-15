@@ -12,9 +12,15 @@ class Book extends Model
     protected $fillable = [
         'name',
         'loaisach_id',
+        'tacgia_id',
+        'nhaxuatban_id',
         'desc',
         'image',
         'price',
+        'ngayxb',
+        'size',
+        'loaibia',
+        'sotrang',
     ];
     protected $perPage = 5;
 

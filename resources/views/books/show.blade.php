@@ -103,12 +103,12 @@
                                     </div>
                                     <div class="product_meta">
 											<span class="posted_in">Tac Gia:
-{{--												<a href="#">{{ $book->tacgia->name }}</a>--}}
+												<a href="{{ route('tacgias.show', $book->tacgia_id) }}">{{ $book->tacgia->name }}</a>
 											</span>
                                     </div>
                                     <div class="product_meta">
 											<span class="posted_in">Nha Xuat Ban:
-{{--												<a href="#">{{ $book->nhaxuatban->name }}</a>--}}
+												<a href="{{ route('nhaxuatbans.show', $book->nhaxuatban_id) }}">{{ $book->nhaxuatban->name }}</a>
 											</span>
                                     </div>
 
@@ -150,7 +150,12 @@
                             <!-- Start Single Tab Content -->
                             <div class="pro__tab_label tab-pane fade show active" id="nav-details" role="tabpanel">
                                 <div class="description__attribute">
-                                    <p>{{ $book->desc }}</p>
+                                    <p>{!! $book->desc !!}</p>
+                                    <br>
+                                    <p>Ngay Xuat Ban: {{ $book->ngayxb }}</p>
+                                    <p>Size: {{ $book->size }}</p>
+                                    <p>Loai Bia: {{ $book->loaibia }}</p>
+                                    <p>So Trang: {{ $book->sotrang }}</p>
                                     <ul>
                                         <li></li>
                                         <li></li>

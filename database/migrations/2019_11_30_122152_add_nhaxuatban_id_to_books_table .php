@@ -16,7 +16,7 @@ class AddNhaxuatbanIdToBooksTable extends Migration
         Schema::table('books', function (Blueprint $table) {
             $table->unsignedBigInteger('nhaxuatban_id');
 
-            $table->foreign('nhaxuatban_id')->references('id')->on('nhaxuatbans');
+            $table->foreign('nhaxuatban_id')->references('id')->on('nhaxuatbans')->onDelete('cascade');
         });
     }
 

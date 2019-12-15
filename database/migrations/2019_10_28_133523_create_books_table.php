@@ -19,6 +19,10 @@ class CreateBooksTable extends Migration
             $table->string('desc', 3000)->nullable();
             $table->string('image')->nullable();
             $table->float('price');
+            $table->string('ngayxb')->nullable();
+            $table->string('size')->nullable();
+            $table->string('loaibia')->nullable();
+            $table->integer('sotrang')->nullable();
             $table->timestamps();
         });
     }
