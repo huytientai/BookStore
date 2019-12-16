@@ -31,21 +31,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $b0 = $this->orderdetail->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+        $id = $this->book->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->pluck('id');
+        $b0 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
-        $id = $this->book->findLoaisach(11)->pluck('id');
+        $id = $this->book->findLoaisach(11)->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->pluck('id');
         $b1 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
-        $id = $this->book->findLoaisach(12)->pluck('id');
+        $id = $this->book->findLoaisach(12)->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->pluck('id');
         $b2 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
-        $id = $this->book->findLoaisach(13)->pluck('id');
+        $id = $this->book->findLoaisach(13)->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->pluck('id');
         $b3 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
-        $id = $this->book->findLoaisach(14)->pluck('id');
+        $id = $this->book->findLoaisach(14)->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->pluck('id');
         $b4 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
 
-        $tacgias=$this->book->groupBy('tacgia_id')->orderByRaw('count(*) desc')->limit(3)->get()->pluck('tacgia');
+        $tacgias = $this->book->groupBy('tacgia_id')->orderByRaw('count(*) desc')->limit(3)->get()->pluck('tacgia');
 
         $best_books = $this->orderdetail->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(7)->get()->pluck('book');
 
