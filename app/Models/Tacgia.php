@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class tacgia extends Model
+class Tacgia extends Model
 {
-    //
 	protected $table = 'tacgias';
 	
 	public $timestamps = true;
-	
-	protected $fillable = [
+    use SoftDeletes;
+
+    protected $fillable = [
 		'id',
 		'name',
         'born',
@@ -57,7 +58,6 @@ class tacgia extends Model
         } else {
             $data['image'] = null;
         }
-        
 
         Tacgia::create($data);
     }

@@ -22,6 +22,7 @@ class CreateOrdersTable extends Migration
             $table->float('total_price');
             $table->boolean('status')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

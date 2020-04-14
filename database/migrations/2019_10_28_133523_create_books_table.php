@@ -24,6 +24,8 @@ class CreateBooksTable extends Migration
             $table->string('loaibia')->nullable();
             $table->integer('sotrang')->nullable();
             $table->timestamps();
+            $table->integer('soluong')->default(0);
+            $table->softDeletes();
         });
     }
 

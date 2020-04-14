@@ -82,6 +82,9 @@
                                     <div class="product__overview">
                                         <p>DESCRIBE: {!! substr($book->desc,0,250) . ' ...' !!}</p>
                                     </div>
+
+                                    <h5>Nums: {{ $book->soluong }}</h5>
+                                    <br>
                                     <div class="box-tocart d-flex row">
                                         <form action="{{ route('carts.store') }}" class="row" method="post">
                                             <span>Qty</span>
@@ -850,5 +853,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        var quantityInput = document.getElementById('qty');
+        quantityInput.addEventListener('change', function (e) {
+            var value = e.target
+            if (isNaN(value.value) || value.value <= 0)
+                value.value = 1
+        })
+    </script>
 
 @endsection

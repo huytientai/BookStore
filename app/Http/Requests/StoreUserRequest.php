@@ -24,7 +24,7 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_name' => 'required|max:100|unique:users,user_name,' . $this->id ?? '',
+            'email' => 'email|max:100|unique:users,email,' . $this->id ?? '',
             'password' => 'string|max:255|' . (($this->method() == 'POST') ? 'required' : 'nullable'),
             'password_confirmation' => 'required_with:password|same:password',
             'name' => 'required|string|max:255',

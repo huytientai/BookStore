@@ -3,7 +3,6 @@
 @section('title', config('app.name','Home'))
 
 @section('content')
-
     <section class="wn__product__area brown--color pt--80  pb--30">
         <div class="container">
             @include('flash::message')

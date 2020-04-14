@@ -30,8 +30,10 @@ Route::resource('/loaisachs', 'LoaisachsController');
 Route::resource('/nhaxuatbans', 'NhaxuatbansController');
 Route::resource('/tacgias', 'TacgiasController');
 
+//Route::get('/favorites', 'FavoritesController')->middleware(['auth']);
 Route::resource('/carts', 'CartsController')->middleware(['auth']);
 
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+

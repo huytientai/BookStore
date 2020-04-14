@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Loaisach extends Model
 {
@@ -10,6 +11,8 @@ class Loaisach extends Model
 
     public $primaryKey = 'id';
     public $timestamps = true;
+    use SoftDeletes;
+
 
     protected $fillable = [
         'name',

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -17,9 +17,10 @@ class User extends Authenticatable
     public $timestamps = true;
 
     protected $perPage = 10;
+    use SoftDeletes;
 
     protected $fillable = [
-        'user_name',
+        'email',
         'password',
         'name',
         'address',
@@ -59,7 +60,7 @@ class User extends Authenticatable
      */
     public function scopeFindUserName($query, $userName)
     {
-        return $query->where('user_name', 'like', '%' . $userName . '%');
+        return $query->where('email', 'like', '%' . $userName . '%');
     }
 
     /**
@@ -99,17 +100,17 @@ class User extends Authenticatable
     }
 
     /**
-     * get users info ascending sort by user_name
+     * get users info ascending sort by email
      *
      * @param array $data
      * @return \Illuminate\Pagination\Paginator
      */
     public function getUsers($data)
     {
-        $builder = $this->orderBy('user_name');
+        $builder = $this->orderBy('email');
 
-        if (isset($data['user_name'])) {
-            $builder->findUserName($data['user_name']);
+        if (isset($data['email'])) {
+            $builder->findUserName($data['email']);
         }
         if (isset($data['name'])) {
             $builder->findName($data['name']);
@@ -148,7 +149,7 @@ class User extends Authenticatable
         $data = $request->all();
 
         if (Auth::id() == $request->id) {
-            $data['user_name'] = Auth::user()->user_name;
+            $data['email'] = Auth::user()->email;
         }
 
         if ($data['password']) {

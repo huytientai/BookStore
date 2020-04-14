@@ -24,6 +24,7 @@ class CreateOrderdetailTable extends Migration
 
             $table->float('sell_price');
             $table->integer('quantity');
+            $table->softDeletes();
         });
     }
 

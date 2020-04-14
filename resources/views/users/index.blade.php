@@ -12,16 +12,16 @@
                 @csrf
                 <div class="row">
                     <div class="col-auto">
-                        <input class="form-control mr-sm-0" type="search" placeholder="User Name" name="user_name" value="{{ request('user_name') }}">
+                        <input class="form-control mr-sm-0" type="search" placeholder="Email" name="email" value="{{ request('email') }}">
                     </div>
                     <div class="col-auto">
-                        <input class="form-control mr-sm-0" type="search" placeholder="Tên" name="name" value="{{ request('name') }}">
+                        <input class="form-control mr-sm-0" type="search" placeholder="Name" name="name" value="{{ request('name') }}">
                     </div>
                     <div class="col-auto">
-                        <input class="form-control mr-sm-0" type="search" placeholder="Địa chỉ" name="address" value="{{ request('address') }}">
+                        <input class="form-control mr-sm-0" type="search" placeholder="Address" name="address" value="{{ request('address') }}">
                     </div>
                     <div class="col-auto">
-                        <input class="form-control mr-sm-0" type="search" placeholder="Số điện thoại" name="phone" value="{{ request('phone') }}">
+                        <input class="form-control mr-sm-0" type="search" placeholder="Phone" name="phone" value="{{ request('phone') }}">
                     </div>
                 </div>
 
@@ -36,12 +36,12 @@
                     <tr>
                         <th>STT</th>
                         <th>Account</th>
-                        <th>Tên</th>
-                        <th>Địa chỉ</th>
-                        <th>SĐT</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
                         <th width="120">Role</th>
                         @can('admin')
-                            <th width="230">Hành động</th>
+                            <th width="230">Action</th>
                         @endcan
                     </tr>
                 </thead>
@@ -49,7 +49,7 @@
                 @foreach($users as $key => $user)
                     <tr class="text-left">
                         <td>{{ $users->firstItem() + $key }}</td>
-                        <td>{{ $user->user_name }}</td>
+                        <td>{{ $user->email }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->address }}</td>
                         <td>{{ $user->phone }}</td>
@@ -57,7 +57,7 @@
 
                         @can('admin')
                             <td>
-                                <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Cập nhật</a>
+                                <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Update</a>
                                 <button data-toggle="modal" onclick="deleteData({{ $user->id }})" data-target="#delete-modal" class="btn btn-xs btn-danger">Xóa</button>
                             </td>
                         @endcan

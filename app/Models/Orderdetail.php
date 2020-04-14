@@ -6,14 +6,16 @@ use App\Models\ModelMPK;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Orderdetail extends ModelMPK
+class Orderdetail extends Model
 {
     protected $table = 'orderdetails';
 
     public $primaryKey = ['order_id', 'book_id'];
     public $timestamps = false;
 	public $incrementing = false;
+    use SoftDeletes;
 
     protected $fillable = [
         'order_id',
@@ -21,12 +23,6 @@ class Orderdetail extends ModelMPK
         'sell_price',
         'quantity',
     ];
-	
-	 /*protected function setKeysForSaveQuery(Builder $query)
-            {
-                return $query->where('order_id', $this->getAttribute('order_id'))
-                             ->where('book_id', $this->getAttribute('book_id'));
-            }*/
 
     protected $perPage = 10;
 

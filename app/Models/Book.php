@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Book extends Model
 {
     protected $table = 'books';
     public $primaryKey = 'id';
     public $timestamps = true;
+    use SoftDeletes;
+
     protected $fillable = [
         'name',
         'loaisach_id',
@@ -21,6 +24,7 @@ class Book extends Model
         'size',
         'loaibia',
         'sotrang',
+        'soluong',
     ];
     protected $perPage = 5;
 

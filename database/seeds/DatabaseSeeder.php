@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
     {
         Schema::disableForeignKeyConstraints();
 
-        $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(LoaisachsTableSeeder::class);
         $this->call(TacgiaTableSeeder::class);

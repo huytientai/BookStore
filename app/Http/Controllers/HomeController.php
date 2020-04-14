@@ -33,18 +33,23 @@ class HomeController extends Controller
     {
         $id = $this->book->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->pluck('id');
         $b0 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+        //        $b0=$this->orderdetail->limit(10)->get()->pluck('book');
 
         $id = $this->book->findLoaisach(11)->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->pluck('id');
         $b1 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+//        $b1 = $this->orderdetail->limit(10)->get()->pluck('book');
 
         $id = $this->book->findLoaisach(12)->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->pluck('id');
         $b2 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+//        $b2 = $this->orderdetail->limit(10)->get()->pluck('book');
 
         $id = $this->book->findLoaisach(13)->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->pluck('id');
         $b3 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+//        $b3 = $this->orderdetail->limit(10)->get()->pluck('book');
 
         $id = $this->book->findLoaisach(14)->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->pluck('id');
         $b4 = $this->orderdetail->whereIn('book_id', $id)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit(10)->get()->pluck('book');
+//        $b4 = $this->orderdetail->limit(10)->get()->pluck('book');
 
         $tacgias = $this->book->groupBy('tacgia_id')->orderByRaw('count(*) desc')->limit(3)->get()->pluck('tacgia');
 
