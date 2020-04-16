@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('exam1.default')
 
 @section('title', 'edit book')
 

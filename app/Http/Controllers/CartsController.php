@@ -109,26 +109,43 @@ class CartsController extends Controller
     {
         $books = $request->books;
 
-        $total = 0;
-        foreach ($books as $value) {
-            $book = $this->book->find($value['id']);
-            $total += $book->price * $value['quantity'];
-        }
-        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total]);
-
-        foreach ($books as $value) {
-            $book = $this->book->find($value['id']);
-            $data['order_id'] = $order->id;
-            $data['book_id'] = $book->id;
-            $data['sell_price'] = $book->price;
-            $data['quantity'] = $value['quantity'];
-            $this->orderdetail->create($data);
-        }
-
+//        dd($request);
         $this->cart->removeCartOfUser();
 
-        flash('Dat hang thanh cong')->success();
+        if($books!=null) {
+            foreach ($books as $value) {
+                $book = $this->book->find($value['id']);
+                $data['user_id'] = Auth::id();
+                $data['book_id'] = $book->id;
+                $data['quantity'] = $value['quantity'];
+                $this->cart->create($data);
+            }
+        }
+        flash('Update success')->success();
         return redirect()->route('carts.index');
+
+//        $books = $request->books;
+//
+//        $total = 0;
+//        foreach ($books as $value) {
+//            $book = $this->book->find($value['id']);
+//            $total += $book->price * $value['quantity'];
+//        }
+//        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total]);
+//
+//        foreach ($books as $value) {
+//            $book = $this->book->find($value['id']);
+//            $data['order_id'] = $order->id;
+//            $data['book_id'] = $book->id;
+//            $data['sell_price'] = $book->price;
+//            $data['quantity'] = $value['quantity'];
+//            $this->orderdetail->create($data);
+//        }
+//
+//        $this->cart->removeCartOfUser();
+//
+//        flash('Dat hang thanh cong')->success();
+//        return redirect()->route('carts.index');
     }
 
     /**

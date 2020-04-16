@@ -21,6 +21,11 @@ class CreateOrdersTable extends Migration
 
             $table->float('total_price');
             $table->boolean('status')->default(false);
+
+            $table->string('name', 255);
+            $table->string('phone', 15);
+            $table->string('email', 100);
+            $table->string('address', 255);
             $table->timestamps();
             $table->softDeletes();
         });

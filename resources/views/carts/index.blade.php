@@ -40,7 +40,7 @@
                                         </td>
                                         <td class="product-quantity">
                                             <input type="number" class="book-quantity" min="1" value="{{ $cart->quantity }}">
-                                            <input type="hidden" class="book-id" name="book-id" value="{{ $cart->id }}">
+                                            <input type="hidden" class="book-id" name="book-id" value="{{ $cart->book_id }}">
                                         </td>
                                         <td class="product-subtotal">${{ $cart->book->price * $cart->quantity }}</td>
                                         <td class="product-remove">
@@ -55,10 +55,21 @@
                     </form>
                     <div class="cartbox__btn">
                         <ul class="cart__btn__list d-flex flex-wrap flex-md-nowrap flex-lg-nowrap justify-content-between">
-                            {{--                            <li><a href="#">Coupon Code</a></li>--}}
-                            {{--                            <li><a href="#">Apply Code</a></li>--}}
-                            {{--                            <li><a href="#">Update Cart</a></li>--}}
-                            {{--                            <li><a href="#">Check Out</a></li>--}}
+                            <li><a href="#">Coupon Code</a></li>
+                            <li><a href="#">Apply Code</a></li>
+                            <li>
+                                <form action="{{ route('carts.update', 1) }}" id="update-form" method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <a type="button" class="btn cart__total__amount" style="width: 100%" onclick="update_cart()">Update Cart</a>
+{{--                                    <button onclick="submit">Update Cart</button>--}}
+                                </form>
+                            </li>
+                            <li><form action="{{ route('checkout.index') }}" id="checkout-form" method="post">
+                                    @csrf
+                                    <a type="button" style="width: 100%" onclick="checkout()">Check Out</a>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -74,11 +85,15 @@
                                 <li>$</li>
                             </ul>
                         </div>
-                        <form action="{{ route('carts.update', 1) }}" id="order-form" method="post">
-                            @csrf
-                            @method('PUT')
-                            <button type="button" class="btn cart__total__amount" style="width: 100%" onclick="order()">ORDER</button>
-                        </form>
+                        {{--                        <form action="{{ route('carts.update', 1) }}" id="order-form" method="post">--}}
+                        {{--                            @csrf--}}
+                        {{--                            @method('PUT')--}}
+                        {{--                            <button type="button" class="btn cart__total__amount" style="width: 100%" onclick="order()">Grand Total</button>--}}
+                        {{--                        </form>--}}
+                        <div class="cart__total__amount">
+                            <span>Grand Total</span>
+                            <span class="grand__total__tk">$</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -164,6 +179,7 @@
 
         function updateCartTotal() {
             var cartItemContainer = document.getElementsByClassName('each-cart')
+
             var total = 0
 
             for (var i = 0; i < cartItemContainer.length; i++) {
@@ -177,10 +193,49 @@
                 total += quantity * price
             }
             document.getElementsByClassName('cart__total__tk').item(0).getElementsByTagName('li').item(0).innerHTML = '$' + total
+            document.getElementsByClassName('grand__total__tk').item(0).innerHTML = '$' + total
+
         }
 
+        function update_cart() {
+            var cartItemContainer = document.getElementsByClassName('each-cart')
+            if(cartItemContainer.item(0)==null){
+                return document.getElementById("update-form").submit();;
+            }
 
-        function order() {
+            if (cartItemContainer.length) {
+                for (var i = 0; i < cartItemContainer.length; i++) {
+                    var input = document.createElement("input");
+                    var input1 = document.createElement("input");
+
+                    var quantityElement = cartItemContainer[i].getElementsByClassName('book-quantity')[0];
+                    var idElement = cartItemContainer[i].getElementsByClassName('book-id')[0];
+                    console.log(idElement);
+                    var quantity = quantityElement.value
+                    var book_id = idElement.value
+
+                    // set input
+                    input.setAttribute("type", "hidden");
+                    var name = "books[:i][id]"
+                    name = name.replace(':i', i)
+                    input.setAttribute("name", name);
+                    input.setAttribute("value", book_id);
+                    document.getElementById("update-form").appendChild(input);
+
+                    input1.setAttribute("type", "hidden");
+                    var name = "books[:i][quantity]"
+                    name = name.replace(':i', i)
+                    input1.setAttribute("name", name);
+                    input1.setAttribute("value", quantity);
+                    document.getElementById("update-form").appendChild(input1);
+                }
+                // this.preventDefault();
+
+                document.getElementById("update-form").submit();
+            }
+        }
+
+        function checkout() {
             var cartItemContainer = document.getElementsByClassName('each-cart')
 
             if (cartItemContainer.length) {
@@ -199,16 +254,16 @@
                     name = name.replace(':i', i)
                     input.setAttribute("name", name);
                     input.setAttribute("value", book_id);
-                    document.getElementById("order-form").appendChild(input);
+                    document.getElementById("checkout-form").appendChild(input);
 
                     input1.setAttribute("type", "hidden");
                     var name = "books[:i][quantity]"
                     name = name.replace(':i', i)
                     input1.setAttribute("name", name);
                     input1.setAttribute("value", quantity);
-                    document.getElementById("order-form").appendChild(input1);
+                    document.getElementById("checkout-form").appendChild(input1);
                 }
-                document.getElementById("order-form").submit();
+                document.getElementById("checkout-form").submit();
             }
         }
     </script>
