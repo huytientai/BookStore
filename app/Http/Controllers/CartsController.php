@@ -109,7 +109,6 @@ class CartsController extends Controller
     {
         $books = $request->books;
 
-//        dd($request);
         $this->cart->removeCartOfUser();
 
         if($books!=null) {

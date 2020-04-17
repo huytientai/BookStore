@@ -56,37 +56,48 @@
                 <div class="col-lg-6 col-12">
                     <div class="customer_details">
                         <h3>Billing details</h3>
-                        <div class="customar__field">
-                            <div class="margin_between">
-                                <div class="input_box space_between">
-                                    <label>Name <span>*</span></label>
-                                    <input type="text" name="name" value="{{ Auth::user()->name }}" >
+                        <form action="{{ route('checkout.store') }}" id="checkout-form" method="post">
+                            @csrf
+                            @php($i=0)
+                            <div class="customar__field">
+
+                                <div class="margin_between">
+                                    <div class="input_box space_between">
+                                        <label>Name <span>*</span></label>
+                                        <input type="text" name="name" id="user-name-checkout" value="{{ Auth::user()->name }}" required >
+                                    </div>
+
+                                </div>
+                                <div class="input_box">
+                                    <label>Company name <span></span></label>
+                                    <input type="text" name="company" id="company-checkout">
                                 </div>
 
-                            </div>
-                            <div class="input_box">
-                                <label>Company name <span></span></label>
-                                <input type="text">
-                            </div>
-
-                            <div class="input_box">
-                                <label>Address <span>*</span></label>
-                                <input type="text" placeholder="Street address">
-                            </div>
-
-                            <div class="margin_between">
-                                <div class="input_box space_between">
-                                    <label>Phone <span>*</span></label>
-                                    <input type="text" name="phone" value="{{ Auth::user()->phone }}">
+                                <div class="input_box">
+                                    <label>Address <span>*</span></label>
+                                    <input type="text" name="address" id="address-checkout" placeholder="delivery location" required>
                                 </div>
 
-                                <div class="input_box space_between">
-                                    <label>Email address <span>*</span></label>
-                                    <input type="email" name="email" value="{{ Auth::user()->email }}">
+                                <div class="margin_between">
+                                    <div class="input_box space_between">
+                                        <label>Phone <span>*</span></label>
+                                        <input type="number" name="phone" id="phone-checkout" value="{{ Auth::user()->phone }}" required>
+                                    </div>
+
+                                    <div class="input_box space_between">
+                                        <label>Email address <span>*</span></label>
+                                        <input type="email" name="email" id="email-checkout" value="{{ Auth::user()->email }}" required>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                            @foreach($books as $book)
+                                <input type="hidden" name="books[{{$i}}][id]" value="{{ $book->id }}">
+                                <input type="hidden" name="books[{{$i++}}][quantity]" value="{{ $book->quantity }}">
+                            @endforeach
+
+                            <button type="submit" class="btn cart__total__amount" style="width: 100%">Checkout</button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-lg-6 col-12 md-mt-40 sm-mt-40">
@@ -99,7 +110,9 @@
                         <ul class="order_product">
                             @php($total=0)
                             @foreach($books as $book)
-                                <li> <a href="{{ route('books.show', $book->id) }}">{{ $book->name }}</a> × {{ $book->quantity }}<span>${{ $book->price * $book->quantity }}</span></li>
+                                <li>
+                                    <a href="{{ route('books.show', $book->id) }}">{{ $book->name }}</a> × {{ $book->quantity }}
+                                    <span>${{ $book->price * $book->quantity }}</span></li>
                                 @php($total+= $book->price * $book->quantity)
                             @endforeach
                         </ul>
@@ -112,7 +125,7 @@
                                         <label>Nomal</label>
                                     </li>
                                     <li>
-                                        <input name="shipping_method[0]" data-index="0" value="legacy_flat_rate"  type="radio">
+                                        <input name="shipping_method[0]" data-index="0" value="legacy_flat_rate" type="radio">
                                         <label>Fast(2h)</label>
                                     </li>
                                 </ul>
@@ -156,7 +169,7 @@
                         <div class="payment">
                             <div class="che__header" role="tab" id="headingFour">
                                 <a class="collapsed checkout__title" data-toggle="collapse" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                    <span>PayPal <img src="images/icons/payment.png" alt="payment images"> </span>
+                                    <span>PayPal <img src="{{ asset('img/icons/payment.png') }}" alt="payment images"> </span>
                                 </a>
                             </div>
                             <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
@@ -169,4 +182,8 @@
             </div>
         </div>
     </section>
+
+    <script>
+
+    </script>
 @endsection

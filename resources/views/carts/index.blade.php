@@ -65,7 +65,8 @@
 {{--                                    <button onclick="submit">Update Cart</button>--}}
                                 </form>
                             </li>
-                            <li><form action="{{ route('checkout.index') }}" id="checkout-form" method="post">
+                            <li>
+                                <form action="{{ route('checkout.index') }}" id="checkout-form" method="post">
                                     @csrf
                                     <a type="button" style="width: 100%" onclick="checkout()">Check Out</a>
                                 </form>
@@ -210,7 +211,6 @@
 
                     var quantityElement = cartItemContainer[i].getElementsByClassName('book-quantity')[0];
                     var idElement = cartItemContainer[i].getElementsByClassName('book-id')[0];
-                    console.log(idElement);
                     var quantity = quantityElement.value
                     var book_id = idElement.value
 
@@ -229,7 +229,6 @@
                     input1.setAttribute("value", quantity);
                     document.getElementById("update-form").appendChild(input1);
                 }
-                // this.preventDefault();
 
                 document.getElementById("update-form").submit();
             }

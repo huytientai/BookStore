@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreOrderRequest;
 use App\Models\Book;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Orderdetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutsController extends Controller
 {
@@ -36,10 +38,9 @@ class CheckoutsController extends Controller
             return redirect()->route('carts.index');
         }
 
-        $i=0;
-        foreach ($data as $value)
-        {
-            $books[$i] =$this->book->find($value['id']);
+        $i = 0;
+        foreach ($data as $value) {
+            $books[$i] = $this->book->find($value['id']);
             $books[$i]['quantity'] = $value['quantity'];
             $i++;
         }
@@ -47,19 +48,6 @@ class CheckoutsController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
-        //
-//        if($request==null){
-//            return redirect()->route('carts.index');
-//        }
-        return view('checkout.index')->with('books', $request);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -69,53 +57,32 @@ class CheckoutsController extends Controller
      */
     public function store(Request $request)
     {
+        $books = $request->books;
 
+        $total = 0;
+        // create order
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            $total += $book->price * $value['quantity'];
+        }
+        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->email]);
 
-//        $books = $request->books;
-//
-//        $total = 0;
-//        foreach ($books as $value) {
-//            $book = $this->book->find($value['id']);
-//            $total += $book->price * $value['quantity'];
-//        }
-//        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total]);
-//
-//        foreach ($books as $value) {
-//            $book = $this->book->find($value['id']);
-//            $data['order_id'] = $order->id;
-//            $data['book_id'] = $book->id;
-//            $data['sell_price'] = $book->price;
-//            $data['quantity'] = $value['quantity'];
-//            $this->orderdetail->create($data);
-//        }
-//
-//        $this->cart->removeCartOfUser();
-//
-//        flash('Order Successed')->success();
-//        return redirect()->route('carts.index');
+        // create order detail
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            $data['order_id'] = $order->id;
+            $data['book_id'] = $book->id;
+            $data['sell_price'] = $book->price;
+            $data['quantity'] = $value['quantity'];
+            $this->orderdetail->create($data);
+        }
+
+        $this->cart->removeCartOfUser();
+
+        flash('Order Successed')->success();
+        return redirect()->route('carts.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

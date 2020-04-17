@@ -31,8 +31,9 @@ Route::resource('/nhaxuatbans', 'NhaxuatbansController');
 Route::resource('/tacgias', 'TacgiasController');
 
 //Route::get('/favorites', 'FavoritesController')->middleware(['auth']);
-//Route::resource('/checkout', 'CheckoutsController')->middleware(['auth']);
 Route::post('/checkout','CheckoutsController@index')->name('checkout.index')->middleware(['auth']);
+Route::post('/checkout/store','CheckoutsController@store')->name('checkout.store')->middleware(['auth']);
+
 Route::resource('/carts', 'CartsController')->middleware(['auth']);
 
 Route::get('/about', function () {
