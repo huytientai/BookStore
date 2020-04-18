@@ -65,7 +65,7 @@ class CheckoutsController extends Controller
             $book = $this->book->find($value['id']);
             $total += $book->price * $value['quantity'];
         }
-        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->email]);
+        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
 
         // create order detail
         foreach ($books as $value) {

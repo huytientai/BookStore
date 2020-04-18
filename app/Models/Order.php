@@ -17,6 +17,11 @@ class Order extends Model
         'user_id',
         'total_price',
         'status',
+        'name',
+        'phone',
+        'address',
+        'email',
+        'company',
     ];
 
     protected $perPage = 10;

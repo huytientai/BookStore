@@ -33,15 +33,15 @@ class CartsController extends Controller
     public function index()
     {
         $carts = $this->cart->where('user_id', Auth::id())->orderBy('id')->get();
-        $order = $this->order->where('user_id', Auth::id())->where('status', false)->orderBy('created_at', 'desc')->first();
-
-        if ($order != null) {
-            $orderdetails = $this->orderdetail->where('order_id', $order->id)->get();
-        } else {
-            $orderdetails = null;
-        }
-
-        return view('carts.index')->with(['carts' => $carts, 'order' => $order, 'orderdetails' => $orderdetails]);
+        $orders = $this->order->where('user_id', Auth::id())->where('status', false)->orderBy('created_at', 'desc')->get();
+//        dd($order[0]->orderdetails);
+//        if ($order != null) {
+//            $orderdetails = $this->orderdetail->where('order_id', $order->id)->get();
+//        } else {
+//            $orderdetails = null;
+//        }
+//        dd($orderdetails);
+        return view('carts.index')->with(['carts' => $carts, 'orders' => $orders]);
     }
 
 
@@ -123,28 +123,6 @@ class CartsController extends Controller
         flash('Update success')->success();
         return redirect()->route('carts.index');
 
-//        $books = $request->books;
-//
-//        $total = 0;
-//        foreach ($books as $value) {
-//            $book = $this->book->find($value['id']);
-//            $total += $book->price * $value['quantity'];
-//        }
-//        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total]);
-//
-//        foreach ($books as $value) {
-//            $book = $this->book->find($value['id']);
-//            $data['order_id'] = $order->id;
-//            $data['book_id'] = $book->id;
-//            $data['sell_price'] = $book->price;
-//            $data['quantity'] = $value['quantity'];
-//            $this->orderdetail->create($data);
-//        }
-//
-//        $this->cart->removeCartOfUser();
-//
-//        flash('Dat hang thanh cong')->success();
-//        return redirect()->route('carts.index');
     }
 
     /**
