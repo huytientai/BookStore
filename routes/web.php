@@ -36,6 +36,10 @@ Route::post('/checkout/store','CheckoutsController@store')->name('checkout.store
 
 Route::resource('/carts', 'CartsController')->middleware(['auth']);
 
+Route::resource('/orders', 'OrdersController')->middleware(['auth']);
+
+Route::resource('/reviews', 'ReviewsController');
+
 Route::get('/about', function () {
     return view('about');
 })->name('about');

@@ -6,7 +6,7 @@
                 <div class="col-lg-12">
                     <div class="footer__widget footer__menu">
                         <div class="ft__logo">
-                            <a href="index.html">
+                            <a href="{{ route('home') }}">
                                 <img src="{{ asset('img/logo/3.png') }}" alt="logo">
                             </a>
                             <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered duskam alteration variations of passages</p>

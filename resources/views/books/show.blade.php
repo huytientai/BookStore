@@ -3,35 +3,6 @@
 @section('title', $book->name . ' book')
 
 @section('content')
-
-    {{--    <div class="col-md-8 col-sm-8">--}}
-    {{--        <br>--}}
-    {{--        @if($book->image)--}}
-    {{--            <img style="width: 100%" src="/storage/book_images/{{ $book->image }}">--}}
-    {{--        @else--}}
-    {{--            <img style="width: 70%" src="/img/no_image.jpg">--}}
-    {{--        @endif--}}
-    {{--    </div>--}}
-    {{--    <br>--}}
-    {{--    <h1>{{ $book->name }}</h1>--}}
-    {{--    <br>--}}
-    {{--    <h4> Describe</h4>--}}
-    {{--    <p>{!! $book->desc !!}</p>--}}
-
-    {{--    <hr>--}}
-    {{--    <small>written on {{ $book->created_at }}</small>--}}
-    {{--    <hr>--}}
-
-    {{--    @canany(['admin','staff'])--}}
-    {{--        <a class="btn btn-primary" href="{{ route('books.edit', $book->id) }}">Edit</a>--}}
-    {{--        <form action="{{ route('books.destroy', $book->id) }}" method="post">--}}
-    {{--            @csrf--}}
-    {{--            @method('DELETE')--}}
-
-    {{--            <button type="submit" class="btn btn-danger">Delete</button>--}}
-    {{--        </form>--}}
-    {{--    @endcanany--}}
-
     <!-- Start main Content -->
     <div class="maincontent bg--white pt--80 pb--55">
         <div class="container">
@@ -68,12 +39,24 @@
                                 <div class="product__info__main">
                                     <h1>{{ $book->name }}</h1>
                                     <div class="product-reviews-summary d-flex">
+                                        @php
+                                            $sum=0;
+                                            foreach($book->reviews as $review){
+                                                $sum+=$review->star;
+                                            }
+                                            if(count($book->reviews) == 0)
+                                                $avg=0;
+                                            else
+                                                $avg=ceil($sum/count($book->reviews));
+                                        @endphp
+
                                         <ul class="rating-summary d-flex">
-                                            <li><i class="zmdi zmdi-star-outline"></i></li>
-                                            <li><i class="zmdi zmdi-star-outline"></i></li>
-                                            <li><i class="zmdi zmdi-star-outline"></i></li>
-                                            <li class="off"><i class="zmdi zmdi-star-outline"></i></li>
-                                            <li class="off"><i class="zmdi zmdi-star-outline"></i></li>
+                                            @for($i=0;$i<$avg;$i++)
+                                                <li class="on"><i class="zmdi zmdi-star-outline"></i></li>
+                                            @endfor
+                                            @for($i=5;$i>$avg;$i--)
+                                                <li class="off"><i class="zmdi zmdi-star-outline"></i></li>
+                                            @endfor
                                         </ul>
                                     </div>
                                     <div class="price-box">
@@ -171,101 +154,89 @@
                             <div class="pro__tab_label tab-pane fade" id="nav-review" role="tabpanel">
                                 <div class="review__attribute">
                                     <h1>Customer Reviews</h1>
-                                    <h2>Hastech</h2>
-                                    <div class="review__ratings__type d-flex">
-                                        <div class="review-ratings">
-                                            <div class="rating-summary d-flex">
-                                                <span>Quality</span>
-                                                <ul class="rating d-flex">
-                                                    <li><i class="zmdi zmdi-star"></i></li>
-                                                    <li><i class="zmdi zmdi-star"></i></li>
-                                                    <li><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                </ul>
+                                    @if(isset($book->reviews[0]))
+                                        @foreach($book->reviews as $review)
+                                            <div class="row">
+                                                <h2>{{ $review->summary }}&nbsp;</h2>
+                                                <div class="review__ratings__type d-flex ">
+                                                    <div class="review-ratings">
+                                                        <div class="rating-summary d-flex">
+                                                            <ul class="rating d-flex">
+                                                                @for($i=0; $i<$review->star; $i++)
+                                                                    <li><i class="zmdi zmdi-star"></i></li>
+                                                                @endfor
+                                                                @for($i=5; $i>$review->star; $i--)
+                                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
+                                                                @endfor
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-
-                                            <div class="rating-summary d-flex">
-                                                <span>Price</span>
-                                                <ul class="rating d-flex">
-                                                    <li><i class="zmdi zmdi-star"></i></li>
-                                                    <li><i class="zmdi zmdi-star"></i></li>
-                                                    <li><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                </ul>
+                                            <div class="review__ratings__type d-flex">
+                                                <div>
+                                                    <p>Review by {{ $review->name }} ({{ $review->created_at }})</p>
+                                                    <p>{{ $review->review }}</p>
+                                                </div>
                                             </div>
-                                            <div class="rating-summary d-flex">
-                                                <span>value</span>
-                                                <ul class="rating d-flex">
-                                                    <li><i class="zmdi zmdi-star"></i></li>
-                                                    <li><i class="zmdi zmdi-star"></i></li>
-                                                    <li><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="review-content">
-                                            <p>Hastech</p>
-                                            <p>Review by Hastech</p>
-                                            <p>Posted on 11/6/2018</p>
-                                        </div>
-                                    </div>
+                                        @endforeach
+                                    @endif
                                 </div>
                                 <div class="review-fieldset">
                                     <h2>You're reviewing:</h2>
-                                    <h3>Chaz Kangeroo Hoodie</h3>
+                                    <h3>{{ $book->name }}</h3>
                                     <div class="review-field-ratings">
                                         <div class="product-review-table">
                                             <div class="review-field-rating d-flex">
                                                 <span>Quality</span>
-                                                <ul class="rating d-flex">
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <div class="review-field-rating d-flex">
-                                                <span>Price</span>
-                                                <ul class="rating d-flex">
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                </ul>
-                                            </div>
-                                            <div class="review-field-rating d-flex">
-                                                <span>Value</span>
-                                                <ul class="rating d-flex">
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
-                                                    <li class="off"><i class="zmdi zmdi-star"></i></li>
+                                                <ul class="rating d-flex" id="your-rate">
+                                                    <li class="off" onclick="vote(this)" data-value="1">
+                                                        <i class="zmdi zmdi-star"></i></li>
+                                                    <li class="off" onclick="vote(this)" data-value="2">
+                                                        <i class="zmdi zmdi-star"></i></li>
+                                                    <li class="off" onclick="vote(this)" data-value="3">
+                                                        <i class="zmdi zmdi-star"></i></li>
+                                                    <li class="off" onclick="vote(this)" data-value="4">
+                                                        <i class="zmdi zmdi-star"></i></li>
+                                                    <li class="off" onclick="vote(this)" data-value="5">
+                                                        <i class="zmdi zmdi-star"></i></li>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="review_form_field">
-                                        <div class="input__box">
-                                            <span>Nickname</span>
-                                            <input id="nickname_field" type="text" name="nickname">
-                                        </div>
-                                        <div class="input__box">
-                                            <span>Summary</span>
-                                            <input id="summery_field" type="text" name="summery">
-                                        </div>
-                                        <div class="input__box">
-                                            <span>Review</span>
-                                            <textarea name="review"></textarea>
-                                        </div>
-                                        <div class="review-form-actions">
-                                            <button>Submit Review</button>
-                                        </div>
+                                        <form action="{{ route('reviews.store') }}" method="post">
+                                            @csrf
+                                            @error('star')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                            <input type="hidden" value="6" id="star-review" name="star">
+                                            <input type="hidden" value="{{ $book->id }}" name="book_id">
+                                            <div class="input__box">
+                                                <span>Nickname</span>
+                                                <input id="nickname_field" type="text" name="name" required>
+                                                @error('name')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="input__box">
+                                                <span>Summary</span>
+                                                <input id="summery_field" type="text" name="summary" required>
+                                                @error('summary')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="input__box">
+                                                <span>Review</span>
+                                                <textarea name="review" required></textarea>
+                                                @error('review')
+                                                <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div>
+                                                <button type="submit" class="btn btn-primary">Submit Review</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -861,6 +832,37 @@
             if (isNaN(value.value) || value.value <= 0)
                 value.value = 1
         })
+
+        document.getElementsByClassName('review_form_field').item(0).getElementsByTagName('button').item(0).addEventListener('click', function (event) {
+            var x = document.getElementById('star-review');
+            if (x.value == 0) {
+                alert('you have not vote yet');
+                event.preventDefault()
+            }
+        })
+
+        function vote(star) {
+            var stars = star.parentElement
+            val = star.getAttribute('data-value')
+            for (var i = 0; i <= 4; i++) {
+                var item = stars.getElementsByTagName('li').item(i);
+                if (i < val) {
+                    if (item.classList.contains('off')) {
+                        item.classList.remove('off')
+                        item.classList.add('on')
+                        //font-size
+                    }
+                } else {
+                    if (item.classList.contains('on')) {
+                        item.classList.remove('on')
+                        item.classList.add('off')
+                    }
+                }
+            }
+            var review = document.getElementById('star-review');
+            review.value = val;
+        }
+
     </script>
 
 @endsection

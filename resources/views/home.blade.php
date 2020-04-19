@@ -370,13 +370,25 @@
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                $sum=0;
+                                                foreach($b0[$i]->reviews as $review){
+                                                    $sum+=$review->star;
+                                                }
+                                                if(count($b0[$i]->reviews) == 0)
+                                                    $avg=0;
+                                                else
+                                                    $avg=ceil($sum/count($b0[$i]->reviews));
+                                            @endphp
                                             <div class="product__hover--content">
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -422,13 +434,25 @@
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                $sum=0;
+                                                foreach($b0[$i+1]->reviews as $review){
+                                                    $sum+=$review->star;
+                                                }
+                                                if(count($b0[$i+1]->reviews)==0 )
+                                                    $avg=0;
+                                                else
+                                                    $avg=ceil($sum/count($b0[$i+1]->reviews));
+                                            @endphp
                                             <div class="product__hover--content">
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -461,7 +485,8 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center">
-                                            <h4><a href="{{ route('books.show', $b1[$i]->id) }}">{{ $b1[$i]->name }}</a>
+                                            <h4>
+                                                <a href="{{ route('books.show', $b1[$i]->id) }}">{{ $b1[$i]->name }}</a>
                                             </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b1[$i]->price }}</li>
@@ -475,7 +500,8 @@
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b1[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
                                                         <li>
                                                             <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
@@ -483,13 +509,25 @@
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                $sum=0;
+                                                foreach($b1[$i]->reviews as $review){
+                                                    $sum+=$review->star;
+                                                }
+                                                if(count($b1[$i]->reviews)==0 )
+                                                    $avg=0;
+                                                else
+                                                    $avg=ceil($sum/count($b1[$i]->reviews));
+                                            @endphp
                                             <div class="product__hover--content">
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -527,7 +565,8 @@
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b1[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
                                                         <li>
                                                             <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
@@ -535,13 +574,25 @@
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                $sum=0;
+                                                foreach($b1[$i+1]->reviews as $review){
+                                                    $sum+=$review->star;
+                                                }
+                                                if(count($b1[$i+1]->reviews)==0 )
+                                                    $avg=0;
+                                                else
+                                                    $avg=ceil($sum/count($b1[$i+1]->reviews));
+                                            @endphp
                                             <div class="product__hover--content">
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -573,7 +624,8 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b2[$i]->id) }}">{{ $b2[$i]->name }}</a>
+                                            <h4>
+                                                <a href="{{ route('books.show', $b2[$i]->id) }}">{{ $b2[$i]->name }}</a>
                                             </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b2[$i]->price }}</li>
@@ -587,7 +639,8 @@
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b2[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
                                                         <li>
                                                             <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
@@ -595,13 +648,25 @@
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                $sum=0;
+                                                foreach($b2[$i]->reviews as $review){
+                                                    $sum+=$review->star;
+                                                }
+                                                if(count($b2[$i]->reviews)==0 )
+                                                    $avg=0;
+                                                else
+                                                    $avg=ceil($sum/count($b2[$i]->reviews));
+                                            @endphp
                                             <div class="product__hover--content">
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -639,7 +704,8 @@
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b2[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
                                                         <li>
                                                             <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
@@ -647,13 +713,25 @@
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                $sum=0;
+                                                foreach($b2[$i+1]->reviews as $review){
+                                                    $sum+=$review->star;
+                                                }
+                                                if(count($b2[$i+1]->reviews)==0 )
+                                                    $avg=0;
+                                                else
+                                                    $avg=ceil($sum/count($b2[$i+1]->reviews));
+                                            @endphp
                                             <div class="product__hover--content">
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -686,7 +764,8 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b3[$i]->id) }}">{{ $b3[$i]->name }}</a>
+                                            <h4>
+                                                <a href="{{ route('books.show', $b3[$i]->id) }}">{{ $b3[$i]->name }}</a>
                                             </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b3[$i]->price }}</li>
@@ -700,7 +779,8 @@
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b3[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
                                                         <li>
                                                             <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
@@ -708,13 +788,25 @@
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                $sum=0;
+                                                foreach($b3[$i]->reviews as $review){
+                                                    $sum+=$review->star;
+                                                }
+                                                if(count($b3[$i]->reviews)==0 )
+                                                    $avg=0;
+                                                else
+                                                    $avg=ceil($sum/count($b3[$i]->reviews));
+                                            @endphp
                                             <div class="product__hover--content">
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -752,7 +844,8 @@
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b3[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
                                                         <li>
                                                             <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
@@ -760,13 +853,25 @@
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                $sum=0;
+                                                foreach($b3[$i+1]->reviews as $review){
+                                                    $sum+=$review->star;
+                                                }
+                                                if(count($b3[$i+1]->reviews)==0 )
+                                                    $avg=0;
+                                                else
+                                                    $avg=ceil($sum/count($b3[$i+1]->reviews));
+                                            @endphp
                                             <div class="product__hover--content">
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -798,7 +903,8 @@
                                             </div>
                                         </div>
                                         <div class="product__content content--center content--center">
-                                            <h4><a href="{{ route('books.show', $b4[$i]->id) }}">{{ $b4[$i]->name }}</a>
+                                            <h4>
+                                                <a href="{{ route('books.show', $b4[$i]->id) }}">{{ $b4[$i]->name }}</a>
                                             </h4>
                                             <ul class="prize d-flex">
                                                 <li>${{ $b4[$i]->price }}</li>
@@ -812,7 +918,8 @@
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b4[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
                                                         <li>
                                                             <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
@@ -820,13 +927,25 @@
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                $sum=0;
+                                                foreach($b4[$i]->reviews as $review){
+                                                    $sum+=$review->star;
+                                                }
+                                                if(count($b4[$i]->reviews)==0 )
+                                                    $avg=0;
+                                                else
+                                                    $avg=ceil($sum/count($b4[$i]->reviews));
+                                            @endphp
                                             <div class="product__hover--content">
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -864,7 +983,8 @@
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b4[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
                                                         <li>
                                                             <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
@@ -872,13 +992,25 @@
                                                     </ul>
                                                 </div>
                                             </div>
+
+                                            @php
+                                                $sum=0;
+                                                foreach($b4[$i+1]->reviews as $review){
+                                                    $sum+=$review->star;
+                                                }
+                                                if(count($b4[$i+1]->reviews)==0 )
+                                                    $avg=0;
+                                                else
+                                                    $avg=ceil($sum/count($b4[$i+1]->reviews));
+                                            @endphp
                                             <div class="product__hover--content">
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -1002,13 +1134,24 @@
                             </ul>
                         </div>
                     </div>
+                    @php
+                        $sum=0;
+                        foreach($best_books[0]->reviews as $review){
+                            $sum+=$review->star;
+                        }
+                        if(count($best_books[0]->reviews)==0 )
+                            $avg=0;
+                        else
+                            $avg=ceil($sum/count($best_books[0]->reviews));
+                    @endphp
                     <div class="product__hover--content">
                         <ul class="rating d-flex">
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
+                            @for($star=0;$star<$avg;$star++)
+                                <li class="on"><i class="fa fa-star-o"></i></li>
+                            @endfor
+                            @for($star=5;$star>$avg;$star--)
+                                <li><i class="fa fa-star-o"></i></li>
+                            @endfor
                         </ul>
                     </div>
                 </div>
@@ -1039,13 +1182,24 @@
                             </ul>
                         </div>
                     </div>
+                    @php
+                        $sum=0;
+                        foreach($best_books[1]->reviews as $review){
+                            $sum+=$review->star;
+                        }
+                        if(count($best_books[1]->reviews)==0 )
+                            $avg=0;
+                        else
+                            $avg=ceil($sum/count($best_books[1]->reviews));
+                    @endphp
                     <div class="product__hover--content">
                         <ul class="rating d-flex">
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
+                            @for($star=0;$star<$avg;$star++)
+                                <li class="on"><i class="fa fa-star-o"></i></li>
+                            @endfor
+                            @for($star=5;$star>$avg;$star--)
+                                <li><i class="fa fa-star-o"></i></li>
+                            @endfor
                         </ul>
                     </div>
                 </div>
@@ -1076,13 +1230,24 @@
                             </ul>
                         </div>
                     </div>
+                    @php
+                        $sum=0;
+                        foreach($best_books[2]->reviews as $review){
+                            $sum+=$review->star;
+                        }
+                        if(count($best_books[2]->reviews)==0 )
+                            $avg=0;
+                        else
+                            $avg=ceil($sum/count($best_books[2]->reviews));
+                    @endphp
                     <div class="product__hover--content">
                         <ul class="rating d-flex">
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
+                            @for($star=0;$star<$avg;$star++)
+                                <li class="on"><i class="fa fa-star-o"></i></li>
+                            @endfor
+                            @for($star=5;$star>$avg;$star--)
+                                <li><i class="fa fa-star-o"></i></li>
+                            @endfor
                         </ul>
                     </div>
                 </div>
@@ -1113,13 +1278,24 @@
                             </ul>
                         </div>
                     </div>
+                    @php
+                        $sum=0;
+                        foreach($best_books[3]->reviews as $review){
+                            $sum+=$review->star;
+                        }
+                        if(count($best_books[3]->reviews)==0 )
+                            $avg=0;
+                        else
+                            $avg=ceil($sum/count($best_books[3]->reviews));
+                    @endphp
                     <div class="product__hover--content">
                         <ul class="rating d-flex">
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
+                            @for($star=0;$star<$avg;$star++)
+                                <li class="on"><i class="fa fa-star-o"></i></li>
+                            @endfor
+                            @for($star=5;$star>$avg;$star--)
+                                <li><i class="fa fa-star-o"></i></li>
+                            @endfor
                         </ul>
                     </div>
                 </div>
@@ -1186,13 +1362,25 @@
                             </ul>
                         </div>
                     </div>
+
+                    @php
+                        $sum=0;
+                        foreach($best_books[4]->reviews as $review){
+                            $sum+=$review->star;
+                        }
+                        if(count($best_books[4]->reviews)==0 )
+                            $avg=0;
+                        else
+                            $avg=ceil($sum/count($best_books[4]->reviews));
+                    @endphp
                     <div class="product__hover--content">
                         <ul class="rating d-flex">
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
+                            @for($star=0;$star<$avg;$star++)
+                                <li class="on"><i class="fa fa-star-o"></i></li>
+                            @endfor
+                            @for($star=5;$star>$avg;$star--)
+                                <li><i class="fa fa-star-o"></i></li>
+                            @endfor
                         </ul>
                     </div>
                 </div>
@@ -1222,13 +1410,25 @@
                             </ul>
                         </div>
                     </div>
+
+                    @php
+                        $sum=0;
+                        foreach($best_books[5]->reviews as $review){
+                            $sum+=$review->star;
+                        }
+                        if(count($best_books[5]->reviews)==0 )
+                            $avg=0;
+                        else
+                            $avg=ceil($sum/count($best_books[5]->reviews));
+                    @endphp
                     <div class="product__hover--content">
                         <ul class="rating d-flex">
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
+                            @for($star=0;$star<$avg;$star++)
+                                <li class="on"><i class="fa fa-star-o"></i></li>
+                            @endfor
+                            @for($star=5;$star>$avg;$star--)
+                                <li><i class="fa fa-star-o"></i></li>
+                            @endfor
                         </ul>
                     </div>
                 </div>
@@ -1258,13 +1458,25 @@
                             </ul>
                         </div>
                     </div>
+
+                    @php
+                        $sum=0;
+                        foreach($best_books[6]->reviews as $review){
+                            $sum+=$review->star;
+                        }
+                        if(count($best_books[6]->reviews)==0 )
+                            $avg=0;
+                        else
+                            $avg=ceil($sum/count($best_books[6]->reviews));
+                    @endphp
                     <div class="product__hover--content">
                         <ul class="rating d-flex">
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
+                            @for($star=0;$star<$avg;$star++)
+                                <li class="on"><i class="fa fa-star-o"></i></li>
+                            @endfor
+                            @for($star=5;$star>$avg;$star--)
+                                <li><i class="fa fa-star-o"></i></li>
+                            @endfor
                         </ul>
                     </div>
                 </div>

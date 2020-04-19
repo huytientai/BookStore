@@ -113,4 +113,7 @@ class Book extends Model
         return $this->belongsTo('App\Models\Nhaxuatban');
     }
 
+    public function reviews(){
+        return $this->hasMany('App\Models\Review');
+    }
 }

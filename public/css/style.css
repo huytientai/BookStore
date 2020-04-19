@@ -3999,6 +3999,9 @@ h3.widget-title-modal {
   font-size: 18px;
   margin-right: 4px;
 }
+.product__info__main .product-reviews-summary .rating-summary li.off i {
+    color: #c7c7c7;
+}
   .product__info__main .product-reviews-summary .reviews-actions a {
     color: #858484;
     font-size: 12px;
