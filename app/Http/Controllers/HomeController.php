@@ -92,7 +92,7 @@ class HomeController extends Controller
         if (count($id) < $limit) {
             $x = $limit - count($id);
             if ($category == null) {
-                $array = $this->book->whereNotIn('id', $id)->limit($x)->get()->pluck('book_id');
+                $array = $this->book->whereNotIn('id', $id)->limit($x)->get()->pluck('id');
             } else
                 $array = $this->book->where('loaisach_id', '=', $category)->whereNotIn('id', $id)->limit($x)->get()->pluck('id');
 
