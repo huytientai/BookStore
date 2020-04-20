@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
             $table->string('phone', 15);
             $table->string('email', 100);
             $table->string('address', 255);
-            $table->string('company', 255);
+            $table->string('company', 255)->nullable();
 
             $table->timestamps();
             $table->softDeletes();

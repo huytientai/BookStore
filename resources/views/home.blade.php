@@ -319,9 +319,9 @@
                     <div class="product__nav nav justify-content-center" role="tablist">
                         <a class="nav-item nav-link active" data-toggle="tab" href="#nav-all" role="tab">ALL</a>
                         <a class="nav-item nav-link" data-toggle="tab" href="#nav-biographic" role="tab">{{ $b1[0]->loaisach->name }}</a>
-                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-adventure" role="tab">ADVENTURE</a>
-                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-children" role="tab">CHILDREN</a>
-                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-cook" role="tab">COOK</a>
+                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-adventure" role="tab">{{ $b2[0]->loaisach->name }}</a>
+                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-children" role="tab">{{ $b3[0]->loaisach->name }}</a>
+                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-cook" role="tab">{{ $b4[0]->loaisach->name }}</a>
                     </div>
                 </div>
             </div>

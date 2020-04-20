@@ -56,6 +56,16 @@ class Book extends Model
         return $this->find($request->id)->update($data);
     }
 
+    public function findCategoryWithoutIds($category, $array, $limit)
+    {
+        if ($limit == 0)
+            $id = $this->findLoaisach($category)->whereNotIn('id', $array)->pluck('id');
+        else
+            $id = $this->findLoaisach($category)->whereNotIn('id', $array)->limit($limit)->pluck('id');
+
+        return $id;
+    }
+
     public function searchBook($data)
     {
         $builder = $this->orderBy('name');
@@ -113,7 +123,8 @@ class Book extends Model
         return $this->belongsTo('App\Models\Nhaxuatban');
     }
 
-    public function reviews(){
+    public function reviews()
+    {
         return $this->hasMany('App\Models\Review');
     }
 }
