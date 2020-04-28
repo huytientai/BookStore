@@ -10,7 +10,10 @@ $factory->define(Orderdetail::class, function (Faker $faker) {
         //
         'order_id' => $faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
         'book_id' => $faker->unique()->numberBetween($min = 1, $max = 100),
-        'sell_price' => $faker->randomFloat(0.5, 10, 100),
         'quantity' => $faker->randomElement([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
     ];
+})->afterCreating(\App\Models\Orderdetail::class, function (\App\Models\Orderdetail $orderdetail, Faker $faker) {
+    $book = \App\Models\Book::find($orderdetail->book_id);
+    $orderdetail->sell_price = $book->price;
+    $orderdetail->save();
 });

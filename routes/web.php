@@ -46,6 +46,8 @@ Route::resource('/orders', 'OrdersController')->middleware(['auth']);
 
 Route::resource('/reviews', 'ReviewsController');
 
+Route::get('/charts', 'ChartController@index')->name('charts.index')->middleware('auth');
+
 Route::get('/about', function () {
     return view('about');
 })->name('about');

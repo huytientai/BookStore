@@ -15,4 +15,7 @@ $factory->define(Order::class, function (Faker $faker) {
         'phone' => $faker->e164PhoneNumber,
         'email' => $faker->unique()->email,
     ];
+})->afterCreating(\App\Models\Order::class, function (\App\Models\Order $order, Faker $faker) {
+    $order->total_price = \App\Models\Orderdetail::select(\Illuminate\Support\Facades\DB::raw('sum(sell_price*quantity) as sum'))->where('order_id','=',$order->id)->get()[0]->sum;
+    $order->save();
 });

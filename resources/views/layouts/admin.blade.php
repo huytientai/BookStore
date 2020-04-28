@@ -50,9 +50,9 @@
         <div class="sidebar-wrapper">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="dashboard.blade.php">
+                    <a class="nav-link" href="{{ route('charts.index') }}">
                         <i class="material-icons">bar_chart</i>
-{{--                        <i class="material-icons">show_chart</i>--}}
+                        {{--                        <i class="material-icons">show_chart</i>--}}
                         <p>Chart</p>
                     </a>
                 </li>
@@ -164,7 +164,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                                 <a class="dropdown-item" href="{{ route('users.show', Auth::id()) }}">Your Profile</a>
-{{--                                <a class="dropdown-item" href="{{ route('users.create') }}">Create User</a>--}}
+                                {{--                                <a class="dropdown-item" href="{{ route('users.create') }}">Create User</a>--}}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
@@ -439,6 +439,8 @@
         });
     });
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+
 </body>
 
 </html>
