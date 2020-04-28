@@ -49,49 +49,50 @@
         </div>
         <div class="sidebar-wrapper">
             <ul class="nav">
-                <li class="nav-item  ">
+                <li class="nav-item">
                     <a class="nav-link" href="dashboard.blade.php">
-                        <i class="material-icons">dashboard</i>
-                        <p>Dashboard</p>
+                        <i class="material-icons">bar_chart</i>
+{{--                        <i class="material-icons">show_chart</i>--}}
+                        <p>Chart</p>
                     </a>
                 </li>
-                <li class="nav-item active ">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('users.index') }}">
                         <i class="material-icons">person</i>
                         <p>Users List</p>
                     </a>
                 </li>
-                <li class="nav-item ">
-                    <a class="nav-link" href="./tables.html">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('imports.index') }}">
                         <i class="material-icons">content_paste</i>
-                        <p>Table List</p>
+                        <p>Import list</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="./typography.html">
                         <i class="material-icons">library_books</i>
                         <p>Typography</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="./icons.html">
                         <i class="material-icons">bubble_chart</i>
                         <p>Icons</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="./map.html">
                         <i class="material-icons">location_ons</i>
                         <p>Maps</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="./notifications.html">
                         <i class="material-icons">notifications</i>
                         <p>Notifications</p>
                     </a>
                 </li>
-                <li class="nav-item ">
+                <li class="nav-item">
                     <a class="nav-link" href="./rtl.html">
                         <i class="material-icons">language</i>
                         <p>RTL Support</p>
@@ -163,9 +164,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
                                 <a class="dropdown-item" href="{{ route('users.show', Auth::id()) }}">Your Profile</a>
-                                <a class="dropdown-item" href="{{ route('users.create') }}">Create User</a>
+{{--                                <a class="dropdown-item" href="{{ route('users.create') }}">Create User</a>--}}
                                 <div class="dropdown-divider"></div>
-                                {{--                                <a class="dropdown-item" href="{{ route('logout') }}">Log out</a>--}}
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

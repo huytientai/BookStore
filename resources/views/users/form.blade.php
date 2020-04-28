@@ -1,10 +1,10 @@
 {{--user name--}}
 @can('admin')
     <div class="form-group row">
-        <label for="user-name" class="col-sm-2 col-form-label @error('user_name') text-danger @enderror">User Name</label>
+        <label for="email" class="col-sm-2 col-form-label @error('email') text-danger @enderror">Email</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control @error('user_name') is-invalid @enderror" id="user-name" name="user_name" value="{{ old('user_name') ?? $user->user_name ?? null }}">
-            @error('user_name')
+            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email-name" name="email" value="{{ old('email') ?? $user->email ?? null }}">
+            @error('email')
             <div class="text-danger">{{ $message }}</div>
             @enderror
         </div>

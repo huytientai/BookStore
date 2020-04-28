@@ -14,20 +14,14 @@ class UsersTableSeeder extends Seeder
         //reset  database
         \App\Models\User::truncate();
 
-//        \App\Models\User::create([
-//            'email' => 'admin',
-//            'password' => Hash::make('admin'),
-//            'name' => 'admin',
-//            'role' => \App\Models\User::ADMIN,
-//        ]);
-        //create 100 random users
-        factory(\App\Models\User::class, 10)->create();
-
         \App\Models\User::create([
             'email' => 'admin',
             'password' => Hash::make('admin'),
             'name' => 'admin',
             'role' => \App\Models\User::ADMIN,
         ]);
+
+        //create 10 random users
+        factory(\App\Models\User::class, 10)->create();
     }
 }

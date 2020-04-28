@@ -31,6 +31,10 @@ class Book extends Model
     public function saveBook($request)
     {
         $data = $request->all();
+
+        if (!$data['soluong'])
+            unset($data['soluong']);
+
         if ($request->hasFile('image')) {
             $clientImageName = pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME);
             $clientImageExtension = $request->image->getClientOriginalExtension();

@@ -72,6 +72,14 @@ class HomeController extends Controller
                 }
             }
         }
+
+        if (count($result) < $limit) {
+            $x = $limit - count($result);
+            $books = $this->book->where('created_at', '<', now()->subDays($days)->toDateTimeString())->orderBy('created_at','desc')->limit($x)->get();
+            foreach ($books as $book) {
+                array_push($result, $book);
+            }
+        }
         return $result;
     }
 

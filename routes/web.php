@@ -25,14 +25,20 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/users', 'UsersController')->middleware(['auth']);
 
 Route::resource('/books', 'BooksController');
+Route::post('/books/{id}/importRequest', 'BooksController@storeImportRequest')->name('books.importRequest');
 
 Route::resource('/loaisachs', 'LoaisachsController');
 Route::resource('/nhaxuatbans', 'NhaxuatbansController');
 Route::resource('/tacgias', 'TacgiasController');
 
+Route::resource('/imports', 'ImportsController')->middleware(['auth']);
+Route::get('/imports/{id}/accept','ImportsController@accept')->name('imports.accept')->middleware('auth');
+Route::get('/imports/{id}/denies', 'ImportsController@denies')->name('imports.denies')->middleware('auth');
+Route::post('/imports/{id}/revert','ImportsController@revert')->name('imports.revert')->middleware('auth');
+
 //Route::get('/favorites', 'FavoritesController')->middleware(['auth']);
-Route::post('/checkout','CheckoutsController@index')->name('checkout.index')->middleware(['auth']);
-Route::post('/checkout/store','CheckoutsController@store')->name('checkout.store')->middleware(['auth']);
+Route::post('/checkout', 'CheckoutsController@index')->name('checkout.index')->middleware(['auth']);
+Route::post('/checkout/store', 'CheckoutsController@store')->name('checkout.store')->middleware(['auth']);
 
 Route::resource('/carts', 'CartsController')->middleware(['auth']);
 

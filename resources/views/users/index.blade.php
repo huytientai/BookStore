@@ -5,6 +5,12 @@
 @section('content')
     <br>
     <div class="container">
+        @can('admin')
+            <a href="{{ route('users.create') }}">
+                <button class="btn btn-primary">Create User</button>
+            </a>
+        @endcan
+        <br><br>
         @include('flash::message')
 
         <div class="container">
@@ -33,17 +39,17 @@
         @if(count($users))
             <table class="table">
                 <thead class="thead-light text-center">
-                    <tr>
-                        <th>STT</th>
-                        <th>Account</th>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>Phone</th>
-                        <th width="120">Role</th>
-                        @can('admin')
-                            <th width="230">Action</th>
-                        @endcan
-                    </tr>
+                <tr>
+                    <th>STT</th>
+                    <th>Account</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th width="120">Role</th>
+                    @can('admin')
+                        <th width="230">Action</th>
+                    @endcan
+                </tr>
                 </thead>
 
                 @foreach($users as $key => $user)
@@ -96,6 +102,9 @@
     </div>
 
     <script type="text/javascript">
+        sidebar = document.getElementsByClassName('sidebar-wrapper').item(0).getElementsByClassName('nav').item(0);
+        sidebar.getElementsByTagName('li').item(1).classList.add('active');
+
         function deleteData(id) {
             var id = id;
             var url = '{{ route("users.destroy", ":id") }}';

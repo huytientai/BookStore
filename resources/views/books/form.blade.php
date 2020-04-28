@@ -11,13 +11,16 @@
 
 {{--Loai sach--}}
 <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Chọn Loai Sach</label>
+    <label class="col-sm-2 col-form-label @error('loaisach_id') text-danger @enderror">Chọn Loai Sach</label>
     <div class="col-sm-5">
         <select class="browser-default custom-select mr-sm-0" name="loaisach_id">
             @foreach(\App\Models\Loaisach::pluck('name', 'id')->toArray() as $key => $value)
                 <option value="{{ $key }}" {{ ((old('loaisach_id') ?? $book->loaisach_id ?? 0) == $key) ? 'selected' : '' }}>{{ $value }}</option>
             @endforeach
         </select>
+        @error('loaisach_id')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
     </div>
 </div>
 
@@ -61,9 +64,9 @@
     <label for="image" class="col-md-2 col-form-label">Book Image</label>
     <div class="col-md-5">
         <input id="image" type="file" name="image">
-{{--        @if ($book->image)--}}
-{{--            <code>{{ $book->image }}</code>--}}
-{{--        @endif--}}
+        {{--        @if ($book->image)--}}
+        {{--            <code>{{ $book->image }}</code>--}}
+        {{--        @endif--}}
     </div>
 </div>
 
@@ -117,6 +120,17 @@
     <div class="col-sm-5">
         <input type="number" class="form-control @error('sotrang') is-invalid @enderror" id="sotrang" name="sotrang" value="{{ old('sotrang') ?? $book->sotrang ?? null }}">
         @error('sotrang')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+{{--book soluong--}}
+<div class="form-group row">
+    <label for="soluong" class="col-sm-2 col-form-label @error('soluong') text-danger @enderror">So luong</label>
+    <div class="col-sm-5">
+        <input type="number" class="form-control @error('soluong') is-invalid @enderror" id="soluong" name="soluong" value="{{ old('soluong') ?? $book->soluong ?? null }}">
+        @error('soluong')
         <div class="text-danger">{{ $message }}</div>
         @enderror
     </div>

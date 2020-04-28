@@ -33,6 +33,9 @@
                                             </form>
                                         @endcanany
                                     </div>
+                                    @canany(['admin','staff','warehouseman'])
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#import-modal">Import</button>
+                                    @endcan
                                 </div>
                             </div>
                             <div class="col-lg-6 col-12">
@@ -822,6 +825,40 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    {{--    import modal--}}
+    <div id="import-modal" class="modal" role="dialog">
+        <div class="modal-dialog">
+            <form action="{{ route('books.importRequest',$book->id) }}" method="post">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <h4 class="modal-title text-center text-dark">Import Book</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body" style="padding-left: 15px">
+                        @csrf
+                        <div>
+                            <p>Quantity: </p>
+                            <input type="number" class="form-control-sm" name="quantity" min="1" required>
+                        </div>
+                        <div>
+                            <p>From: </p>
+                            <input type="text" class="form-control-sm" name="from" >
+                        </div>
+                        <div>
+                            <p>Note: </p>
+                            <textarea type="text" class="form-control" name="note"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                        <button type="submit" name="" class="btn btn-primary">Send Request</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 

@@ -42,13 +42,17 @@ class User extends Authenticatable
     ];
 
     const ADMIN = 1;
-    const STAFF = 2;
-    const GUESS = 3;
+    const GUESS = 2;
+    const STAFF = 3;
+    const WAREHOUSEMAN = 4;
+    const SELLER = 5;
 
     public static $roles = [
-        self::ADMIN => 'Quản trị viên',
-        self::STAFF => 'Nhân viên',
-        self::GUESS => 'Người dùng',
+        self::ADMIN => 'Admin',
+        self::GUESS => 'User',
+        self::STAFF => 'Staff',
+        self::WAREHOUSEMAN => 'Warehouseman',
+        self::SELLER => 'Seller',
     ];
 
     /**
@@ -186,4 +190,5 @@ class User extends Authenticatable
     {
         $this->hasMany('App\Models\Orderdetail');
     }
+
 }
