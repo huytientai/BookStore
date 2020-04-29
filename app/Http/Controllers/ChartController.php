@@ -11,14 +11,12 @@ use Illuminate\Support\Facades\DB;
 
 class ChartController extends Controller
 {
-    protected $revenue;
     protected $order;
     protected $orderDetail;
     protected $category;
 
-    public function __construct(Revenue $revenue, Order $order, Orderdetail $orderDetail,Loaisach $category)
+    public function __construct( Order $order, Orderdetail $orderDetail,Loaisach $category)
     {
-        $this->revenue = $revenue;
         $this->order = $order;
         $this->orderDetail = $orderDetail;
         $this->category = $category;
@@ -29,8 +27,8 @@ class ChartController extends Controller
      */
     public function index()
     {
-        $chart = $this->revenue;
-        $chart->labels(range(1, 31, 1));
+        $lineChart = new Revenue();
+        $lineChart->labels(range(1, 31, 1));
 
         $total = $this->order->select(DB::raw("DATE_FORMAT(created_at,'%d') as date,sum(total_price)"))->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->groupBy('date')->orderBy('date')->get()->pluck('sum(total_price)', 'date')->toArraY();
         for ($i = 1; $i < 32; $i++) {
@@ -39,16 +37,34 @@ class ChartController extends Controller
             }
         }
         ksort($total);
-        $chart->dataset('Total', 'line', array_values($total))->color('red');
+        $lineChart->dataset('Total', 'line', array_values($total))->color('red');
 
         $categories = $this->category->all()->pluck('id','name')->toArray();
         foreach ($categories as $key => $value ) {
             $total=$this->getDayRevenueByCategory($value);
-            $chart->dataset($key, 'line',array_values($total))->color('#' . substr(str_shuffle('ABCDEF0123456789'), 0, 6));
+            $lineChart->dataset($key, 'line',array_values($total))->color('#' . substr(str_shuffle('ABCDEF0123456789'), 0, 6));
         }
-//        dd(mt_rand(0, 0xFFFFFF));
 
-        return view('charts.index', compact('chart'));
+        $barChart = new Revenue();
+
+        $barChart->labels(range(1, 31, 1));
+
+        $total = $this->order->select(DB::raw("DATE_FORMAT(created_at,'%d') as date,sum(total_price)"))->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->groupBy('date')->orderBy('date')->get()->pluck('sum(total_price)', 'date')->toArraY();
+        for ($i = 1; $i < 32; $i++) {
+            if (!isset($total[$i])) {
+                $total[$i] = 0;
+            }
+        }
+        ksort($total);
+
+        $barChart->dataset('Total', 'line', array_values($total))->color('red');
+        $categories = $this->category->all()->pluck('id','name')->toArray();
+        foreach ($categories as $key => $value ) {
+            $total=$this->getDayRevenueByCategory($value);
+            $barChart->dataset($key, 'line',array_values($total))->color('#' . substr(str_shuffle('ABCDEF0123456789'), 0, 6));
+        }
+
+        return view('charts.index', compact('lineChart','barChart'));
     }
 
     public function getDayRevenueByCategory($id)
