@@ -65,8 +65,8 @@
     <!--  Google Maps Plugin    -->
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
     <!-- Chartist JS -->
-{{--<script src="{{ asset('js/plugins/chartist.min.js') }}"></script>--}}
-<!--  Notifications Plugin    -->
+    <script src="{{ asset('js/plugins/chartist.min.js') }}"></script>
+    <!--  Notifications Plugin    -->
     <script src="{{ asset('js/plugins/bootstrap-notify.js') }}"></script>
     <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
     <script src="{{ asset('js/material-dashboard.js?v=2.1.1') }}" type="text/javascript"></script>
@@ -88,10 +88,9 @@
         <div class="sidebar-wrapper">
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('charts.index') }}">
-                        <i class="material-icons">bar_chart</i>
-                        {{--                        <i class="material-icons">show_chart</i>--}}
-                        <p>Chart</p>
+                    <a class="nav-link" href="{{ route('dashboard') }}">
+                        <i class="material-icons">dashboard</i>
+                        <p>DashBoard</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -101,15 +100,22 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('charts.index') }}">
+                        <i class="material-icons">bar_chart</i>
+                        {{--                        <i class="material-icons">show_chart</i>--}}
+                        <p>Chart</p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('imports.index') }}">
                         <i class="material-icons">content_paste</i>
                         <p>Import list</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="./typography.html">
+                    <a class="nav-link" href="{{ route('dashboard') }}">
                         <i class="material-icons">library_books</i>
-                        <p>Typography</p>
+                        <p>DashBoard</p>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -262,8 +268,6 @@
         </footer>
     </div>
 </div>
-
-
 
 
 <script>

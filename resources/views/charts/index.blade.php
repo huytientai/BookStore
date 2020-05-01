@@ -32,7 +32,7 @@
         </div>
     </div>
 
-    <br><br><hr><br><br>
+    <br><br><hr><br>
 
     <div style="padding-left: 15px;padding-right: 15px;height: 500px">
         <h3 style="color:dodgerblue">Last Month</h3>
@@ -67,6 +67,6 @@
 
     <script>
         sidebar = document.getElementsByClassName('sidebar-wrapper').item(0).getElementsByClassName('nav').item(0);
-        sidebar.getElementsByTagName('li').item(0).classList.add('active');
+        sidebar.getElementsByTagName('li').item(2).classList.add('active');
     </script>
 @endsection

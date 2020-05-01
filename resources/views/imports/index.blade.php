@@ -81,6 +81,6 @@
 
     <script>
         sidebar = document.getElementsByClassName('sidebar-wrapper').item(0).getElementsByClassName('nav').item(0);
-        sidebar.getElementsByTagName('li').item(2).classList.add('active');
+        sidebar.getElementsByTagName('li').item(3).classList.add('active');
     </script>
 @endsection
