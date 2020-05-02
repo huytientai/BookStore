@@ -112,18 +112,7 @@
                         <p>Import list</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard') }}">
-                        <i class="material-icons">library_books</i>
-                        <p>DashBoard</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./icons.html">
-                        <i class="material-icons">bubble_chart</i>
-                        <p>Icons</p>
-                    </a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="./map.html">
                         <i class="material-icons">location_ons</i>
@@ -136,18 +125,7 @@
                         <p>Notifications</p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="./rtl.html">
-                        <i class="material-icons">language</i>
-                        <p>RTL Support</p>
-                    </a>
-                </li>
-                <li class="nav-item active-pro ">
-                    <a class="nav-link" href="./upgrade.html">
-                        <i class="material-icons">unarchive</i>
-                        <p>Upgrade to PRO</p>
-                    </a>
-                </li>
+
             </ul>
         </div>
     </div>
@@ -176,7 +154,7 @@
                     </form>
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#pablo">
+                            <a class="nav-link" href="{{ route('dashboard') }}">
                                 <i class="material-icons">dashboard</i>
                                 <p class="d-lg-none d-md-block">
                                     Stats

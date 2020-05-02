@@ -11,7 +11,7 @@
 
 {{--Loai sach--}}
 <div class="form-group row">
-    <label class="col-sm-2 col-form-label @error('loaisach_id') text-danger @enderror">Chọn Loai Sach</label>
+    <label class="col-sm-2 col-form-label @error('loaisach_id') text-danger @enderror">Category</label>
     <div class="col-sm-5">
         <select class="browser-default custom-select mr-sm-0" name="loaisach_id">
             @foreach(\App\Models\Loaisach::pluck('name', 'id')->toArray() as $key => $value)
@@ -26,7 +26,7 @@
 
 {{--Tac Gia--}}
 <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Tac Gia</label>
+    <label class="col-sm-2 col-form-label">Author</label>
     <div class="col-sm-5">
         <select class="browser-default custom-select mr-sm-0" name="tacgia_id">
             @foreach(\App\Models\tacgia::pluck('name', 'id')->toArray() as $key => $value)
@@ -38,7 +38,7 @@
 
 {{--Nha xuat ban--}}
 <div class="form-group row">
-    <label class="col-sm-2 col-form-label">Nha xuat ban</label>
+    <label class="col-sm-2 col-form-label">Publishing Comp</label>
     <div class="col-sm-5">
         <select class="browser-default custom-select mr-sm-0" name="nhaxuatban_id">
             @foreach(\App\Models\Nhaxuatban::pluck('name', 'id')->toArray() as $key => $value)
@@ -83,7 +83,7 @@
 
 {{--book ngayxb--}}
 <div class="form-group row">
-    <label for="ngayxb" class="col-sm-2 col-form-label @error('ngayxb') text-danger @enderror">Ngay xuat ban</label>
+    <label for="ngayxb" class="col-sm-2 col-form-label @error('ngayxb') text-danger @enderror">Publish Date</label>
     <div class="col-sm-5">
         <input type="text" class="form-control @error('ngayxb') is-invalid @enderror" id="ngayxb" name="ngayxb" value="{{ old('ngayxb') ?? $book->ngayxb ?? null }}">
         @error('ngayxb')
@@ -105,7 +105,7 @@
 
 {{--book loaibia--}}
 <div class="form-group row">
-    <label for="loaibia" class="col-sm-2 col-form-label @error('loaibia') text-danger @enderror">Loai bia</label>
+    <label for="loaibia" class="col-sm-2 col-form-label @error('loaibia') text-danger @enderror">Paper Cover</label>
     <div class="col-sm-5">
         <input type="text" class="form-control @error('loaibia') is-invalid @enderror" id="loaibia" name="loaibia" value="{{ old('loaibia') ?? $book->loaibia ?? null }}">
         @error('loaibia')
@@ -116,7 +116,7 @@
 
 {{--book sotrang--}}
 <div class="form-group row">
-    <label for="sotrang" class="col-sm-2 col-form-label @error('sotrang') text-danger @enderror">So trang</label>
+    <label for="sotrang" class="col-sm-2 col-form-label @error('sotrang') text-danger @enderror">Number of Pages</label>
     <div class="col-sm-5">
         <input type="number" class="form-control @error('sotrang') is-invalid @enderror" id="sotrang" name="sotrang" value="{{ old('sotrang') ?? $book->sotrang ?? null }}">
         @error('sotrang')
@@ -127,7 +127,7 @@
 
 {{--book soluong--}}
 <div class="form-group row">
-    <label for="soluong" class="col-sm-2 col-form-label @error('soluong') text-danger @enderror">So luong</label>
+    <label for="soluong" class="col-sm-2 col-form-label @error('soluong') text-danger @enderror">Number of Books</label>
     <div class="col-sm-5">
         <input type="number" class="form-control @error('soluong') is-invalid @enderror" id="soluong" name="soluong" value="{{ old('soluong') ?? $book->soluong ?? null }}">
         @error('soluong')

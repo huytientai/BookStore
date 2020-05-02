@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 
 class DashboardController extends Controller
@@ -35,9 +36,17 @@ class DashboardController extends Controller
         }
 
         // info
+        $free = ceil(disk_free_space('D:') / 1024 / 1024 / 1024 * 100) / 100;
+        $total = ceil(disk_total_space('D:') / 1024 / 1024 / 1024);
+
+        $used = $total - $free;
+//        $used *= 10;
+
         $revenue = $this->order->select(DB::raw('sum(total_price) as sum'))->where('created_at', '>=', now()->subDays(1)->toDateTimeString())->get()->pluck('sum')->toArray()[0];
         $register = $this->user->select(DB::raw('count(*) as register'))->where('created_at', '>=', now()->subDays(30)->toDateTimeString())->get()->pluck('register')->toArray()[0];
 
+        $info['used'] = $used;
+        $info['total'] = $total;
         $info['revenue'] = $revenue;
         $info['register'] = $register;
 

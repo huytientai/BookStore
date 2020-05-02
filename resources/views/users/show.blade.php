@@ -36,12 +36,12 @@
                             </div>
                             <div class="col-lg-6 col-12">
                                 <div class="product__info__main">
-                                    <h1>{{ Auth::user()->name }}</h1>
+                                    <h1>{{ $user->name }}</h1>
 
                                     <div class="product__overview">
-                                        <p>Address: {{ Auth::user()->address }}</p>
-                                        <p>Phone: {{ Auth::user()->phone }}</p>
-                                        <a class="btn btn-primary" href="{{ route('users.edit', Auth::user()->id) }}">edit</a>
+                                        <p>Address: {{ $user->address }}</p>
+                                        <p>Phone: {{ $user->phone }}</p>
+                                        <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">edit</a>
                                     </div>
                                 </div>
                             </div>

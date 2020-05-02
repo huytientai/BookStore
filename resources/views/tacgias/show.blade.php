@@ -28,7 +28,7 @@
             <h4> Address</h4>
             <p>{!! $tacgia->address !!}</p>
             <hr>
-            <h4> Tieu Su</h4>
+            <h4>Life and Career</h4>
             <p>{!! $tacgia->desc !!}</p>
             <small>written on {{ $tacgia->created_at }}</small>
             <hr>

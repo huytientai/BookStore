@@ -1,13 +1,13 @@
 @extends('exam1.default')
 
-@section('title', 'Cập nhật người dùng')
+@section('title', 'Update User')
 
 @section('content')
     <br>
     <br>
     <div class="container">
         <br>
-        <h3>Cập nhật</h3>
+        <h3>Update</h3>
         <form action="{{ route('users.update', $user->id) }}" method="post">
             @csrf
             @method('PUT')
@@ -15,7 +15,7 @@
             @include('users.form')
 
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                <button type="submit" class="btn btn-primary">Update</button>
             </div>
         </form>
     </div>

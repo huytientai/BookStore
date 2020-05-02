@@ -7,12 +7,12 @@
         <div class="container">
             <br><br><br><br>
 	    @canany(['admin','staff'])
-                                <a class="btn btn-primary" href="{{ route('loaisachs.create') }}">Create Loai sach</a>
+                                <a class="btn btn-primary" href="{{ route('loaisachs.create') }}">Create Categories</a>
                                 <br><br>
                             @endcanany
             @include('flash::message')
 
-            <h1>Loaisachs</h1>
+            <h1>Categories</h1>
             @if(count($loaisachs)>0)
                 @foreach($loaisachs as $key => $loaisach)
                     <div class="card card-body bg-light">

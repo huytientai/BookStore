@@ -6,7 +6,7 @@
     <div class="maincontent bg--white pt--80 pb--55">
         <div class="container">
             <br>
-            <h1>Edit Nhaxuatban</h1>
+            <h1>Edit Publishing Company</h1>
             <form action="{{ route('nhaxuatbans.update', $nhaxuatban->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -14,7 +14,7 @@
 
                 @include('nhaxuatbans.form')
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">EDIT NHAXUATBAN</button>
+                    <button type="submit" class="btn btn-primary">EDIT</button>
                 </div>
             </form>
             <br>

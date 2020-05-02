@@ -1,17 +1,17 @@
 @extends('layouts.admin')
 
-@section('title', 'Thêm mới người dùng')
+@section('title', 'Create User')
 
 @section('content')
     <br>
     <br>
 
-    <h3>Đăng ký</h3>
+    <h3>Create New User</h3>
     <form action="{{ route('users.store') }}" method="post">
         @csrf
         @include('users.form')
         <div class="form-group">
-            <button type="submit" class="btn btn-primary">Đăng ký</button>
+            <button type="submit" class="btn btn-primary">Create</button>
         </div>
     </form>
 

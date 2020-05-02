@@ -7,13 +7,13 @@
         <div class="container">
             <br>
             @canany(['admin','staff'])
-                <a class="btn btn-primary" href="{{ route('nhaxuatbans.create') }}">Create Nha xuat ban</a>
+                <a class="btn btn-primary" href="{{ route('nhaxuatbans.create') }}">Create Publishing Company</a>
                 <br><br>
             @endcanany
 
             @include('flash::message')
 
-            <h1>Nhà xuất bản</h1>
+            <h1>Publishing Company</h1>
             @if(count($nhaxuatbans)>0)
                 @foreach($nhaxuatbans as $key => $nhaxuatban)
                     <div class="card card-body bg-light">

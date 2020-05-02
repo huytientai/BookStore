@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -93,8 +94,9 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        if (Auth::user()->id == $id) {
-            return view('users.show');
+        if (Auth::user()->id == $id || Gate::any(['admin', 'staff'], Auth::user())) {
+            $user = $this->user->find($id);
+            return view('users.show')->with('user', $user);
         }
 
         return redirect()->route('home');
@@ -111,10 +113,10 @@ class UsersController extends Controller
         if (Gate::allows('admin', Auth::user())) {
             $user = $this->user->find($id);
             if (!isset($user)) {
-                flash('cap nhat that bai')->error();
+                flash('User not exist')->error();
                 return redirect()->route('users.index');
             }
-            return view('users/edit')->with('user', $user);
+            return view('users.edit')->with('user', $user);
         } elseif (Auth::user()->id == $id) {
 //            $user = $this->user->find($id);
             return view('users/edit')->with('user', Auth::user());
@@ -131,8 +133,9 @@ class UsersController extends Controller
      * @param \Illuminate\Http\StoreUserRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUserRequest $request)
+    public function update(UpdateUserRequest $request)
     {
+        dd($request->all());
         if (Gate::allows('admin', Auth::user())) {
             if ($this->user->updateUser($request)) {
                 flash('Cap nhat thanh cong')->success();

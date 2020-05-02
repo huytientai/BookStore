@@ -91,12 +91,12 @@
 											</span>
                                     </div>
                                     <div class="product_meta">
-											<span class="posted_in">Tac Gia:
+											<span class="posted_in">Author:
 												<a href="{{ route('tacgias.show', $book->tacgia_id) }}">{{ $book->tacgia->name }}</a>
 											</span>
                                     </div>
                                     <div class="product_meta">
-											<span class="posted_in">Nha Xuat Ban:
+											<span class="posted_in">Publishing Company:
 												<a href="{{ route('nhaxuatbans.show', $book->nhaxuatban_id) }}">{{ $book->nhaxuatban->name }}</a>
 											</span>
                                     </div>
@@ -141,10 +141,10 @@
                                 <div class="description__attribute">
                                     <p>{!! $book->desc !!}</p>
                                     <br>
-                                    <p>Ngay Xuat Ban: {{ $book->ngayxb }}</p>
+                                    <p>Publish Date: {{ $book->ngayxb }}</p>
                                     <p>Size: {{ $book->size }}</p>
-                                    <p>Loai Bia: {{ $book->loaibia }}</p>
-                                    <p>So Trang: {{ $book->sotrang }}</p>
+                                    <p>Paper Cover: {{ $book->loaibia }}</p>
+                                    <p>Pages: {{ $book->sotrang }}</p>
                                     <ul>
                                         <li></li>
                                         <li></li>

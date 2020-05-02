@@ -6,7 +6,7 @@
     <div class="cart-main-area section-padding--lg bg--white">
         <div class="container">
             <br>
-            <h1>Edit Tacgia</h1>
+            <h1>Edit Author</h1>
             <form action="{{ route('tacgias.update', $tacgia->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -14,7 +14,7 @@
 
                 @include('tacgias.form')
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">EDIT TACGIA</button>
+                    <button type="submit" class="btn btn-primary">EDIT</button>
                 </div>
             </form>
             <br>

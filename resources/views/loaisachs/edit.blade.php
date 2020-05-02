@@ -6,7 +6,7 @@
     <div class="cart-main-area section-padding--lg bg--white">
         <div class="container">
             <br>
-            <h1>Edit Loaisach</h1>
+            <h1>Edit Category</h1>
             <form action="{{ route('loaisachs.update', $loaisach->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -14,7 +14,7 @@
 
                 @include('loaisachs.form')
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">EDIT LOAISACH</button>
+                    <button type="submit" class="btn btn-primary">EDIT NAME</button>
                 </div>
             </form>
         </div>

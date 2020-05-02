@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Danh sách người dùng')
+@section('title', 'Users list')
 
 @section('content')
     <br>
@@ -55,7 +55,7 @@
                 @foreach($users as $key => $user)
                     <tr class="text-left">
                         <td>{{ $users->firstItem() + $key }}</td>
-                        <td>{{ $user->email }}</td>
+                        <td><a href="{{ route('users.show',$user->id) }}">{{ $user->email }}</a></td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->address }}</td>
                         <td>{{ $user->phone }}</td>
@@ -72,7 +72,7 @@
             </table>
             {!! $users->appends(request()->input())->links() !!}
         @else
-            <p class="text-center">Không có kết quả tìm kiếm.</p>
+            <p class="text-center">No Result.</p>
         @endif
     </div>
 
@@ -89,11 +89,11 @@
                     <div class="modal-body">
                         @csrf
                         @method('delete')
-                        <p class="text-center">Bạn có chắc chắn muốn xoá bản ghi này không?</p>
+                        <p class="text-center">Are you sure you want to delete this user?</p>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Huỷ</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Cancel</button>
                         <button type="submit" name="" class="btn btn-danger" data-dismiss="modal" onclick="formSubmit()">OK</button>
                     </div>
                 </div>

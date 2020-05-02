@@ -43,10 +43,10 @@
                         </li>
 
                         @canany(['admin','staff'])
-                            <li><a href="{{ route('loaisachs.index') }}">Book Type</a></li>
+                            <li><a href="{{ route('loaisachs.index') }}">Categories</a></li>
                         @endcanany
-                        <li><a href="{{ route('tacgias.index') }}">Tac Gia</a></li>
-                        <li><a href="{{ route('nhaxuatbans.index') }}">Nha Xuat Ban</a></li>
+                        <li><a href="{{ route('tacgias.index') }}">Author</a></li>
+                        <li><a href="{{ route('nhaxuatbans.index') }}">Publishing Company</a></li>
                         <li><a href="{{ route('about') }}">About Us</a></li>
                     </ul>
                 </nav>
@@ -161,7 +161,7 @@
             <div class="row">
                 <div class="col-auto">
                     <select class="browser-default custom-select mr-sm-0" name="loaisach_id">
-                        <option value="">book type</option>
+                        <option value="">Categories</option>
                         @foreach(\App\Models\Loaisach::pluck('name', 'id')->toArray() as $key => $value)
                             <option value="{{ $key }}" {{ ((request('loaisach_id') ?? 0) == $key) ? 'selected' : '' }}>{{ $value }}</option>
                         @endforeach
@@ -169,7 +169,7 @@
                 </div>
                 <div class="col-auto">
                     <select class="browser-default custom-select mr-sm-0" name="tacgia_id">
-                        <option value="">Tac gia</option>
+                        <option value="">Author</option>
                         @foreach(\App\Models\tacgia::pluck('name', 'id')->toArray() as $key => $value)
                             <option value="{{ $key }}" {{ ((request('tacgia_id') ?? 0) == $key) ? 'selected' : '' }}>{{ $value }}</option>
                         @endforeach
@@ -177,7 +177,7 @@
                 </div>
                 <div class="col-auto">
                     <select class="browser-default custom-select mr-sm-0" name="nhaxuatban_id">
-                        <option value="">Nha xuat ban</option>
+                        <option value="">Publishing Company</option>
                         @foreach(\App\Models\Nhaxuatban::pluck('name', 'id')->toArray() as $key => $value)
                             <option value="{{ $key }}" {{ ((request('nhaxuatban_id') ?? 0) == $key) ? 'selected' : '' }}>{{ $value }}</option>
                         @endforeach

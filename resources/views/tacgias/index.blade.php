@@ -7,12 +7,12 @@
         <div class="container">
             <br><br><br>
             @canany(['admin','staff'])
-                <a class="btn btn-primary" href="{{ route('tacgias.create') }}">Create Tac gia</a>
+                <a class="btn btn-primary" href="{{ route('tacgias.create') }}">Create Author</a>
                 <br><br>
             @endcanany
 
             @include('flash::message')
-            <h1>Tác giả</h1>
+            <h1>Authors</h1>
             @if(count($tacgias)>0)
                 @foreach($tacgias as $key => $tacgia)
                     <div class="card card-body bg-light">
@@ -35,7 +35,7 @@
                                     <p> Email: {!! substr($tacgia->email,0,100) !!}</p>
                                     <p> Phone: {!! substr($tacgia->phone,0,100) !!}</p>
                                     <p> Address: {!! substr($tacgia->address,0,50) . '...' !!}</p>
-                                    <p> Tieu Su: {!! substr($tacgia->desc,0,100) . '...' !!}</p>
+                                    <p> Life And Career: {!! substr($tacgia->desc,0,100) . '...' !!}</p>
                                     <small>update on {{ $tacgia->created_at }}</small>
                                 </div>
                             </div>

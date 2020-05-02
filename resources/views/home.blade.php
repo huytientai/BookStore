@@ -51,9 +51,7 @@
                                                 <a class="wishlist" href="{{ route('carts.show', $book->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                             </li>
                                             <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                            <li>
-                                                <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                            </li>
+
                                         </ul>
                                     </div>
                                 </div>
@@ -166,9 +164,7 @@
                                                         </li>
                                                         <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -230,9 +226,7 @@
                                                         </li>
                                                         <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -305,9 +299,7 @@
                                                         <li>
                                                             <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -370,9 +362,7 @@
                                                         <li>
                                                             <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -444,9 +434,7 @@
                                                         <li>
                                                             <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -509,9 +497,7 @@
                                                         <li>
                                                             <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -584,9 +570,7 @@
                                                         <li>
                                                             <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -649,9 +633,7 @@
                                                         <li>
                                                             <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -723,9 +705,7 @@
                                                         <li>
                                                             <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -788,9 +768,7 @@
                                                         <li>
                                                             <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
-                                                        <li>
-                                                            <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                                        </li>
+
                                                     </ul>
                                                 </div>
                                             </div>
@@ -930,9 +908,7 @@
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[0]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                <li>
-                                    <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -978,9 +954,7 @@
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                <li>
-                                    <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -1026,9 +1000,7 @@
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[2]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                <li>
-                                    <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -1074,9 +1046,7 @@
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[3]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                <li>
-                                    <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -1122,9 +1092,7 @@
                                     <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                <li>
-                                    <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -1158,9 +1126,7 @@
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[4]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                <li>
-                                    <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -1206,9 +1172,7 @@
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[5]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                <li>
-                                    <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -1254,9 +1218,7 @@
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[6]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
                                 <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                <li>
-                                    <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>

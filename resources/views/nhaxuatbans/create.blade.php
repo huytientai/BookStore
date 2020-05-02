@@ -6,12 +6,12 @@
     <div class="maincontent bg--white pt--80 pb--55">
         <div class="container">
             <br>
-            <h1>Add Nhaxuatban</h1>
+            <h1>Add Publishing Company</h1>
             <form action="{{ route('nhaxuatbans.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @include('nhaxuatbans.form')
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">ADD NHAXUATBAN</button>
+                    <button type="submit" class="btn btn-primary">ADD</button>
                 </div>
             </form>
             <br>
