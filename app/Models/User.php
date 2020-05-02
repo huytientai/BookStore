@@ -145,16 +145,17 @@ class User extends Authenticatable
     /**
      * update user in database
      *
-     * @param StoreUserRequest $request
+     * @param UpdateUserRequest $request
      * @return boolean
      */
     public function updateUser($request)
     {
         $data = $request->all();
+        $user = $this->find($request->id);
 
-        if (Auth::id() == $request->id) {
-            $data['email'] = Auth::user()->email;
-        }
+        $data['email'] = $user->email;
+        if (Auth::user()->role == self::GUESS)
+            $data['role'] = self::GUESS;
 
         if ($data['password']) {
             $data['password'] = Hash::make($data['password']);

@@ -130,12 +130,11 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\StoreUserRequest $request
+     * @param \Illuminate\Http\UpdateUserRequest $request
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateUserRequest $request)
     {
-        dd($request->all());
         if (Gate::allows('admin', Auth::user())) {
             if ($this->user->updateUser($request)) {
                 flash('Cap nhat thanh cong')->success();

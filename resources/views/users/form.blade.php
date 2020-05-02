@@ -1,19 +1,3 @@
-{{--user name--}}
-@can('admin')
-    <div class="form-group row">
-        <label for="email" class="col-sm-2 col-form-label @error('email') text-danger @enderror">Email</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control @error('email') is-invalid @enderror" id="email-name" name="email" value="{{ old('email') ?? $user->email ?? null }}">
-            @error('email')
-            <div class="text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-    </div>
-@endcan
-@cannot('admin')
-    <input type="hidden" name="user_name" value="{{ $user->user_name }}">
-@endcannot
-
 {{--Mật khẩu--}}
 <div class="form-group row">
     <label for="password" class="col-sm-2 col-form-label @error('password') text-danger @enderror">Password</label>
@@ -71,7 +55,7 @@
 
 {{--role--}}
 @can('admin')
-    <div class="form-group row @cannot('admin') hidden @endcannot">
+    <div class="form-group row">
         <label class="col-sm-2 col-form-label">Role</label>
         <div class="col-sm-5">
             <select class="browser-default custom-select" name="role">
@@ -86,6 +70,4 @@
         </div>
     </div>
 @endcan
-@cannot('admin')
-    <input type="hidden" name="role" value="3">
-@endcannot
+
