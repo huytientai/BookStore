@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Gate;
 class UsersController extends Controller
 {
     protected $user;
+    protected $order;
 
     /**
      * construct class
@@ -19,9 +21,10 @@ class UsersController extends Controller
      * UsersController constructor.
      * @param User $user
      */
-    public function __construct(User $user)
+    public function __construct(User $user, Order $order)
     {
         $this->user = $user;
+        $this->order = $order;
     }
 
     /**
@@ -94,9 +97,10 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        if (Auth::user()->id == $id || Gate::any(['admin', 'staff'], Auth::user())) {
+        if (Auth::user()->id == $id || Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
             $user = $this->user->find($id);
-            return view('users.show')->with('user', $user);
+            $orders = $this->order->where('user_id', $id)->orderBy('created_at', 'desc')->get();
+            return view('users.show')->with(['user' => $user, 'orders' => $orders]);
         }
 
         return redirect()->route('home');

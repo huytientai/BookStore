@@ -77,7 +77,6 @@
                                                     <a class="currency-trigger" href="{{ route('users.index') }}">Manager</a>
                                                 @endcanany
                                                 <a class="currency-trigger" href="{{ route('users.show',Auth::user()->id) }}">Your Profile</a>
-                                                <a class="currency-trigger" href="{{ route('orders.index') }}">Your Bought</a>
                                                 <a class="currency-trigger" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Log out</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

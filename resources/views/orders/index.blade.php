@@ -1,34 +1,290 @@
-@extends('exam1.default')
+@extends('layouts.admin')
 
-@section('title', 'Your Bought')
+@section('title', 'Orders')
 
 @section('content')
+    <style>
+        .table-content table {
+            background: #fff none repeat scroll 0 0;
+            border-color: #eaeaea;
+            border-radius: 0;
+            border-style: solid;
+            border-width: 1px 0 0 1px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .table-content table th {
+            border-top: medium none;
+            font-weight: bold;
+            padding: 20px 10px;
+            text-align: center;
+            text-transform: uppercase;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .table-content table th, .table-content table td {
+            border-bottom: 1px solid #eaeaea;
+            border-right: 1px solid #eaeaea;
+        }
+
+        .table-content table td {
+            border-top: medium none;
+            font-size: 13px;
+            padding: 20px 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table-content table td input {
+            background: #e5e5e5 none repeat scroll 0 0;
+            border: medium none;
+            border-radius: 3px;
+            color: #333;
+            font-size: 15px;
+            font-weight: normal;
+            height: 40px;
+            padding: 0 5px 0 10px;
+            width: 60px;
+        }
+
+        .table-content table td.product-subtotal {
+            font-size: 16px;
+            font-weight: bold;
+            width: 120px;
+            color: #333;
+        }
+
+        .table-content table td.product-name a {
+            font-size: 14px;
+            font-weight: 700;
+            margin-left: 10px;
+            color: #333;
+        }
+
+        .table-content table td.product-name {
+            width: 270px;
+        }
+
+        .table-content table td.product-thumbnail {
+            width: 130px;
+        }
+
+        .table-content table td.product-remove i {
+            color: #919191;
+            display: inline-block;
+            font-size: 20px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            width: 40px;
+        }
+
+        .table-content table .product-price .amount {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .table-content table td.product-remove i:hover {
+            color: #252525;
+        }
+
+        .table-content table td.product-quantity {
+            width: 180px;
+        }
+
+        .table-content table td.product-remove {
+            width: 150px;
+        }
+
+        .table-content table td.product-price {
+            width: 130px;
+        }
+
+        .table-content table td.product-name a:hover {
+            color: #e59285;
+        }
+
+        .table-content table .title-top th {
+            background: #f6f6f6 none repeat scroll 0 0;
+            border-bottom: 1px solid transparent;
+            border-right: 1px solid transparent;
+            color: #333;
+        }
+
+        .wnro__table table {
+            border: 1px solid #e1e1e1;
+        }
+
+        /*.wnro__table th .nobr {*/
+        /*    color: #2e2e2e;*/
+        /*    display: inline-block;*/
+        /*    font-size: 16px;*/
+        /*    font-weight: 600;*/
+        /*    padding: 20px 0;*/
+        /*    text-transform: uppercase; }*/
+        /*.wnro__table tbody td.product-remove a {*/
+        /*    color: #3f3f3f;*/
+        /*    display: block;*/
+        /*    font-weight: 700;*/
+        /*    height: 1em;*/
+        /*    line-height: 1;*/
+        /*    padding: 10px 0;*/
+        /*    text-align: center; }*/
+        /*.wnro__table tbody td.product-remove {*/
+        /*    padding-right: 0;*/
+        /*    text-align: center;*/
+        /*    width: 40px; }*/
+
+        .table-content table .title-top th {
+            background: #f6f6f6 none repeat scroll 0 0;
+            border-bottom: 1px solid transparent;
+            border-right: 1px solid transparent;
+            color: #333;
+        }
+
+        .table-content table td.product-thumbnail {
+            width: 130px;
+        }
+
+        .product-thumbnail {
+            padding: 25px 0;
+        }
+
+        .product-name a {
+            color: #333444;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .table-content table td.product-name a {
+            font-size: 14px;
+            font-weight: 700;
+            margin-left: 10px;
+            color: #333;
+        }
+
+        .table-content table td.product-name {
+            width: 270px;
+        }
+
+        .table-content table td.product-name a:hover {
+            color: #e59285;
+        }
+
+        .table-content table td.product-name a:hover {
+            color: #e59285;
+        }
+
+        .table-content table td.product-price {
+            width: 130px;
+        }
+
+        .table-content table td.product-quantity {
+            width: 180px;
+        }
+
+        .table-content table td.product-subtotal {
+            font-size: 16px;
+            font-weight: bold;
+            width: 120px;
+            color: #333;
+        }
+    </style>
+
     <div class="cart-main-area section-padding--lg bg--white">
         <div class="container">
+            @include('flash::message')
             <br>
-            <h2>Your Bought</h2>
+            <h2>Orders List</h2>
             <br>
-            <ol>
 
-                @if(isset($orders[0]))
+            <div class="container">
+                <form action="{{ route('orders.index') }}" class="form-group" method="get">
+                    @csrf
+                    <div class="row">
+                        <div class="col-auto">
+                            <input class="form-control mr-sm-0" type="search" placeholder="Order ID" name="order_id" value="{{ request('order_id') }}">
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control mr-sm-0" type="search" placeholder="Name" name="name" value="{{ request('name') }}">
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control mr-sm-0" type="search" placeholder="User Id" name="user_id" value="{{ request('user_id') }}">
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control mr-sm-0" type="search" placeholder="Phone" name="phone" value="{{ request('phone') }}">
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control mr-sm-0" type="search" placeholder="Email" name="email" value="{{ request('email') }}">
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control mr-sm-0" type="search" placeholder="Address" name="address" value="{{ request('address') }}">
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control mr-sm-0" type="search" placeholder="Company" name="company" value="{{ request('company') }}">
+                        </div>
+                        <div class="col-auto">
+                            <input class="form-control mr-sm-0" type="date" name="date" value="{{ request('date') }}">
+                        </div>
+                        <div class="col-auto" style="padding-top: 4px">
+                            <select class="browser-default custom-select mr-sm-0" name="status" style="height: 37px">
+                                <option value="">Status</option>
+                                @foreach(\App\Models\Order::$status as $key => $value)
+                                    <option value="{{ $key }}" {{ ((request('status') ?? -1) == $key) ? 'selected' : '' }}>{{ $value }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <button class="btn btn-primary my-2 my-sm-10 container d-flex justify-content-center" type="submit">Search</button>
+                </form>
+            </div>
+
+            <br>
+
+            <ol>
+                @if(count($orders))
                     @foreach($orders as $order)
                         <div>
-                            <li class="orders">#Order{{ $order->id }} ({{ $order->created_at }})</li>
+                            <li class="orders" style="cursor: pointer;">#Order{{ $order->id }} ({{ $order->created_at }})</li>
                             <div class="row order-details" style="display: none">
                                 <div class="col-md-12 col-sm-12 ol-lg-12">
                                     <div class="row">
                                         <div class="col-sm">Name: {{ $order->name }}</div>
-                                        <div class="col-sm">Address: {{ $order->address }}</div>
+                                        <div class="col-sm">
+                                            <a href="{{ route('users.show',$order->user_id) }}">User_Id: {{ $order->user_id }}</a>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm">Phone: {{ $order->phone }}</div>
+
                                         <div class="col-sm">Email: {{ $order->email }}</div>
                                     </div>
-                                    <div>Company: {{ $order->company }}</div>
+                                    <div class="row">
+                                        <div class="col-sm">Address: {{ $order->address }}</div>
+                                        <div class="col-sm"> Company: {{ $order->company }}</div>
+                                    </div>
                                     <br>
+                                    <div></div>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div>Total: {{ $order->total_price }}$</div>
+                                            <div>Status: {{ $order->status == false ? 'Processing':'Done' }}</div>
+                                        </div>
+                                        <div class="col-sm">
+                                            @if($order->status)
+                                                <a class="btn btn-primary" href="{{ route('orders.finish',$order->id) }}">Finish</a>
+                                            @else
+                                                <a class="btn btn-primary" href="{{ route('orders.finish',$order->id) }}">Finish</a>
+                                            @endif
+                                        </div>
+                                    </div>
 
-                                    <div>Total: {{ $order->total_price }}$</div>
-                                    <div>Status: {{ $order->status == false ? 'Processing':'Done' }}</div>
+                                    <div>{{ $order->status==true ? 'Finished by: ' . $order->finished->name : '' }}</div>
                                     <br>
 
                                     <div>Created At: {{ $order->created_at }}</div>
@@ -39,10 +295,10 @@
                                             <thead>
                                             <tr class="title-top">
                                                 <th class="product-thumbnail">Image</th>
-                                                <th class="product-name">Product</th>
-                                                <th class="product-price">Price</th>
-                                                <th class="product-quantity">Quantity</th>
-                                                <th class="product-subtotal">Total</th>
+                                                <th class="product-name" style="width: 270px;">Product</th>
+                                                <th class="product-price" style="width: 130px;">Price</th>
+                                                <th class="product-quantity" style="width: 180px">Quantity</th>
+                                                <th class="product-subtotal" style="width: 120px;">Total</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -76,6 +332,9 @@
                             </div>
                         </div>
                     @endforeach
+
+                    <br>
+                    {!! $orders->links() !!}
                 @endif
 
             </ol>
@@ -95,5 +354,8 @@
                 }
             })
         }
+
+        sidebar = document.getElementsByClassName('sidebar-wrapper').item(0).getElementsByClassName('nav').item(0);
+        sidebar.getElementsByTagName('li').item(4).classList.add('active');
     </script>
 @endsection

@@ -109,7 +109,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('imports.index') }}">
                         <i class="material-icons">content_paste</i>
-                        <p>Import list</p>
+                        <p>Imports list</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('orders.index') }}">
+                        <i class="material-icons">content_paste</i>
+                        <p>Orders list</p>
                     </a>
                 </li>
 

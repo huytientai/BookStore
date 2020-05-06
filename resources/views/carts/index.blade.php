@@ -68,7 +68,7 @@
                             <li>
                                 <form action="{{ route('checkout.index') }}" id="checkout-form" method="post">
                                     @csrf
-                                    <a type="button" style="width: 100%" onclick="checkout()">Check Out</a>
+                                    <a type="button" class="btn" style="width: 100%" onclick="checkout()">Check Out</a>
                                 </form>
                             </li>
                         </ul>

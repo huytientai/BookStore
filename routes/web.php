@@ -43,6 +43,7 @@ Route::post('/checkout/store', 'CheckoutsController@store')->name('checkout.stor
 Route::resource('/carts', 'CartsController')->middleware(['auth']);
 
 Route::resource('/orders', 'OrdersController')->middleware(['auth']);
+Route::get('/orders/{id}/finish', 'OrdersController@finish')->middleware('auth')->name('orders.finish');
 
 Route::resource('/reviews', 'ReviewsController');
 

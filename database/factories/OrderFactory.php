@@ -14,8 +14,10 @@ $factory->define(Order::class, function (Faker $faker) {
         'address' => $faker->address,
         'phone' => $faker->e164PhoneNumber,
         'email' => $faker->unique()->email,
+        'finished_id' => $faker->randomElement(\App\Models\User::whereIn('role', [\App\Models\User::ADMIN, \App\Models\User::STAFF, \App\Models\User::SELLER])->get()->pluck('id')->toArray()),
+
     ];
 })->afterCreating(\App\Models\Order::class, function (\App\Models\Order $order, Faker $faker) {
-    $order->total_price = \App\Models\Orderdetail::select(\Illuminate\Support\Facades\DB::raw('sum(sell_price*quantity) as sum'))->where('order_id','=',$order->id)->get()[0]->sum;
+    $order->total_price = \App\Models\Orderdetail::select(\Illuminate\Support\Facades\DB::raw('sum(sell_price*quantity) as sum'))->where('order_id', '=', $order->id)->get()[0]->sum;
     $order->save();
 });

@@ -11,7 +11,7 @@
             </a>
         @endcan
         <br><br>
-        @include('flash::message')
+            @include('flash::message')
 
         <div class="container">
             <form action="{{ route('users.index') }}" class="form-group" method="get">
