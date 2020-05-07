@@ -32,9 +32,9 @@ Route::resource('/nhaxuatbans', 'NhaxuatbansController');
 Route::resource('/tacgias', 'TacgiasController');
 
 Route::resource('/imports', 'ImportsController')->middleware(['auth']);
-Route::get('/imports/{id}/accept','ImportsController@accept')->name('imports.accept')->middleware('auth');
+Route::get('/imports/{id}/accept', 'ImportsController@accept')->name('imports.accept')->middleware('auth');
 Route::get('/imports/{id}/denies', 'ImportsController@denies')->name('imports.denies')->middleware('auth');
-Route::post('/imports/{id}/revert','ImportsController@revert')->name('imports.revert')->middleware('auth');
+Route::post('/imports/{id}/revert', 'ImportsController@revert')->name('imports.revert')->middleware('auth');
 
 //Route::get('/favorites', 'FavoritesController')->middleware(['auth']);
 Route::post('/checkout', 'CheckoutsController@index')->name('checkout.index')->middleware(['auth']);
@@ -43,7 +43,11 @@ Route::post('/checkout/store', 'CheckoutsController@store')->name('checkout.stor
 Route::resource('/carts', 'CartsController')->middleware(['auth']);
 
 Route::resource('/orders', 'OrdersController')->middleware(['auth']);
-Route::get('/orders/{id}/finish', 'OrdersController@finish')->middleware('auth')->name('orders.finish');
+Route::get('/orders/{id}/check', 'OrdersController@check')->name('orders.check')->middleware('auth');
+Route::get('/orders/{id}/finish', 'OrdersController@finish')->name('orders.finish')->middleware('auth');
+Route::get('/orders/{id}/revertToWaiting', 'OrdersController@revertToWaiting')->name('orders.revertToWaiting')->middleware('auth');
+Route::get('/orders/{id}/revertToChecked', 'OrdersController@revertToChecked')->name('orders.revertToChecked')->middleware('auth');
+
 
 Route::resource('/reviews', 'ReviewsController');
 

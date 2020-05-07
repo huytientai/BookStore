@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Order;
 use App\Models\Orderdetail;
 use Illuminate\Http\Request;
@@ -38,7 +39,7 @@ class OrdersController extends Controller
 
     public function searchOrders($data)
     {
-        $builder = $this->order->orderBy('status')->orderBy('created_at', 'desc')->orderBy('id', 'desc');
+        $builder = $this->order->orderBy('status')->orderBy('id');
         if (isset($data['order_id'])) {
             $builder->findOrderId($data['order_id']);
         }
@@ -111,7 +112,99 @@ class OrdersController extends Controller
 
     }
 
-    /** Accept and finish the order
+    /** Check the order
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function check($id)
+    {
+        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+            if ($order->status == Order::CHECKED) {
+                flash('This order was checked by ' . $order->finish->name);
+                return redirect()->back();
+            }
+            if ($order->status == Order::DONE) {
+                flash('This order was finished by ' . $order->finish->name)->error();
+                return redirect()->back();
+            }
+
+            $orderDetails = $this->orderDetail->where('order_id', $order->id)->get();
+            $error = '';
+            foreach ($orderDetails as $orderDetail) {
+                if ($orderDetail->book->soluong < $orderDetail->quantity) {
+                    if ($error == null) {
+                        $error = 'Not Enough Quantity:';
+                    }
+                    $error .= '\n\t' . $orderDetail->book->name . ' (' . $orderDetail->book->soluong . '<' . $orderDetail->quantity . ')';
+                }
+            }
+            if ($error != null) {
+                flash($error)->error();
+                return redirect()->back();
+            }
+
+            foreach ($orderDetails as $orderDetail) {
+                $book = Book::find($orderDetail->book_id);
+                $book->soluong -= $orderDetail->quantity;
+                $book->save();
+            }
+
+            $order->status = Order::CHECKED;
+            $order->finished_id = Auth::id();
+            $order->save();
+            flash('You has checked Order#' . $order->id);
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->warning();
+        return redirect()->route('home');
+    }
+
+    /** revert status: Checked->waiting
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function revertToWaiting($id)
+    {
+        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+
+            if ($order->status == Order::WAITING || $order->status == Order::DONE) {
+                flash('Cant convert to waiting.It not checked yet')->error();
+                return redirect()->back();
+            }
+
+            $orderDetails = $this->orderDetail->where('order_id', $order->id)->get();
+
+            foreach ($orderDetails as $orderDetail) {
+                $book = Book::find($orderDetail->book_id);
+                $book->soluong += $orderDetail->quantity;
+                $book->save();
+            }
+
+            $order->status = Order::WAITING;
+            $order->save();
+            flash('Revert Order#' . $order->id . ' successful');
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->warning();
+        return redirect()->route('home');
+    }
+
+
+    /** Finish the order
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -124,18 +217,52 @@ class OrdersController extends Controller
                 flash('This order is not exist');
                 return redirect()->back();
             }
-            if ($order->status == true) {
-                flash('This order was finished by ' . $order->user->name);
+            if ($order->status == Order::WAITING) {
+                flash('Cant finish this order.It not check yet')->error();
                 return redirect()->back();
             }
-            $order->status = true;
+
+            if ($order->status == Order::DONE) {
+                flash('This order was finished by ' . $order->finish->name);
+                return redirect()->back();
+            }
+
+            $order->status = Order::DONE;
+            $order->finished_id = Auth::id();
             $order->save();
             flash('You has been finished Order#' . $order->id);
             return redirect()->back();
         }
 
-        flash('You are not authorized');
+        flash('You are not authorized')->warning();
         return redirect()->route('home');
+    }
+
+    /** revert status: Done -> checked
+     * @param $id : order_id
+     * @return back()
+     */
+    public function revertToChecked($id)
+    {
+        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+            if ($order->status == Order::WAITING || $order->status == Order::CHECKED) {
+                flash('Cant revert this order.It not Done yet')->error();
+                return redirect()->back();
+            }
+
+            $order->status = Order::CHECKED;
+            $order->save();
+            flash('Revert to checked successful');
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->error();
+        return redirect()->back();
     }
 
     /**

@@ -20,14 +20,14 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->float('total_price');
-            $table->boolean('status')->default(false);
+            $table->integer('status')->default(0);
 
             $table->string('name', 255);
             $table->string('phone', 15);
             $table->string('email', 100);
             $table->string('address', 255);
             $table->string('company', 255)->nullable();
-            
+
             $table->unsignedBigInteger('finished_id');
             $table->foreign('finished_id')->references('id')->on('users')->onDelete('cascade');
 

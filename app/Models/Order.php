@@ -25,11 +25,13 @@ class Order extends Model
         'finished_id',
     ];
 
-    const PROCESSING = 0;
-    const DONE = 1;
+    const WAITING = 0;
+    const CHECKED = 1;
+    const DONE = 2;
 
     public static $status = [
-        self::PROCESSING => 'Processing',
+        self::WAITING => 'Waiting',
+        self::CHECKED => 'Checked',
         self::DONE => 'Done',
     ];
 
