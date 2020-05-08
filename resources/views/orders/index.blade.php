@@ -275,8 +275,12 @@
                                             <div>Total: {{ $order->total_price }}$</div>
                                             @if($order->status == \App\Models\Order::WAITING)
                                                 <div>Status: {{ \App\Models\Order::$status[\App\Models\Order::WAITING] }}</div>
+                                            @elseif($order->status == \App\Models\Order::CHECKED)
+                                                <div>Status: {{  \App\Models\Order::$status[\App\Models\Order::CHECKED] }}</div>
+                                            @elseif($order->status == \App\Models\Order::SHIPPING)
+                                                <div>Status: {{  \App\Models\Order::$status[\App\Models\Order::SHIPPING] }}</div>
                                             @else
-                                                <div>Status: {{ $order->status == \App\Models\Order::CHECKED ? \App\Models\Order::$status[\App\Models\Order::CHECKED]:\App\Models\Order::$status[\App\Models\Order::DONE] }}</div>
+                                                <div>Status: {{  \App\Models\Order::$status[\App\Models\Order::DONE] }}</div>
                                             @endif
                                         </div>
                                         <div class="col-sm">
@@ -286,17 +290,22 @@
                                                 </div>
                                             @elseif($order->status == \App\Models\Order::CHECKED)
                                                 <div class="row">
-                                                    <a class="btn btn-primary" href="{{ route('orders.finish',$order->id) }}">Finish</a>
+                                                    <a class="btn btn-primary" href="{{ route('orders.shipping',$order->id) }}">Shipping</a>
                                                     <a class="btn btn-danger" href="{{ route('orders.revertToWaiting',$order->id) }}">Revert to Waiting</a>
                                                 </div>
+                                            @elseif($order->status == \App\Models\Order::SHIPPING)
+                                                <div class="row">
+                                                    <a class="btn btn-primary" href="{{ route('orders.finish',$order->id) }}">Finish</a>
+                                                    <a class="btn btn-danger" href="{{ route('orders.revertToChecked',$order->id) }}">Revert to Checked</a>
+                                                </div>
                                             @else
-                                                <a class="btn btn-danger" href="{{ route('orders.revertToChecked',$order->id) }}">Revert to Checked</a>
+                                                <a class="btn btn-danger" href="{{ route('orders.revertToShipping',$order->id) }}">Revert to Shipping</a>
                                             @endif
                                         </div>
                                     </div>
 
                                     @if($order->status != \App\Models\Order::WAITING)
-                                        <div>{{ ($order->status==\App\Models\Order::CHECKED ? 'Checked by: ' :'Finished by: ') . $order->finished->name  }}</div>
+                                        <div>{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->finished->name }}</div>
                                     @endif
                                     <br>
 

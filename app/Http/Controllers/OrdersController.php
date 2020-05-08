@@ -129,6 +129,12 @@ class OrdersController extends Controller
                 flash('This order was checked by ' . $order->finish->name);
                 return redirect()->back();
             }
+
+            if ($order->status == Order::SHIPPING) {
+                flash('This order is shipping now ')->error();
+                return redirect()->back();
+            }
+
             if ($order->status == Order::DONE) {
                 flash('This order was finished by ' . $order->finish->name)->error();
                 return redirect()->back();
@@ -180,8 +186,8 @@ class OrdersController extends Controller
                 return redirect()->back();
             }
 
-            if ($order->status == Order::WAITING || $order->status == Order::DONE) {
-                flash('Cant convert to waiting.It not checked yet')->error();
+            if ($order->status == Order::WAITING || $order->status == Order::SHIPPING || $order->status == Order::DONE) {
+                flash('Cant convert to waiting.It is not checked status')->error();
                 return redirect()->back();
             }
 
@@ -203,6 +209,66 @@ class OrdersController extends Controller
         return redirect()->route('home');
     }
 
+    /** Finish the order
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function shipping($id)
+    {
+        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+            if ($order->status == Order::WAITING || $order->status == Order::DONE) {
+                flash('Cant ship this order.It is not checked status')->error();
+                return redirect()->back();
+            }
+
+            if ($order->status == Order::SHIPPING) {
+                flash('This order is shipping now');
+                return redirect()->back();
+            }
+
+            $order->status = Order::SHIPPING;
+            $order->finished_id = Auth::id();
+            $order->save();
+            flash('Order#' . $order->id . ' is shipping');
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->warning();
+        return redirect()->route('home');
+    }
+
+    /** revert status: Done -> checked
+     * @param $id : order_id
+     * @return back()
+     */
+    public function revertToChecked($id)
+    {
+        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+            if ($order->status == Order::WAITING || $order->status == Order::CHECKED || $order->status == Order::DONE) {
+                flash('Cant revert this order.It is not Shipping status')->error();
+                return redirect()->back();
+            }
+
+            $order->status = Order::CHECKED;
+            $order->save();
+            flash('Revert to checked successful');
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->error();
+        return redirect()->back();
+    }
 
     /** Finish the order
      * @param $id
@@ -217,8 +283,8 @@ class OrdersController extends Controller
                 flash('This order is not exist');
                 return redirect()->back();
             }
-            if ($order->status == Order::WAITING) {
-                flash('Cant finish this order.It not check yet')->error();
+            if ($order->status == Order::WAITING || $order->status == Order::CHECKED) {
+                flash('Cant finish this order.It is not shipping yet')->error();
                 return redirect()->back();
             }
 
@@ -242,7 +308,7 @@ class OrdersController extends Controller
      * @param $id : order_id
      * @return back()
      */
-    public function revertToChecked($id)
+    public function revertToShipping($id)
     {
         if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
             $order = $this->order->find($id);
@@ -250,14 +316,14 @@ class OrdersController extends Controller
                 flash('This order is not exist');
                 return redirect()->back();
             }
-            if ($order->status == Order::WAITING || $order->status == Order::CHECKED) {
-                flash('Cant revert this order.It not Done yet')->error();
+            if ($order->status == Order::WAITING || $order->status == Order::CHECKED || $order->status == Order::SHIPPING) {
+                flash('Cant revert this order.It is not Done yet')->error();
                 return redirect()->back();
             }
 
-            $order->status = Order::CHECKED;
+            $order->status = Order::SHIPPING;
             $order->save();
-            flash('Revert to checked successful');
+            flash('Revert to shipping successful');
             return redirect()->back();
         }
 

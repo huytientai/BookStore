@@ -27,11 +27,13 @@ class Order extends Model
 
     const WAITING = 0;
     const CHECKED = 1;
-    const DONE = 2;
+    const SHIPPING = 2;
+    const DONE = 3;
 
     public static $status = [
         self::WAITING => 'Waiting',
         self::CHECKED => 'Checked',
+        self::SHIPPING => 'Shipping',
         self::DONE => 'Done',
     ];
 

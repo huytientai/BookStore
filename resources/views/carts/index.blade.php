@@ -114,6 +114,8 @@
                             <li class="orders">#Order{{ $order->id }} ({{ $order->created_at }})</li>
                             <div class="row order-details" style="display: none">
                                 <div class="col-md-12 col-sm-12 ol-lg-12">
+                                    <div>Status: {{ \App\Models\Order::$status[$order->status] }}</div>
+                                    <br>
                                     <div class="row">
                                         <div class="col-sm">Name: {{ $order->name }}</div>
                                         <div class="col-sm">Address: {{ $order->address }}</div>

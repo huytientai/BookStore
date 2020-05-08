@@ -30,7 +30,7 @@ class CartsController extends Controller
     public function index()
     {
         $carts = $this->cart->where('user_id', Auth::id())->orderBy('id')->get();
-        $orders = $this->order->where('user_id', Auth::id())->where('status', false)->orderBy('created_at', 'desc')->get();
+        $orders = $this->order->where('user_id', Auth::id())->where('status', '!=', Order::DONE)->orderBy('status')->orderBy('created_at', 'desc')->get();
 
         return view('carts.index')->with(['carts' => $carts, 'orders' => $orders]);
     }
@@ -102,7 +102,7 @@ class CartsController extends Controller
 
         $this->cart->removeCartOfUser();
 
-        if($books!=null) {
+        if ($books != null) {
             foreach ($books as $value) {
                 $book = $this->book->find($value['id']);
                 $data['user_id'] = Auth::id();

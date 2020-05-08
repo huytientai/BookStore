@@ -63,7 +63,7 @@
                 @if(isset($orders[0]))
                     @foreach($orders as $order)
                         <div>
-                            <li class="orders">#Order{{ $order->id }} ({{ $order->created_at }})</li>
+                            <li class="orders" style="cursor: pointer;">#Order{{ $order->id }} ({{ $order->created_at }})</li>
                             <div class="row order-details" style="display: none">
                                 <div class="col-md-12 col-sm-12 ol-lg-12">
                                     <div class="row">
@@ -78,7 +78,13 @@
                                     <br>
 
                                     <div>Total: {{ $order->total_price }}$</div>
-                                    <div>Status: {{ $order->status == false ? 'Processing':'Done' }}</div>
+                                    <br>
+                                    <div>Status: {{  \App\Models\Order::$status[$order->status] }}</div>
+                                    @canany(['admin','staff','seller'])
+                                        @if($order->status!=\App\Models\Order::WAITING)
+                                            <div>{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->finished->name }}</div>
+                                        @endif
+                                    @endcan
                                     <br>
 
                                     <div>Created At: {{ $order->created_at }}</div>
