@@ -90,19 +90,6 @@ class Order extends Model
         return $query->where('status', $status);
     }
 
-
-    /** Update order
-     *
-     * @param $request
-     * @return boolean
-     */
-    public function updateOrder($request)
-    {
-        $data = $request->all();
-
-        return $this->find($request->id)->update($data);
-    }
-
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id');

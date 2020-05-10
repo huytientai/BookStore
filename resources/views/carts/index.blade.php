@@ -62,7 +62,6 @@
                                     @csrf
                                     @method('PUT')
                                     <a type="button" class="btn cart__total__amount" style="width: 100%" onclick="update_cart()">Update Cart</a>
-                                    {{--                                    <button onclick="submit">Update Cart</button>--}}
                                 </form>
                             </li>
                             <li>

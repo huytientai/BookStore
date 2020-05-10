@@ -63,6 +63,15 @@ class CheckoutsController extends Controller
         // create order
         foreach ($books as $value) {
             $book = $this->book->find($value['id']);
+            if ($book == null) {
+                $book = $this->book->withTrashed()->where('id', $value['id'])->get();
+                if ($book == null) {
+                    flash('Book #' . $value['id'] . 'is not exist');
+                    return back();
+                }
+                flash('Book ' . $book->name . 'was deleted');
+                return back();
+            }
             $total += $book->price * $value['quantity'];
         }
         $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
@@ -79,7 +88,7 @@ class CheckoutsController extends Controller
 
         $this->cart->removeCartOfUser();
 
-        flash('Order Successed')->success();
+        flash('Order Succeed')->success();
         return redirect()->route('carts.index');
     }
 

@@ -79,7 +79,23 @@ class OrdersController extends Controller
      */
     public function edit($id)
     {
-        //
+        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return back();
+            }
+
+            if ($order->status == Order::CHECKED) {
+                return view('orders.edit')->with('order', $order);
+            }
+
+            flash('Cant edit this order');
+            return back();
+        }
+
+        flash('You are not authorized');
+        return redirect()->back();
     }
 
     /**
@@ -91,25 +107,70 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $order = $this->order->find($id);
-        if ($order == null) {
-            flash('This order is not exist');
+        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+
+            if ($order->status != Order::CHECKED) {
+                flash('It need to be checked status');
+                return back();
+            }
+
+            $books = $request->books;
+
+            if ($books == null) {
+                return $this->destroy($id);
+            }
+
+            //check books exist and customer used to buy it
+            foreach ($books as $value) {
+                $book = Book::find($value['id']);
+                if ($book == null) {
+                    $book = $this->book->withTrashed()->where('id', $value['id'])->get();
+                    if ($book == null) {
+                        flash('Book #' . $value['id'] . 'is not exist');
+                        return back();
+                    }
+                    flash('Book ' . $book->name . 'was deleted');
+                    return back();
+                }
+
+                $orderDetail = $this->orderDetail->where('order_id', $id)->where('book_id', $value['id'])->first();
+                if ($orderDetail == null) {
+                    flash('This Customer used not to buy it');
+                    return back();
+                }
+            }
+
+            // update orderDetail
+            $orderDetails = $this->orderDetail->where('order_id', $id)->get();
+            $books_id = array_column($books, 'quantity', 'id');
+            foreach ($orderDetails as $orderDetail) {
+                if (array_key_exists($orderDetail->book_id, $books_id)) {
+                    $orderDetail->quantity = $books_id[$orderDetail->book_id];
+                    $orderDetail->save();
+                } else $orderDetail->delete();
+            }
+
+            // update order
+            $orderDetails = $this->orderDetail->where('order_id', $id)->get();
+            $sum = 0;
+            foreach ($orderDetails as $orderDetail) {
+                $sum += $orderDetail->sell_price * $orderDetail->quantity;
+            }
+            $order->total_price = $sum;
+            $order->finished_id = Auth::id();
+            $order->save();
+
+            flash('Update succeed');
             return redirect()->back();
         }
 
-        $books = $request->books;
-
-
-        $orderDetails = $this->orderDetail->where('order_id', $id)->get();
-        $sum = 0;
-        foreach ($orderDetails as $orderDetail) {
-            $sum += $orderDetail->sell_price * $orderDetail->quantity;
-        }
-        $order->sum = $sum;
-
-        flash('Update succeed');
-        return redirect()->back();
-
+        flash('You are not authorized');
+        return back();
     }
 
     /** Check the order
@@ -339,6 +400,22 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash("This order is not existed");
+                return back();
+            }
+
+            $order->finished_id = Auth::id();
+            $order->save();
+            $order->delete();
+            $this->orderDetail->where('order_id', $id)->delete();
+            flash('Order #' . $id . 'is canceled');
+            return redirect()->route('orders.index');
+        }
+
+        flash('You are not authorized')->error();
+        return redirect()->back();
     }
 }

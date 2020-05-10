@@ -3,196 +3,7 @@
 @section('title', 'Orders')
 
 @section('content')
-    <style>
-        .table-content table {
-            background: #fff none repeat scroll 0 0;
-            border-color: #eaeaea;
-            border-radius: 0;
-            border-style: solid;
-            border-width: 1px 0 0 1px;
-            text-align: center;
-            width: 100%;
-        }
-
-        .table-content table th {
-            border-top: medium none;
-            font-weight: bold;
-            padding: 20px 10px;
-            text-align: center;
-            text-transform: uppercase;
-            vertical-align: middle;
-            white-space: nowrap;
-        }
-
-        .table-content table th, .table-content table td {
-            border-bottom: 1px solid #eaeaea;
-            border-right: 1px solid #eaeaea;
-        }
-
-        .table-content table td {
-            border-top: medium none;
-            font-size: 13px;
-            padding: 20px 10px;
-            text-align: center;
-            vertical-align: middle;
-        }
-
-        .table-content table td input {
-            background: #e5e5e5 none repeat scroll 0 0;
-            border: medium none;
-            border-radius: 3px;
-            color: #333;
-            font-size: 15px;
-            font-weight: normal;
-            height: 40px;
-            padding: 0 5px 0 10px;
-            width: 60px;
-        }
-
-        .table-content table td.product-subtotal {
-            font-size: 16px;
-            font-weight: bold;
-            width: 120px;
-            color: #333;
-        }
-
-        .table-content table td.product-name a {
-            font-size: 14px;
-            font-weight: 700;
-            margin-left: 10px;
-            color: #333;
-        }
-
-        .table-content table td.product-name {
-            width: 270px;
-        }
-
-        .table-content table td.product-thumbnail {
-            width: 130px;
-        }
-
-        .table-content table td.product-remove i {
-            color: #919191;
-            display: inline-block;
-            font-size: 20px;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            width: 40px;
-        }
-
-        .table-content table .product-price .amount {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .table-content table td.product-remove i:hover {
-            color: #252525;
-        }
-
-        .table-content table td.product-quantity {
-            width: 180px;
-        }
-
-        .table-content table td.product-remove {
-            width: 150px;
-        }
-
-        .table-content table td.product-price {
-            width: 130px;
-        }
-
-        .table-content table td.product-name a:hover {
-            color: #e59285;
-        }
-
-        .table-content table .title-top th {
-            background: #f6f6f6 none repeat scroll 0 0;
-            border-bottom: 1px solid transparent;
-            border-right: 1px solid transparent;
-            color: #333;
-        }
-
-        .wnro__table table {
-            border: 1px solid #e1e1e1;
-        }
-
-        /*.wnro__table th .nobr {*/
-        /*    color: #2e2e2e;*/
-        /*    display: inline-block;*/
-        /*    font-size: 16px;*/
-        /*    font-weight: 600;*/
-        /*    padding: 20px 0;*/
-        /*    text-transform: uppercase; }*/
-        /*.wnro__table tbody td.product-remove a {*/
-        /*    color: #3f3f3f;*/
-        /*    display: block;*/
-        /*    font-weight: 700;*/
-        /*    height: 1em;*/
-        /*    line-height: 1;*/
-        /*    padding: 10px 0;*/
-        /*    text-align: center; }*/
-        /*.wnro__table tbody td.product-remove {*/
-        /*    padding-right: 0;*/
-        /*    text-align: center;*/
-        /*    width: 40px; }*/
-
-        .table-content table .title-top th {
-            background: #f6f6f6 none repeat scroll 0 0;
-            border-bottom: 1px solid transparent;
-            border-right: 1px solid transparent;
-            color: #333;
-        }
-
-        .table-content table td.product-thumbnail {
-            width: 130px;
-        }
-
-        .product-thumbnail {
-            padding: 25px 0;
-        }
-
-        .product-name a {
-            color: #333444;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .table-content table td.product-name a {
-            font-size: 14px;
-            font-weight: 700;
-            margin-left: 10px;
-            color: #333;
-        }
-
-        .table-content table td.product-name {
-            width: 270px;
-        }
-
-        .table-content table td.product-name a:hover {
-            color: #e59285;
-        }
-
-        .table-content table td.product-name a:hover {
-            color: #e59285;
-        }
-
-        .table-content table td.product-price {
-            width: 130px;
-        }
-
-        .table-content table td.product-quantity {
-            width: 180px;
-        }
-
-        .table-content table td.product-subtotal {
-            font-size: 16px;
-            font-weight: bold;
-            width: 120px;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/table.css') }}">
 
     <div class="cart-main-area section-padding--lg bg--white">
         <div class="container">
@@ -274,7 +85,7 @@
                                         <div class="col-sm">
                                             <div>Total: {{ $order->total_price }}$</div>
                                             @if($order->status == \App\Models\Order::WAITING)
-                                                <div>Status: {{ \App\Models\Order::$status[\App\Models\Order::WAITING] }}</div>
+                                                <div class="">Status: {{ \App\Models\Order::$status[\App\Models\Order::WAITING] }}</div>
                                             @elseif($order->status == \App\Models\Order::CHECKED)
                                                 <div>Status: {{  \App\Models\Order::$status[\App\Models\Order::CHECKED] }}</div>
                                             @elseif($order->status == \App\Models\Order::SHIPPING)
@@ -287,6 +98,11 @@
                                             @if($order->status == \App\Models\Order::WAITING)
                                                 <div class="row">
                                                     <a class="btn btn-primary" href="{{ route('orders.check',$order->id) }}">Check</a>
+                                                    <form action="{{ route('orders.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger" type="submit">Cancel</button>
+                                                    </form>
                                                 </div>
                                             @elseif($order->status == \App\Models\Order::CHECKED)
                                                 <div class="row">
@@ -305,7 +121,21 @@
                                     </div>
 
                                     @if($order->status != \App\Models\Order::WAITING)
-                                        <div>{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->finished->name }}</div>
+                                        <div class="row">
+                                            <div class="col-sm">{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->finished->name }}</div>
+                                            @if($order->status == \App\Models\Order::CHECKED)
+                                                <div class="col-sm">
+                                                    <div class="row">
+                                                        <a class="btn btn-warning" href="{{ route('orders.edit',$order->id) }}">Edit</a>
+                                                        <form action="{{ route('orders.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        <button class="btn btn-danger" type="submit">Cancel</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
                                     @endif
                                     <br>
 
