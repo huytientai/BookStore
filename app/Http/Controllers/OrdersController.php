@@ -39,7 +39,7 @@ class OrdersController extends Controller
 
     public function searchOrders($data)
     {
-        $builder = $this->order->orderBy('status')->orderBy('id');
+        $builder = $this->order->orderBy('deleted_at')->orderBy('status')->orderBy('id');
         if (isset($data['order_id'])) {
             $builder->findOrderId($data['order_id']);
         }
@@ -67,6 +67,12 @@ class OrdersController extends Controller
         if (isset($data['status'])) {
             $builder->findStatus($data['status']);
         }
+
+        if (isset($data['deleted'])) {
+            if ($data['deleted'] == "true") {
+                $builder->onlyTrashed();
+            }
+        } else $builder->withTrashed();
 
         return $builder->paginate();
     }
@@ -410,7 +416,7 @@ class OrdersController extends Controller
             $order->finished_id = Auth::id();
             $order->save();
             $order->delete();
-            $this->orderDetail->where('order_id', $id)->delete();
+//            $this->orderDetail->where('order_id', $id)->delete();
             flash('Order #' . $id . 'is canceled');
             return redirect()->route('orders.index');
         }

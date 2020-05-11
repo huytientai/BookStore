@@ -48,6 +48,13 @@
                                 @endforeach
                             </select>
                         </div>
+                        <siv class="col-auto" style="padding-top: 4px">
+                            <select class="browser-default custom-select mr-sm-0" name="deleted" style="height: 37px">
+                                <option value="">Deleted</option>
+                                <option value="true" {{ (request('deleted') == "true") ? 'selected' : '' }}>True</option>
+                                <option value="false" {{ (request('deleted') == "false") ? 'selected' : '' }}>False</option>
+                            </select>
+                        </siv>
 
                     </div>
 
@@ -95,32 +102,36 @@
                                             @endif
                                         </div>
                                         <div class="col-sm">
-                                            @if($order->status == \App\Models\Order::WAITING)
-                                                <div class="row">
-                                                    <a class="btn btn-primary" href="{{ route('orders.check',$order->id) }}">Check</a>
-                                                    <form action="{{ route('orders.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit">Cancel</button>
-                                                    </form>
-                                                </div>
-                                            @elseif($order->status == \App\Models\Order::CHECKED)
-                                                <div class="row">
-                                                    <a class="btn btn-primary" href="{{ route('orders.shipping',$order->id) }}">Shipping</a>
-                                                    <a class="btn btn-danger" href="{{ route('orders.revertToWaiting',$order->id) }}">Revert to Waiting</a>
-                                                </div>
-                                            @elseif($order->status == \App\Models\Order::SHIPPING)
-                                                <div class="row">
-                                                    <a class="btn btn-primary" href="{{ route('orders.finish',$order->id) }}">Finish</a>
-                                                    <a class="btn btn-danger" href="{{ route('orders.revertToChecked',$order->id) }}">Revert to Checked</a>
-                                                </div>
+                                            @if($order->deleted_at == null)
+                                                @if($order->status == \App\Models\Order::WAITING)
+                                                    <div class="row">
+                                                        <a class="btn btn-primary" href="{{ route('orders.check',$order->id) }}">Check</a>
+                                                        <form action="{{ route('orders.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger" type="submit">Cancel</button>
+                                                        </form>
+                                                    </div>
+                                                @elseif($order->status == \App\Models\Order::CHECKED)
+                                                    <div class="row">
+                                                        <a class="btn btn-primary" href="{{ route('orders.shipping',$order->id) }}">Shipping</a>
+                                                        <a class="btn btn-danger" href="{{ route('orders.revertToWaiting',$order->id) }}">Revert to Waiting</a>
+                                                    </div>
+                                                @elseif($order->status == \App\Models\Order::SHIPPING)
+                                                    <div class="row">
+                                                        <a class="btn btn-primary" href="{{ route('orders.finish',$order->id) }}">Finish</a>
+                                                        <a class="btn btn-danger" href="{{ route('orders.revertToChecked',$order->id) }}">Revert to Checked</a>
+                                                    </div>
+                                                @else
+                                                    <a class="btn btn-danger" href="{{ route('orders.revertToShipping',$order->id) }}">Revert to Shipping</a>
+                                                @endif
                                             @else
-                                                <a class="btn btn-danger" href="{{ route('orders.revertToShipping',$order->id) }}">Revert to Shipping</a>
+                                                <button class="btn btn-dark" style="cursor: not-allowed;">Canceled</button>
                                             @endif
                                         </div>
                                     </div>
 
-                                    @if($order->status != \App\Models\Order::WAITING)
+                                    @if($order->status != \App\Models\Order::WAITING && $order->deleted_at == null)
                                         <div class="row">
                                             <div class="col-sm">{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->finished->name }}</div>
                                             @if($order->status == \App\Models\Order::CHECKED)
@@ -130,7 +141,7 @@
                                                         <form action="{{ route('orders.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
                                                             @csrf
                                                             @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit">Cancel</button>
+                                                            <button class="btn btn-danger" type="submit">Cancel</button>
                                                         </form>
                                                     </div>
                                                 </div>
