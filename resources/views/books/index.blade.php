@@ -109,24 +109,38 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $book->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="{{ route('favorites.show', $book->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
                                                 </div>
                                             </div>
                                             <div class="product__hover--content">
+                                                @php
+                                                    $sum=0;
+
+                                                    if(count($book->reviews) == 0)
+                                                        $avg=0;
+                                                    else{
+                                                        foreach($book->reviews as $review){
+                                                        $sum+=$review->star;
+                                                        }
+                                                        $avg=ceil($sum/count($book->reviews));
+                                                    }
+                                                @endphp
                                                 <ul class="rating d-flex">
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
-                                                    <li><i class="fa fa-star-o"></i></li>
+                                                    @for($star=0;$star<$avg;$star++)
+                                                        <li class="on"><i class="fa fa-star-o"></i></li>
+                                                    @endfor
+                                                    @for($star=5;$star>$avg;$star--)
+                                                        <li><i class="fa fa-star-o"></i></li>
+                                                    @endfor
                                                 </ul>
                                             </div>
                                         </div>
@@ -154,29 +168,45 @@
                                             @endif
                                         </div>
                                         <div class="content">
-                                            <h2><a href="single-product.html">{{ $book->name }}</a></h2>
+                                            <h2><a href="{{ route('books.show',$book->id) }}">{{ $book->name }}</a></h2>
+
+                                            @php
+                                                $sum=0;
+
+                                                if(count($book->reviews) == 0)
+                                                    $avg=0;
+                                                else{
+                                                    foreach($book->reviews as $review){
+                                                    $sum+=$review->star;
+                                                    }
+                                                    $avg=ceil($sum/count($book->reviews));
+                                                }
+                                            @endphp
                                             <ul class="rating d-flex">
-                                                <li class="on"><i class="fa fa-star-o"></i></li>
-                                                <li class="on"><i class="fa fa-star-o"></i></li>
-                                                <li class="on"><i class="fa fa-star-o"></i></li>
-                                                <li class="on"><i class="fa fa-star-o"></i></li>
-                                                <li><i class="fa fa-star-o"></i></li>
-                                                <li><i class="fa fa-star-o"></i></li>
+                                                @for($star=0;$star<$avg;$star++)
+                                                    <li class="on"><i class="fa fa-star-o"></i></li>
+                                                @endfor
+                                                @for($star=5;$star>$avg;$star--)
+                                                    <li><i class="fa fa-star-o"></i></li>
+                                                @endfor
                                             </ul>
                                             <ul class="prize__box">
                                                 <li>${{ $book->price }}</li>
-{{--                                                <li class="old__prize">{{ $book->price }}$</li>--}}
+                                                {{--                                                <li class="old__prize">{{ $book->price }}$</li>--}}
                                             </ul>
                                             <p> DESCRIBE: {!! substr($book->desc,0,250) . ' ...' !!}</p>
                                             <ul class="cart__action d-flex">
-                                                <li class="cart"><a href="{{ route('carts.show', $book->id) }}">Add to cart</a></li>
-                                                <li class="wishlist"><a href="cart.html"></a></li>
+                                                <li class="cart">
+                                                    <a href="{{ route('carts.show', $book->id) }}">Add to cart</a></li>
+                                                <li class="wishlist">
+                                                    <a href="{{ route('favorites.show', $book->id) }}"></a></li>
                                                 <li class="compare"><a href="cart.html"></a></li>
                                             </ul>
 
                                         </div>
                                     </div>
                                     <!-- End Single Product -->
+                                    <br>
                                 @endforeach
                             </div>
                         </div>

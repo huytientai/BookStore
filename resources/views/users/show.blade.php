@@ -41,6 +41,9 @@
                                     <div class="product__overview">
                                         <p>Address: {{ $user->address }}</p>
                                         <p>Phone: {{ $user->phone }}</p>
+                                        @if($user->role != \App\Models\User::GUESS)
+                                            <p>Position: {{ \App\Models\User::$roles[$user->role] }}</p>
+                                        @endif
                                         <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">edit</a>
                                     </div>
                                 </div>

@@ -13,7 +13,7 @@
                     <ul class="meninmenu d-flex justify-content-start">
                         <li class="drop with--one--item"><a href="{{ route('home') }}">Home</a></li>
 
-                        <li class="drop"><a href="/books">Books</a>
+                        <li class="drop"><a href="{{ route('books.index') }}">Books</a>
                             <div class="megamenu mega03">
                                 <ul class="item item03">
                                     <li><a class="title" href="/loaisachs">Categories</a></li>
@@ -54,7 +54,7 @@
             <div class="col-md-6 col-sm-6 col-6 col-lg-2">
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                     <li class="shop_search"><a class="search__active" href="#"></a></li>
-                    <li class="wishlist"><a href="#"></a></li>
+                    <li class="wishlist"><a href="{{ route('favorites.index') }}"></a></li>
                     <li class="shopcart"><a class="" href="{{ route('carts.index') }}"></a></li>
                     <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
                         <div class="searchbar__content setting__block">
@@ -76,6 +76,13 @@
                                                 @canany(['admin','staff'])
                                                     <a class="currency-trigger" href="{{ route('users.index') }}">Manager</a>
                                                 @endcanany
+                                                @can('warehouseman')
+                                                    <a class="currency-trigger" href="{{ route('imports.index') }}">Imports List</a>
+                                                @endcan
+                                                @can('seller')
+                                                    <a class="currency-trigger" href="{{ route('orders.index') }}">Orders List</a>
+                                                @endcan
+
                                                 <a class="currency-trigger" href="{{ route('users.show',Auth::user()->id) }}">Your Profile</a>
                                                 <a class="currency-trigger" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Log out</a>

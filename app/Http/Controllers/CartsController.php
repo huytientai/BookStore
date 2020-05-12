@@ -23,7 +23,7 @@ class CartsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display cart of an user
      *
      * @return \Illuminate\Http\Response
      */
@@ -37,7 +37,7 @@ class CartsController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * Store book into cart in books.show page
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response

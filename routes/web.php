@@ -41,6 +41,7 @@ Route::post('/checkout', 'CheckoutsController@index')->name('checkout.index')->m
 Route::post('/checkout/store', 'CheckoutsController@store')->name('checkout.store')->middleware(['auth']);
 
 Route::resource('/carts', 'CartsController')->middleware(['auth']);
+Route::resource('/favorites', 'FavoritesController')->middleware(['auth']);
 
 Route::resource('/orders', 'OrdersController')->middleware(['auth']);
 Route::get('/orders/{id}/check', 'OrdersController@check')->name('orders.check')->middleware('auth');
