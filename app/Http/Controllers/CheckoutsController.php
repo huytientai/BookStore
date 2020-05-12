@@ -41,6 +41,10 @@ class CheckoutsController extends Controller
         $i = 0;
         foreach ($data as $value) {
             $books[$i] = $this->book->find($value['id']);
+            if ($books[$i] == null) {
+                flash('Book #' . $value['id'] . 'is not existed');
+                return back();
+            }
             $books[$i]['quantity'] = $value['quantity'];
             $i++;
         }

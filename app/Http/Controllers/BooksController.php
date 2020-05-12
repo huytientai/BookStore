@@ -38,6 +38,7 @@ class BooksController extends Controller
         } else {
             $books = $this->book->searchBook($request->all());
         }
+
         return view('books.index')->with(['books' => $books, 'loaisachs' => $loaisachs]);
     }
 

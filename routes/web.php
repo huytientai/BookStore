@@ -36,7 +36,6 @@ Route::get('/imports/{id}/accept', 'ImportsController@accept')->name('imports.ac
 Route::get('/imports/{id}/denies', 'ImportsController@denies')->name('imports.denies')->middleware('auth');
 Route::post('/imports/{id}/revert', 'ImportsController@revert')->name('imports.revert')->middleware('auth');
 
-//Route::get('/favorites', 'FavoritesController')->middleware(['auth']);
 Route::post('/checkout', 'CheckoutsController@index')->name('checkout.index')->middleware(['auth']);
 Route::post('/checkout/store', 'CheckoutsController@store')->name('checkout.store')->middleware(['auth']);
 

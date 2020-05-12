@@ -109,7 +109,13 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index',$book->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $key }}][id]" value="{{ $book->id }}">
+                                                                <input type="hidden" name="books[{{ $key }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $book->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
@@ -215,4 +221,10 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function checkout_submit(element) {
+            element.parentElement.submit();
+        }
+    </script>
 @endsection
