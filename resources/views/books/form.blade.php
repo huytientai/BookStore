@@ -64,15 +64,19 @@
     <label for="image" class="col-md-2 col-form-label">Book Image</label>
     <div class="col-md-5">
         <input id="image" type="file" name="image">
-        {{--        @if ($book->image)--}}
-        {{--            <code>{{ $book->image }}</code>--}}
-        {{--        @endif--}}
+        <div style="width: 200px;padding-top: 10px">
+            @if(isset($book->image))
+                <img src="/storage/book_images/{{ $book->image }}" id="display_image" alt="Not Found"/>
+            @else
+                <img src="" id="display_image" width="200px" alt="No image"/>
+            @endif
+        </div>
     </div>
 </div>
 
 {{-- price --}}
 <div class="form-group row">
-    <label for="price" class="col-sm-2 col-form-label @error('price') text-danger @enderror">price</label>
+    <label for="price" class="col-sm-2 col-form-label @error('price') text-danger @enderror">price($)</label>
     <div class="col-sm-5">
         <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ old('price') ?? $book->price ?? null }}">
         @error('price')
@@ -135,3 +139,56 @@
         @enderror
     </div>
 </div>
+
+{{--table of contents--}}
+<div class="form-group row">
+    <label for="contents" class="col-md-2 col-form-label">Table of contents</label>
+    <div class="col-md-5">
+        <input id="contents" type="file" name="contents[]" multiple>
+        <div style="padding-top: 10px" class="row contents">
+            @if(isset($contents))
+                @foreach($contents as $content)
+                    <img style="width: 200px" src="/storage/table_of_contents/{{ $content->picture }}" class="display_contents" alt="Not Found"/>
+                @endforeach
+            @else
+                <img src="" class="display_contents" width="200px" alt="No image"/>
+            @endif
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#display_image').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#image").change(function () {
+        readURL(this);
+    });
+
+    $("#contents").change(function () {
+        if (this.files && this.files[0]) {
+            $(".display_contents").remove();
+
+            var filesAmount = this.files.length;
+
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    $($.parseHTML('<img style="width: 200px" class="display_contents" alt="Not Found">')).attr('src', event.target.result).appendTo('div.contents');
+                }
+
+                reader.readAsDataURL(this.files[i]);
+            }
+        }
+    });
+
+</script>

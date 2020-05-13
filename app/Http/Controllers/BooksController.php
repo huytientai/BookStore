@@ -7,6 +7,7 @@ use App\Http\Requests\StoreImportRequest;
 use App\Models\Book;
 use App\Models\Import;
 use App\Models\Loaisach;
+use App\Models\TableOfContents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -16,12 +17,14 @@ class BooksController extends Controller
     protected $book;
     protected $loaisach;
     protected $import;
+    protected $tableOfContents;
 
-    public function __construct(Book $book, Loaisach $loaisach, Import $import)
+    public function __construct(Book $book, Loaisach $loaisach, Import $import, TableOfContents $tableOfContents)
     {
         $this->book = $book;
         $this->loaisach = $loaisach;
         $this->import = $import;
+        $this->tableOfContents = $tableOfContents;
         $this->middleware('auth')->except(['index', 'show']);
     }
 
@@ -83,7 +86,13 @@ class BooksController extends Controller
     {
         $loaisachs = $this->loaisach->allLoaisachCount();
         $book = $this->book->find($id);
-        return view('books.show')->with(['book' => $book, 'loaisachs' => $loaisachs]);
+        if ($book == null) {
+            flash('This book is not existed');
+            return redirect()->route('home');
+        }
+
+        $contents = $this->tableOfContents->where('book_id', $id)->get();
+        return view('books.show')->with(['book' => $book, 'contents' => $contents, 'loaisachs' => $loaisachs]);
     }
 
     /**
@@ -96,7 +105,14 @@ class BooksController extends Controller
     {
         if (Gate::any(['admin', 'staff'], Auth::user())) {
             $book = $this->book->find($id);
-            return view('books.edit')->with('book', $book);
+            if ($book == null) {
+                flash('This book is not exist');
+                return redirect()->route('home');
+            }
+
+            $contents = $this->tableOfContents->where('book_id', $id)->get();
+
+            return view('books.edit')->with(['book' => $book, 'contents' => $contents]);
         }
         return redirect()->route('books.show', $id);
     }
@@ -113,7 +129,13 @@ class BooksController extends Controller
             return redirect()->route('books.show', $request->id);
         }
 
+        if (!isset($request->id) || !$this->book->find($request->id)) {
+            flash('This book is not existed');
+            return back();
+        }
+
         $this->book->updateBook($request);
+        $this->tableOfContents->updateTableOfContents($request);
 
         flash('update success')->success();
         return redirect()->route('books.show', $request->id);
@@ -144,8 +166,8 @@ class BooksController extends Controller
         }
 
         $data = $request->all();
-        $data['book_id']=$book_id;
-        $data['user_id']=Auth::id();
+        $data['book_id'] = $book_id;
+        $data['user_id'] = Auth::id();
         $data['status'] = 0;
         $data['accepted_id'] = 1;
 

@@ -152,6 +152,24 @@
                                     </ul>
                                 </div>
                             </div>
+
+                            <br>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#menu" aria-expanded="false" aria-controls="collapseExample">
+                                Table Of Contents
+                            </button>
+                            <div class="collapse" id="menu">
+                                <div class="card card-body">
+                                    @if(@isset($contents))
+                                        <div style="margin-left:auto;margin-right:auto;width: 500px">
+                                            @foreach($contents as $content)
+                                                <img src="/storage/table_of_contents/{{ $content->picture }}">
+                                                <br><br>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+                            <br>
                             <!-- End Single Tab Content -->
                             <!-- Start Single Tab Content -->
                             <div class="pro__tab_label tab-pane fade" id="nav-review" role="tabpanel">
@@ -846,7 +864,7 @@
                         </div>
                         <div>
                             <p>From: </p>
-                            <input type="text" class="form-control-sm" name="from" >
+                            <input type="text" class="form-control-sm" name="from">
                         </div>
                         <div>
                             <p>Note: </p>
