@@ -18,7 +18,7 @@
             <!-- Start Single Tab Content -->
             <div class="furniture--4 border--round arrows_style owl-carousel owl-theme row mt--50">
                 <!-- Start Single Product -->
-                @foreach($new_books as $book)
+                @foreach($new_books as $key => $book)
                     <div class="product product__style--3">
                         <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                             <div class="product__thumb">
@@ -40,17 +40,26 @@
                                 <h4><a href="{{ route('books.show', $book->id) }}">{{ $book->name }}</a></h4>
                                 <ul class="prize d-flex">
                                     <li>${{ $book->price }}</li>
-{{--                                    <li class="old_prize">$35.00</li>--}}
+                                    {{--                                    <li class="old_prize">$35.00</li>--}}
                                 </ul>
                                 <div class="action">
                                     <div class="actions_inner">
                                         <ul class="add_to_links">
-                                            <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                            <li>
+                                                <form action="{{ route('checkout.index',$book->id) }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="books[{{ $key }}][id]" value="{{ $book->id }}">
+                                                    <input type="hidden" name="books[{{ $key }}][quantity]" value="1">
+
+                                                    <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                </form>
                                             </li>
                                             <li>
                                                 <a class="wishlist" href="{{ route('carts.show', $book->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                             </li>
-                                            <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
+                                            <li>
+                                                <a class="compare" href="{{ route('favorites.show', $book->id) }}"><i class="bi bi-heart-beat"></i></a>
+                                            </li>
 
                                         </ul>
                                     </div>
@@ -157,12 +166,19 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index', $b0[$i]->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b0[$i]->id }}">
+                                                                <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b0[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="{{ route('favorites.show', $b0[$i]->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
@@ -219,12 +235,19 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index', $b0[$i+1]->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b0[$i+1]->id }}">
+                                                                <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b0[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
-                                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                        <li>
+                                                            <a class="compare" href="{{ route('favorites.show', $b0[$i+1]->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
@@ -291,13 +314,19 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index', $b1[$i]->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b1[$i]->id }}">
+                                                                <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b1[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
                                                         <li>
-                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                            <a class="compare" href="{{ route('favorites.show', $b1[$i]->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
@@ -354,13 +383,19 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index', $b1[$i+1]->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b1[$i+1]->id }}">
+                                                                <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b1[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
                                                         <li>
-                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                            <a class="compare" href="{{ route('favorites.show', $b1[$i+1]->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
@@ -426,13 +461,19 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index', $b2[$i]->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b2[$i]->id }}">
+                                                                <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b2[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
                                                         <li>
-                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                            <a class="compare" href="{{ route('favorites.show', $b2[$i]->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
@@ -489,13 +530,19 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index', $b2[$i+1]->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b2[$i+1]->id }}">
+                                                                <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b2[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
                                                         <li>
-                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                            <a class="compare" href="{{ route('favorites.show', $b2[$i+1]->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
@@ -562,13 +609,19 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index', $b3[$i]->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b3[$i]->id }}">
+                                                                <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b3[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
                                                         <li>
-                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                            <a class="compare" href="{{ route('favorites.show', $b3[$i]->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
@@ -625,13 +678,19 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index', $b3[$i+1]->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b3[$i+1]->id }}">
+                                                                <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b3[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
                                                         <li>
-                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                            <a class="compare" href="{{ route('favorites.show', $b3[$i+1]->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
@@ -697,13 +756,19 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index', $b4[$i]->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b4[$i]->id }}">
+                                                                <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b4[$i]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
                                                         <li>
-                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                            <a class="compare" href="{{ route('favorites.show', $b4[$i]->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
@@ -760,13 +825,19 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a>
+                                                            <form action="{{ route('checkout.index', $b4[$i+1]->id) }}" method="post">
+                                                                @csrf
+                                                                <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b4[$i+1]->id }}">
+                                                                <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
+
+                                                                <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                            </form>
                                                         </li>
                                                         <li>
                                                             <a class="wishlist" href="{{ route('carts.show', $b4[$i+1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                         </li>
                                                         <li>
-                                                            <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
+                                                            <a class="compare" href="{{ route('favorites.show', $b4[$i+1]->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                         </li>
 
                                                     </ul>
@@ -903,11 +974,19 @@
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li>
+                                    <form action="{{ route('checkout.index', $best_books[0]->id) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="books[0][id]" value="{{ $best_books[0]->id }}">
+                                        <input type="hidden" name="books[0][quantity]" value="1">
+
+                                        <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                    </form>
+                                </li>
                                 <li>
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[0]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
-                                <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
+                                <li><a class="compare" href="{{ route('favorites.show', $best_books[0]->id) }}"><i class="bi bi-heart-beat"></i></a></li>
 
                             </ul>
                         </div>
@@ -949,11 +1028,19 @@
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li>
+                                    <form action="{{ route('checkout.index', $best_books[1]->id) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="books[0][id]" value="{{ $best_books[1]->id }}">
+                                        <input type="hidden" name="books[0][quantity]" value="1">
+
+                                        <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                    </form>
+                                </li>
                                 <li>
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[1]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
-                                <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
+                                <li><a class="compare" href="{{ route('favorites.show', $best_books[1]->id) }}"><i class="bi bi-heart-beat"></i></a></li>
 
                             </ul>
                         </div>
@@ -995,11 +1082,19 @@
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li>
+                                    <form action="{{ route('checkout.index', $best_books[2]->id) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="books[0][id]" value="{{ $best_books[2]->id }}">
+                                        <input type="hidden" name="books[0][quantity]" value="1">
+
+                                        <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                    </form>
+                                </li>
                                 <li>
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[2]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
-                                <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
+                                <li><a class="compare" href="{{ route('favorites.show', $best_books[2]->id) }}"><i class="bi bi-heart-beat"></i></a></li>
 
                             </ul>
                         </div>
@@ -1041,11 +1136,19 @@
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li>
+                                    <form action="{{ route('checkout.index', $best_books[3]->id) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="books[0][id]" value="{{ $best_books[3]->id }}">
+                                        <input type="hidden" name="books[0][quantity]" value="1">
+
+                                        <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                    </form>
+                                </li>
                                 <li>
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[3]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
-                                <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
+                                <li><a class="compare" href="{{ route('favorites.show', $best_books[3]->id) }}"><i class="bi bi-heart-beat"></i></a></li>
 
                             </ul>
                         </div>
@@ -1121,11 +1224,19 @@
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li>
+                                    <form action="{{ route('checkout.index', $best_books[4]->id) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="books[0][id]" value="{{ $best_books[4]->id }}">
+                                        <input type="hidden" name="books[0][quantity]" value="1">
+
+                                        <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                    </form>
+                                </li>
                                 <li>
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[4]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
-                                <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
+                                <li><a class="compare" href="{{ route('favorites.show', $best_books[4]->id) }}"><i class="bi bi-heart-beat"></i></a></li>
 
                             </ul>
                         </div>
@@ -1167,11 +1278,19 @@
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li>
+                                    <form action="{{ route('checkout.index', $best_books[5]->id) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="books[0][id]" value="{{ $best_books[5]->id }}">
+                                        <input type="hidden" name="books[0][quantity]" value="1">
+
+                                        <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                    </form>
+                                </li>
                                 <li>
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[5]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
-                                <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
+                                <li><a class="compare" href="{{ route('favorites.show', $best_books[5]->id) }}"><i class="bi bi-heart-beat"></i></a></li>
 
                             </ul>
                         </div>
@@ -1213,11 +1332,19 @@
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
+                                <li>
+                                    <form action="{{ route('checkout.index', $best_books[6]->id) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="books[0][id]" value="{{ $best_books[6]->id }}">
+                                        <input type="hidden" name="books[0][quantity]" value="1">
+
+                                        <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                    </form>
+                                </li>
                                 <li>
                                     <a class="wishlist" href="{{ route('carts.show', $best_books[6]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                 </li>
-                                <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
+                                <li><a class="compare" href="{{ route('favorites.show', $best_books[6]->id) }}"><i class="bi bi-heart-beat"></i></a></li>
 
                             </ul>
                         </div>

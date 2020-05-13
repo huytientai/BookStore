@@ -65,6 +65,12 @@ class FavoritesController extends Controller
             return back();
         }
 
+        $exist = $this->favorite->where('user_id', Auth::id())->where('book_id', $id)->first();
+        if ($exist) {
+            flash('This book is already in favorites');
+            return back();
+        }
+
         $favorite['user_id'] = Auth::id();
         $favorite['book_id'] = $id;
         $this->favorite->create($favorite);
