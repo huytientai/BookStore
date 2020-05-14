@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\StoreImportRequest;
 use App\Models\Book;
+use App\Models\Cart;
+use App\Models\Favorite;
 use App\Models\Import;
 use App\Models\Loaisach;
 use App\Models\TableOfContents;
@@ -153,8 +155,18 @@ class BooksController extends Controller
             return redirect()->route('books.show', $id);
         }
 
-        $this->book->find($id)->delete();
+        $book = $this->book->find($id);
 
+        if ($book == null) {
+            flash('This book is not exist');
+            return back();
+        }
+
+        //delete if relationship
+        Favorite::where('book_id', $id)->delete();
+        Cart::where('book_id', $id)->delete();
+
+        $book->delete();
         flash('delete success')->error();
         return redirect()->route('books.index');
     }

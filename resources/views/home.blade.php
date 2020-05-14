@@ -1380,4 +1380,11 @@
     <!-- QUICKVIEW PRODUCT -->
     @include('exam1.quickview')
     <!-- END QUICKVIEW PRODUCT -->
+
+    <script>
+        function checkout_submit(element) {
+            element.parentElement.submit();
+        }
+    </script>
+
 @endsection
