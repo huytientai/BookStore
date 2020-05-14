@@ -67,8 +67,18 @@
             <ol>
                 @if(count($orders))
                     @foreach($orders as $order)
+                        @php
+                        $warn=0;
+                        foreach($order->orderdetails as $orderdetail)
+                            {
+                            if($orderdetail->book->deleted_at!=null){
+                            $warn=1;
+                            break;
+                            }
+                        }
+                        @endphp
                         <div>
-                            <li class="orders" style="cursor: pointer;">#Order{{ $order->id }} ({{ $order->created_at }})</li>
+                            <li class="orders" style="cursor: pointer;@if($order->status == \App\Models\Order::CHECKED && $warn) background-color:yellow @endif">#Order{{ $order->id }} ({{ $order->created_at }})</li>
                             <div class="row order-details" style="display: none">
                                 <div class="col-md-12 col-sm-12 ol-lg-12">
                                     <div class="row">
@@ -166,7 +176,7 @@
                                             </thead>
                                             <tbody>
                                             @foreach($order->orderdetails as $orderdetail)
-                                                <tr>
+                                                <tr @if($orderdetail->book->deleted_at)style="background-color: #9c9692" @endif>
                                                     <td class="product-thumbnail">
                                                         @if(isset($orderdetail->book->image))
                                                             <a href="{{ route('books.show', $orderdetail->book_id) }}"><img src="/storage/book_images/{{ $orderdetail->book->image }}"></a>

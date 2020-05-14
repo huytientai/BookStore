@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Order;
 use App\Models\Orderdetail;
+use function foo\func;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -39,7 +40,12 @@ class OrdersController extends Controller
 
     public function searchOrders($data)
     {
-        $builder = $this->order->orderBy('deleted_at')->orderBy('status')->orderBy('id');
+        $builder = $this->order->with(['orderdetails'=> function ($query) {
+            $query->with(['book' => function ($query) {
+                $query->withTrashed();
+            }]);
+        }])->orderBy('deleted_at')->orderBy('status')->orderBy('id');
+
         if (isset($data['order_id'])) {
             $builder->findOrderId($data['order_id']);
         }
@@ -86,7 +92,12 @@ class OrdersController extends Controller
     public function edit($id)
     {
         if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
-            $order = $this->order->find($id);
+            $order = $this->order->with(['orderdetails'=> function ($query) {
+                $query->with(['book' => function ($query) {
+                    $query->withTrashed();
+                }]);
+            }])->find($id);
+
             if ($order == null) {
                 flash('This order is not exist');
                 return back();
@@ -115,6 +126,7 @@ class OrdersController extends Controller
     {
         if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
             $order = $this->order->find($id);
+
             if ($order == null) {
                 flash('This order is not exist');
                 return redirect()->back();

@@ -7,7 +7,18 @@
     @include('flash::message')
     <br>
 
-    <h3>#Order{{ $order->id }}</h3>
+    @php
+        $warn=0;
+        foreach($order->orderdetails as $orderdetail)
+            {
+            if($orderdetail->book->deleted_at!=null){
+            $warn=1;
+            break;
+            }
+        }
+    @endphp
+
+    <h3 @if($order->status == \App\Models\Order::CHECKED && $warn) style="background-color:yellow;" @endif>#Order{{ $order->id }}</h3>
     <div class="row order-details">
         <div class="col-md-12 col-sm-12 ol-lg-12">
             <div class="row">
@@ -80,7 +91,7 @@
                             </thead>
                             <tbody>
                             @foreach($order->orderdetails as $orderdetail)
-                                <tr class="each-cart">
+                                <tr class="each-cart" @if($orderdetail->book->deleted_at)style="background-color: #9c9692" @endif>
                                     <td class="product-thumbnail">
                                         @if(isset($orderdetail->book->image))
                                             <a href="{{ route('books.show', $orderdetail->book_id) }}"><img src="/storage/book_images/{{ $orderdetail->book->image }}"></a>

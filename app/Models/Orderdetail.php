@@ -24,6 +24,8 @@ class Orderdetail extends Model
 
     protected $perPage = 10;
 
+    protected $with = ['book'];
+
     /** group orderDetails by category,most order,time and limit results
      * @param $category
      * @param $days
@@ -56,16 +58,16 @@ class Orderdetail extends Model
     /**
      * Set the keys for a save update query.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
      */
     protected function setKeysForSaveQuery(Builder $query)
     {
         $keys = $this->getKeyName();
-        if(!is_array($keys)){
+        if (!is_array($keys)) {
             return parent::setKeysForSaveQuery($query);
         }
-        foreach($keys as $keyName){
+        foreach ($keys as $keyName) {
             $query->where($keyName, '=', $this->getKeyForSaveQuery($keyName));
         }
 
@@ -80,7 +82,7 @@ class Orderdetail extends Model
      */
     protected function getKeyForSaveQuery($keyName = null)
     {
-        if(is_null($keyName)){
+        if (is_null($keyName)) {
             $keyName = $this->getKeyName();
         }
 
