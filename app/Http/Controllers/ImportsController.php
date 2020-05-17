@@ -48,8 +48,8 @@ class ImportsController extends Controller
      */
     public function store(Request $request)
     {
-        $imports = $this->import->find($request->id);
-        dd($imports);
+//        $imports = $this->import->find($request->id);
+//        dd($imports);
     }
 
     /**
@@ -72,7 +72,29 @@ class ImportsController extends Controller
      */
     public function destroy($id)
     {
-        //
+//        if (Gate::any(['admin', 'staff', 'warehouseman'], Auth::user())) {
+//            $import = $this->import->find($id);
+//
+//            if ($import == null) {
+//                flash('This Import is not existed');
+//                return redirect()->route('imports.index');
+//            }
+//
+//            if (Gate::allows('warehouseman', Auth::user())) {
+//                if ($import->user_id != Auth::id()) {
+//                    flash('This Import is not your')->error();
+//                    return back();
+//                }
+//            }
+//
+//            $import->delete();
+//
+//            flash('The import #' . $id . 'was denied')->warning();
+//            return redirect()->route('imports.index');
+//        }
+//
+//        flash('You are not authorized')->error();
+//        return redirect()->route('home');
     }
 
     public function accept($id)
@@ -95,20 +117,26 @@ class ImportsController extends Controller
             return redirect()->route('imports.show', $import->id);
         }
 
-        flash('You are not authorized');
+        flash('You are not authorized')->error();
         return redirect()->route('home');
     }
 
     public function denies($id)
     {
         if (Gate::any(['admin', 'staff'], Auth::user())) {
-            $this->import->find($id)->delete();
+            $import = $this->import->find($id);
+
+            if ($import == null) {
+                flash('This Import is not existed');
+                return redirect()->route('imports.index');
+            }
+            $import->delete();
 
             flash('The import #' . $id . 'was denied')->warning();
             return redirect()->route('imports.index');
         }
 
-        flash('You are not authorized');
+        flash('You are not authorized')->error();
         return redirect()->route('home');
     }
 
@@ -140,7 +168,7 @@ class ImportsController extends Controller
             return redirect()->route('imports.show', $import->id);
         }
 
-        flash('You are not authorized');
+        flash('You are not authorized')->error();
         return route('home');
     }
 }

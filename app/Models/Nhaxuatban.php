@@ -23,11 +23,6 @@ class Nhaxuatban extends Model
 
     protected $perPage = 5;
 
-    public function books()
-    {
-        return $this->hasMany('App\Models\Book');
-    }
-
     public function updateNhaxuatban($request)
     {
         $data = $request->all();
@@ -60,5 +55,10 @@ class Nhaxuatban extends Model
         }
 
         Nhaxuatban::create($data);
+    }
+
+    public function books()
+    {
+        return $this->hasMany('App\Models\Book');
     }
 }

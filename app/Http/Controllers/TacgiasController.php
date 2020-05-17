@@ -108,10 +108,21 @@ class TacgiasController extends Controller
      */
     public function destroy($id)
     {
-        //
-		$this->tacgia->find($id)->delete();
+		$author=$this->tacgia->withCount('books')->find($id);
 
-        flash('delete success')->error();
+        if ($author == null) {
+            flash('This author is not exited')->error();
+            return redirect()->route('tacgias.index');
+        }
+
+        if ($author->books_count) {
+            flash('Cannot delete(' . $author->books_count . ' books exist)')->error();
+            return back();
+        }
+
+		$author->delete();
+
+        flash('delete successful')->error();
 
         return redirect()->route('tacgias.index');
     }

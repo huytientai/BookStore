@@ -13,7 +13,7 @@ class LoaisachsController extends Controller
     public function __construct(Loaisach $loaisach)
     {
         $this->loaisach = $loaisach;
-        $this->middleware(['auth','manager'])->except(['index', 'show']);
+        $this->middleware(['auth', 'manager'])->except(['index', 'show']);
     }
 
     /**
@@ -61,10 +61,15 @@ class LoaisachsController extends Controller
     public function show($id)
     {
         $loaisach = $this->loaisach->find($id);
+        if ($loaisach == null) {
+            flash('This category is not existed')->error();
+            return redirect()->route('books.index');
+        }
+
         $loaisachs = $this->loaisach->allLoaisachCount();
         $book = new Book();
         $books = $book->findLoaisach($id)->paginate(12);
-        return view('loaisachs.show')->with(['main_loaisach' => $loaisach, 'books' => $books,'loaisachs' => $loaisachs]);
+        return view('loaisachs.show')->with(['main_loaisach' => $loaisach, 'books' => $books, 'loaisachs' => $loaisachs]);
     }
 
     /**
@@ -103,10 +108,20 @@ class LoaisachsController extends Controller
      */
     public function destroy($id)
     {
-        $this->loaisach->find($id)->delete();
+        $loaisach = $this->loaisach->withCount('books')->find($id);
 
-        flash('delete success')->error();
+        if ($loaisach == null) {
+            flash('This category is not existed')->error();
+            return redirect()->route('loaisachs.index');
+        }
 
+        if ($loaisach->books_count) {
+            flash('Cannot delete(' . $loaisach->books_count . ' books exist)')->error();
+            return back();
+        }
+        $loaisach->delete();
+
+        flash('delete successful');
         return redirect()->route('loaisachs.index');
     }
 }

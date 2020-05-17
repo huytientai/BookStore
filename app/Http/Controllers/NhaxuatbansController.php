@@ -108,8 +108,19 @@ class NhaxuatbansController extends Controller
      */
     public function destroy($id)
     {
-        $this->nhaxuatban->find($id)->delete();
+        $pulish = $this->nhaxuatban->withCount('books')->find($id);
 
+        if ($pulish == null) {
+            flash('This Publish Company is not exited');
+            return redirect()->route('nhaxuatbans.index');
+        }
+
+        if ($pulish->books_count) {
+            flash('Cannot delete(' . $pulish->books_count . ' books exist)')->error();
+            return back();
+        }
+
+        $pulish->delete();
         flash('delete success')->error();
 
         return redirect()->route('nhaxuatbans.index');

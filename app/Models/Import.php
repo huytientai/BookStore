@@ -21,6 +21,13 @@ class Import extends Model
     ];
     protected $perPage = 10;
 
+//    const WAITING=0;
+//    const ACCEPTED=1;
+//    const DENIES=2;
+//
+//    public static $status = [];
+
+
     public function user()
     {
         return $this->belongsTo('App\Models\User','user_id');

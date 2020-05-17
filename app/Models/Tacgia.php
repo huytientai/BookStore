@@ -24,11 +24,6 @@ class Tacgia extends Model
 		'image'
 	];
 	protected $perPage = 5;
-
-    public function books()
-    {
-        return $this->hasMany('App\Models\Book');
-    }
 	
 	public function updateTacgia($request)
     {
@@ -60,5 +55,10 @@ class Tacgia extends Model
         }
 
         Tacgia::create($data);
+    }
+
+    public function books()
+    {
+        return $this->hasMany('App\Models\Book');
     }
 }
