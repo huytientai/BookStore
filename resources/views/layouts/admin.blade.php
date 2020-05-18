@@ -121,6 +121,13 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('discount.index') }}">
+                        <i class="material-icons" >%</i>
+                        <p>Discount</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="./map.html">
                         <i class="material-icons">location_ons</i>
                         <p>Maps</p>

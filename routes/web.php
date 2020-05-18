@@ -57,6 +57,8 @@ Route::get('/charts', 'ChartController@index')->name('charts.index')->middleware
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard')->middleware('auth');
 
+Route::resource('/discount', 'DiscountController');
+
 Route::get('/about', function () {
     return view('about');
 })->name('about');

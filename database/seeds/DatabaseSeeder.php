@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         //to get total price
         $this->call(OrdersTableSeeder::class);
 
+        $this->call(DiscountTableSeeder::class);
         Schema::enableForeignKeyConstraints();
     }
 }
