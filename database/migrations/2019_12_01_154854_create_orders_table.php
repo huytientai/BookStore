@@ -28,8 +28,11 @@ class CreateOrdersTable extends Migration
             $table->string('address', 255);
             $table->string('company', 255)->nullable();
 
-            $table->unsignedBigInteger('finished_id')->nullable()->default(null);
-            $table->foreign('finished_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('seller_id')->nullable()->default(null);
+            $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('warehouseman_id')->nullable()->default(null);
+            $table->foreign('warehouseman_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

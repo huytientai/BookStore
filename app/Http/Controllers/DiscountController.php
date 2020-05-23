@@ -32,7 +32,7 @@ class DiscountController extends Controller
      */
     public function create()
     {
-        //
+        return view('discount.create');
     }
 
     /**

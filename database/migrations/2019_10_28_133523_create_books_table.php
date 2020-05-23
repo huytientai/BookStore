@@ -25,6 +25,7 @@ class CreateBooksTable extends Migration
             $table->integer('sotrang')->nullable();
             $table->timestamps();
             $table->integer('soluong')->default(0);
+            $table->integer('virtual_nums')->default(0);
             $table->softDeletes();
         });
     }

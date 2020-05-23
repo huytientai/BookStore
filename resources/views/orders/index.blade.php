@@ -125,7 +125,7 @@
                                                 @elseif($order->status == \App\Models\Order::CHECKED)
                                                     <div class="row">
                                                         <a class="btn btn-primary" href="{{ route('orders.shipping',$order->id) }}">Shipping</a>
-                                                        <a class="btn btn-danger" href="{{ route('orders.revertToWaiting',$order->id) }}">Revert to Waiting</a>
+{{--                                                        <a class="btn btn-danger" href="{{ route('orders.revertToWaiting',$order->id) }}">Revert to Waiting</a>--}}
                                                     </div>
                                                 @elseif($order->status == \App\Models\Order::SHIPPING)
                                                     <div class="row">

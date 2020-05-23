@@ -25,6 +25,7 @@ class Book extends Model
         'loaibia',
         'sotrang',
         'soluong',
+        'virtual_nums'
     ];
     protected $perPage = 5;
 

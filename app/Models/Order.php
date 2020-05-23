@@ -22,18 +22,25 @@ class Order extends Model
         'address',
         'email',
         'company',
-        'finished_id',
+        'seller_id',
+        'warehouseman_id',
     ];
 
     const WAITING = 0;
     const CHECKED = 1;
-    const SHIPPING = 2;
-    const DONE = 3;
+    const REQUEST = 2;
+    const CONFIRM = 3;
+    const SHIPPING = 4; //confirm and shipping
+    const SHIPPED = 5;
+    const DONE = 6;
 
     public static $status = [
         self::WAITING => 'Waiting',
         self::CHECKED => 'Checked',
+        self::REQUEST => 'Request Export',
+        self::CONFIRM => 'Confirm Exported',
         self::SHIPPING => 'Shipping',
+        self::SHIPPED => 'Shipped',
         self::DONE => 'Done',
     ];
 
@@ -100,8 +107,8 @@ class Order extends Model
         return $this->hasMany('App\Models\Orderdetail');
     }
 
-    public function finished()
+    public function seller()
     {
-        return $this->belongsTo('App\Models\User', 'finished_id');
+        return $this->belongsTo('App\Models\User', 'seller_id');
     }
 }

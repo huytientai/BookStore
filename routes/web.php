@@ -31,6 +31,8 @@ Route::resource('/loaisachs', 'LoaisachsController');
 Route::resource('/nhaxuatbans', 'NhaxuatbansController');
 Route::resource('/tacgias', 'TacgiasController');
 
+Route::get('neededImports','ImportsController@neededList')->name('imports.needed')->middleware('auth');
+
 Route::resource('/imports', 'ImportsController')->middleware(['auth']);
 Route::get('/imports/{id}/accept', 'ImportsController@accept')->name('imports.accept')->middleware('auth');
 Route::get('/imports/{id}/denies', 'ImportsController@denies')->name('imports.denies')->middleware('auth');
@@ -46,7 +48,7 @@ Route::resource('/orders', 'OrdersController')->middleware(['auth']);
 Route::get('/orders/{id}/check', 'OrdersController@check')->name('orders.check')->middleware('auth');
 Route::get('/orders/{id}/shipping', 'OrdersController@shipping')->name('orders.shipping')->middleware('auth');
 Route::get('/orders/{id}/finish', 'OrdersController@finish')->name('orders.finish')->middleware('auth');
-Route::get('/orders/{id}/revertToWaiting', 'OrdersController@revertToWaiting')->name('orders.revertToWaiting')->middleware('auth');
+//Route::get('/orders/{id}/revertToWaiting', 'OrdersController@revertToWaiting')->name('orders.revertToWaiting')->middleware('auth');
 Route::get('/orders/{id}/revertToChecked', 'OrdersController@revertToChecked')->name('orders.revertToChecked')->middleware('auth');
 Route::get('/orders/{id}/revertToShipping', 'OrdersController@revertToShipping')->name('orders.revertToShipping')->middleware('auth');
 
@@ -57,7 +59,7 @@ Route::get('/charts', 'ChartController@index')->name('charts.index')->middleware
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard')->middleware('auth');
 
-Route::resource('/discount', 'DiscountController');
+Route::resource('/discount', 'DiscountController')->middleware('auth');
 
 Route::get('/about', function () {
     return view('about');

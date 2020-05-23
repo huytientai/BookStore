@@ -34,10 +34,18 @@ class ImportsController extends Controller
         return redirect()->route('home');
     }
 
-    public function checkIndex()
+    public function neededList()
     {
-        $imports = $this->import->where('status', '=', '0')->get();
-        return view('imports.check_index')->with('imports', $imports);
+        if (Gate::any(['admin', 'staff', 'warehouse'], Auth::user())) {
+            $needed1 = Book::where('soluong', '<', 50)->orderBy('soluong')->orderBy('virtual_nums')->get();
+
+            $id = $needed1->pluck('id')->toArray();
+            $needed2 = Book::where('virtual_nums', '<', 20)->whereNotIn('id', $id)->orderBy('virtual_nums')->get();
+            return view('imports.neededList')->with(['needed1' => $needed1, 'needed2' => $needed2]);
+        }
+
+        flash('You are not authorized');
+        return back();
     }
 
     /**

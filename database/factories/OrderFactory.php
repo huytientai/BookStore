@@ -14,7 +14,7 @@ $factory->define(Order::class, function (Faker $faker) {
         'address' => $faker->address,
         'phone' => $faker->e164PhoneNumber,
         'email' => $faker->unique()->email,
-        'finished_id' => $faker->randomElement(\App\Models\User::whereIn('role', [\App\Models\User::ADMIN, \App\Models\User::STAFF, \App\Models\User::SELLER])->get()->pluck('id')->toArray()),
+        'seller_id' => $faker->randomElement(\App\Models\User::whereIn('role', [\App\Models\User::ADMIN, \App\Models\User::STAFF, \App\Models\User::SELLER])->get()->pluck('id')->toArray()),
 
     ];
 })->afterCreating(\App\Models\Order::class, function (\App\Models\Order $order, Faker $faker) {

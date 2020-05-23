@@ -39,7 +39,7 @@ class OrdersController extends Controller
 
     public function searchOrders($data)
     {
-        $builder = $this->order->with(['orderdetails'=> function ($query) {
+        $builder = $this->order->with(['orderdetails' => function ($query) {
             $query->with(['book' => function ($query) {
                 $query->withTrashed();
             }]);
@@ -91,7 +91,7 @@ class OrdersController extends Controller
     public function edit($id)
     {
         if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
-            $order = $this->order->with(['orderdetails'=> function ($query) {
+            $order = $this->order->with(['orderdetails' => function ($query) {
                 $query->with(['book' => function ($query) {
                     $query->withTrashed();
                 }]);
@@ -287,6 +287,59 @@ class OrdersController extends Controller
         return redirect()->route('home');
     }
 
+    public function requestExport($id)
+    {
+        if (Gate::any(['admin', 'staff', 'warehouse'], Auth::user())) {
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+
+            if ($order->status != Order::CHECKED) {
+                flash('Cant request export this order.It is not checked status')->error();
+                return redirect()->back();
+            }
+
+            $order->status = Order::REQUEST;
+            $order->seller_id = Auth::id();
+            $order->save();
+            flash('Order#' . $order->id . ' is requesting export');
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->warning();
+        return redirect()->route('home');
+    }
+
+    /** revert status: Done -> checked
+     * @param $id : order_id
+     * @return back()
+     */
+    public function revertToChecked($id)
+    {
+        if (Gate::any(['admin', 'staff'], Auth::user())) {
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+            if ($order->status != Order::REQUEST) {
+                flash('Cant revert this order.It is not ' . Order::REQUEST . ' status')->error();
+                return redirect()->back();
+            }
+
+            $order->status = Order::CHECKED;
+            $order->save();
+            flash('Revert to checked successful');
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->error();
+        return redirect()->back();
+    }
+
+
     /** Finish the order
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
@@ -321,32 +374,6 @@ class OrdersController extends Controller
         return redirect()->route('home');
     }
 
-    /** revert status: Done -> checked
-     * @param $id : order_id
-     * @return back()
-     */
-    public function revertToChecked($id)
-    {
-        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
-            $order = $this->order->find($id);
-            if ($order == null) {
-                flash('This order is not exist');
-                return redirect()->back();
-            }
-            if ($order->status == Order::WAITING || $order->status == Order::CHECKED || $order->status == Order::DONE) {
-                flash('Cant revert this order.It is not Shipping status')->error();
-                return redirect()->back();
-            }
-
-            $order->status = Order::CHECKED;
-            $order->save();
-            flash('Revert to checked successful');
-            return redirect()->back();
-        }
-
-        flash('You are not authorized')->error();
-        return redirect()->back();
-    }
 
     /** Finish the order
      * @param $id
