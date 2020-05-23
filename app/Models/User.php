@@ -46,6 +46,7 @@ class User extends Authenticatable
     const STAFF = 3;
     const WAREHOUSEMAN = 4;
     const SELLER = 5;
+    const SHIPPER = 6;
 
     public static $roles = [
         self::ADMIN => 'Admin',
@@ -53,6 +54,7 @@ class User extends Authenticatable
         self::STAFF => 'Staff',
         self::WAREHOUSEMAN => 'Warehouseman',
         self::SELLER => 'Seller',
+        self::SHIPPER => 'Shipper',
     ];
 
     /**

@@ -16,9 +16,9 @@ class TableOfContents extends Model
     ];
     protected $perPage = 5;
 
-    public function saveTableOfContents($request)
+    public function saveTableOfContents($request,$id)
     {
-        $data['book_id'] = $request->id;
+        $data['book_id'] = $id;
 
         $contents = $request->contents;
         if (isset($contents)) {

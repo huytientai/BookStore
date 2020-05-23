@@ -24,6 +24,7 @@ class Order extends Model
         'company',
         'seller_id',
         'warehouseman_id',
+        'shipper_id',
     ];
 
     const WAITING = 0;
@@ -33,6 +34,7 @@ class Order extends Model
     const SHIPPING = 4; //confirm and shipping
     const SHIPPED = 5;
     const DONE = 6;
+    const CANCEL_AFTER_EXPORT=10;
 
     public static $status = [
         self::WAITING => 'Waiting',
@@ -42,6 +44,7 @@ class Order extends Model
         self::SHIPPING => 'Shipping',
         self::SHIPPED => 'Shipped',
         self::DONE => 'Done',
+        self::CANCEL_AFTER_EXPORT => 'Cancel after export',
     ];
 
     protected $perPage = 10;

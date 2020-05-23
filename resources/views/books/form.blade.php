@@ -129,17 +129,6 @@
     </div>
 </div>
 
-{{--book soluong--}}
-<div class="form-group row">
-    <label for="soluong" class="col-sm-2 col-form-label @error('soluong') text-danger @enderror">Number of Books</label>
-    <div class="col-sm-5">
-        <input type="number" class="form-control @error('soluong') is-invalid @enderror" id="soluong" name="soluong" value="{{ old('soluong') ?? $book->soluong ?? null }}">
-        @error('soluong')
-        <div class="text-danger">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
-
 {{--table of contents--}}
 <div class="form-group row">
     <label for="contents" class="col-md-2 col-form-label">Table of contents</label>

@@ -69,7 +69,8 @@
                                         <p>DESCRIBE: {!! substr($book->desc,0,250) . ' ...' !!}</p>
                                     </div>
 
-                                    <h5>Nums: {{ $book->soluong }}</h5>
+                                    <h5>Nums in warehouse: {{ $book->soluong }}</h5>
+                                    <h5>Nums: {{ $book->virtual_nums }}</h5>
                                     <br>
                                     <div class="box-tocart d-flex row">
                                         <form action="{{ route('carts.store') }}" class="row" method="post">

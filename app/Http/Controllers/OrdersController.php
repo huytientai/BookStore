@@ -83,7 +83,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the order after checked.
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -115,7 +115,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update orders when in checked status.
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
@@ -190,7 +190,8 @@ class OrdersController extends Controller
         return back();
     }
 
-    /** Check the order
+    /**
+     * Check the order
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -203,29 +204,19 @@ class OrdersController extends Controller
                 flash('This order is not exist');
                 return redirect()->back();
             }
-            if ($order->status == Order::CHECKED) {
-                flash('This order was checked by ' . $order->finish->name);
-                return redirect()->back();
-            }
-
-            if ($order->status == Order::SHIPPING) {
-                flash('This order is shipping now ')->error();
-                return redirect()->back();
-            }
-
-            if ($order->status == Order::DONE) {
-                flash('This order was finished by ' . $order->finish->name)->error();
+            if ($order->status != Order::WAITING) {
+                flash('Cant Check this order.It is ' . $order->status . ' status now');
                 return redirect()->back();
             }
 
             $orderDetails = $this->orderDetail->where('order_id', $order->id)->get();
             $error = '';
             foreach ($orderDetails as $orderDetail) {
-                if ($orderDetail->book->soluong < $orderDetail->quantity) {
+                if ($orderDetail->book->virtual_nums < $orderDetail->quantity) {
                     if ($error == null) {
                         $error = 'Not Enough Quantity:';
                     }
-                    $error .= '\n\t' . $orderDetail->book->name . ' (' . $orderDetail->book->soluong . '<' . $orderDetail->quantity . ')';
+                    $error .= '\n\t' . $orderDetail->book->name . ' (' . $orderDetail->book->virtual_nums . '<' . $orderDetail->quantity . ')';
                 }
             }
             if ($error != null) {
@@ -235,12 +226,12 @@ class OrdersController extends Controller
 
             foreach ($orderDetails as $orderDetail) {
                 $book = Book::find($orderDetail->book_id);
-                $book->soluong -= $orderDetail->quantity;
+                $book->virtual_nums -= $orderDetail->quantity;
                 $book->save();
             }
 
             $order->status = Order::CHECKED;
-            $order->finished_id = Auth::id();
+            $order->seller_id = Auth::id();
             $order->save();
             flash('You has checked Order#' . $order->id);
             return redirect()->back();
@@ -250,43 +241,11 @@ class OrdersController extends Controller
         return redirect()->route('home');
     }
 
-    /** revert status: Checked->waiting
+    /**
+     * Seller request export to warehouseman
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function revertToWaiting($id)
-    {
-        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
-
-            $order = $this->order->find($id);
-            if ($order == null) {
-                flash('This order is not exist');
-                return redirect()->back();
-            }
-
-            if ($order->status == Order::WAITING || $order->status == Order::SHIPPING || $order->status == Order::DONE) {
-                flash('Cant convert to waiting.It is not checked status')->error();
-                return redirect()->back();
-            }
-
-            $orderDetails = $this->orderDetail->where('order_id', $order->id)->get();
-
-            foreach ($orderDetails as $orderDetail) {
-                $book = Book::find($orderDetail->book_id);
-                $book->soluong += $orderDetail->quantity;
-                $book->save();
-            }
-
-            $order->status = Order::WAITING;
-            $order->save();
-            flash('Revert Order#' . $order->id . ' successful');
-            return redirect()->back();
-        }
-
-        flash('You are not authorized')->warning();
-        return redirect()->route('home');
-    }
-
     public function requestExport($id)
     {
         if (Gate::any(['admin', 'staff', 'warehouse'], Auth::user())) {
@@ -312,7 +271,178 @@ class OrdersController extends Controller
         return redirect()->route('home');
     }
 
-    /** revert status: Done -> checked
+    /**
+     * warehouse confirm exporting the order
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function confirmExport($id)
+    {
+        if (Gate::allows('warehouseman', Auth::user())) {
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+            if ($order->status != Order::REQUEST) {
+                flash('Cant confirm export this order.It is not request status')->error();
+                return redirect()->back();
+            }
+
+            $orderDetails = $this->orderDetail->where('order_id', $order->id)->get();
+
+            foreach ($orderDetails as $orderDetail) {
+                $book = Book::find($orderDetail->book_id);
+                $book->soluong -= $orderDetail->quantity;
+                $book->save();
+            }
+
+            $order->status = Order::CONFIRM;
+            $order->warehouseman_id = Auth::id();
+            $order->save();
+
+            flash('You confirmed exporting Order#' . $order->id);
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->warning();
+        return redirect()->route('home');
+    }
+
+    /**
+     * take goods and shipping
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function shipping($id)
+    {
+        if (Gate::any(['admin', 'staff', 'shipper'], Auth::user())) {
+
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+            if ($order->status != Order::CONFIRM) {
+                flash('Cant take this order.It is not confirm exported status')->error();
+                return redirect()->back();
+            }
+
+            $order->status = Order::SHIPPING;
+            $order->shipper_id = Auth::id();
+            $order->save();
+            flash('Order#' . $order->id . ' is shipping');
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->warning();
+        return redirect()->route('home');
+    }
+
+    /**
+     * shipped and take money from customer
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function shipped($id)
+    {
+        if (Gate::any(['admin', 'shipper'], Auth::user())) {
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+            if (Gate::allows('shipper', Auth::user()) && Auth::id() != $order->shipper_id) {
+                flash('You are not authorized')->warning();
+                return back();
+            }
+
+            $order->status = Order::SHIPPING;
+            $order->save();
+            flash('Order#' . $order->id . ' is shipped');
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Finish the order and take money from shipper
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function done($id)
+    {
+        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+
+            if ($order->status == Order::DONE) {
+                flash('This order was done by ' . $order->finish->name);
+                return redirect()->back();
+            }
+
+            if ($order->status != Order::SHIPPED) {
+                flash('Cant finish this order.It is not shipped yet')->error();
+                return redirect()->back();
+            }
+
+            $order->status = Order::DONE;
+            $order->seller_id = Auth::id();
+            $order->save();
+            flash('You has been done Order#' . $order->id);
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->warning();
+        return redirect()->route('home');
+    }
+
+
+//    -------------------------------------------------------------------------------------
+
+    /**
+     * revert status: Checked->waiting
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function revertToWaiting($id)
+    {
+        if (Gate::any(['admin', 'staff'], Auth::user())) {
+
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->back();
+            }
+
+            if ($order->status == Order::WAITING || $order->status == Order::SHIPPING || $order->status == Order::DONE) {
+                flash('Cant convert to waiting.It is not checked status')->error();
+                return redirect()->back();
+            }
+
+            $orderDetails = $this->orderDetail->where('order_id', $order->id)->get();
+
+            foreach ($orderDetails as $orderDetail) {
+                $book = Book::find($orderDetail->book_id);
+                $book->virtual_nums += $orderDetail->quantity;
+                $book->save();
+            }
+
+            $order->status = Order::WAITING;
+            $order->save();
+            flash('Revert Order#' . $order->id . ' successful');
+            return redirect()->back();
+        }
+
+        flash('You are not authorized')->warning();
+        return redirect()->route('home');
+    }
+
+    /**
+     * revert status: request -> checked
      * @param $id : order_id
      * @return back()
      */
@@ -339,105 +469,12 @@ class OrdersController extends Controller
         return redirect()->back();
     }
 
-
-    /** Finish the order
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function shipping($id)
-    {
-        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
-
-            $order = $this->order->find($id);
-            if ($order == null) {
-                flash('This order is not exist');
-                return redirect()->back();
-            }
-            if ($order->status == Order::WAITING || $order->status == Order::DONE) {
-                flash('Cant ship this order.It is not checked status')->error();
-                return redirect()->back();
-            }
-
-            if ($order->status == Order::SHIPPING) {
-                flash('This order is shipping now');
-                return redirect()->back();
-            }
-
-            $order->status = Order::SHIPPING;
-            $order->finished_id = Auth::id();
-            $order->save();
-            flash('Order#' . $order->id . ' is shipping');
-            return redirect()->back();
-        }
-
-        flash('You are not authorized')->warning();
-        return redirect()->route('home');
-    }
-
-
-    /** Finish the order
-     * @param $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function finish($id)
-    {
-        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
-
-            $order = $this->order->find($id);
-            if ($order == null) {
-                flash('This order is not exist');
-                return redirect()->back();
-            }
-            if ($order->status == Order::WAITING || $order->status == Order::CHECKED) {
-                flash('Cant finish this order.It is not shipping yet')->error();
-                return redirect()->back();
-            }
-
-            if ($order->status == Order::DONE) {
-                flash('This order was finished by ' . $order->finish->name);
-                return redirect()->back();
-            }
-
-            $order->status = Order::DONE;
-            $order->finished_id = Auth::id();
-            $order->save();
-            flash('You has been finished Order#' . $order->id);
-            return redirect()->back();
-        }
-
-        flash('You are not authorized')->warning();
-        return redirect()->route('home');
-    }
-
-    /** revert status: Done -> checked
-     * @param $id : order_id
-     * @return back()
-     */
-    public function revertToShipping($id)
-    {
-        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
-            $order = $this->order->find($id);
-            if ($order == null) {
-                flash('This order is not exist');
-                return redirect()->back();
-            }
-            if ($order->status == Order::WAITING || $order->status == Order::CHECKED || $order->status == Order::SHIPPING) {
-                flash('Cant revert this order.It is not Done yet')->error();
-                return redirect()->back();
-            }
-
-            $order->status = Order::SHIPPING;
-            $order->save();
-            flash('Revert to shipping successful');
-            return redirect()->back();
-        }
-
-        flash('You are not authorized')->error();
-        return redirect()->back();
-    }
+//----------------------------------------------------------------------------------------------
 
     /**
-     * Remove the specified resource from storage.
+     * Cancel order
+     * seller when checked status
+     * admin,staff when before
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -451,15 +488,66 @@ class OrdersController extends Controller
                 return back();
             }
 
-            $order->finished_id = Auth::id();
+            if ($order->status == Order::DONE) {
+                flash('Cant cancel this order.It is Done')->error();
+                return back();
+            }
+            if ($order->status == Order::CANCEL_AFTER_EXPORT) {
+                flash('This order is ' . Order::$status[$order->status] . ' now')->warning();
+                return back();
+            }
+
+            if ($order->status < Order::CONFIRM) {
+                $order->seller_id = Auth::id();
+                $order->save();
+                $order->delete();
+                flash('Order #' . $id . 'is canceled');
+                return redirect()->route('orders.index');
+            }
+
+            $order->status = Order::CANCEL_AFTER_EXPORT;
+            $order->seller_id = Auth::id();
             $order->save();
-            $order->delete();
-//            $this->orderDetail->where('order_id', $id)->delete();
-            flash('Order #' . $id . 'is canceled');
-            return redirect()->route('orders.index');
+            flash('This order is ' . Order::$status[$order->status] . ' now');
+            return back();
         }
 
         flash('You are not authorized')->error();
         return redirect()->back();
+    }
+
+    /**
+     * confirm tack back books after canceled
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function confirmTakeBackBooks($id)
+    {
+        if (Gate::allows('warehouseman', Auth::user())) {
+            $order = $this->order->find($id);
+            if ($order == null) {
+                flash('This order is not exist');
+                return redirect()->route('orders.index');
+            }
+
+            if ($order->status != Order::CANCEL_AFTER_EXPORT) {
+                flash('Cant confirm tack back books.It is not Cancel status');
+                return back();
+            }
+
+            $orderDetails = $this->orderDetail->where('order_id', $order->id)->get();
+
+            foreach ($orderDetails as $orderDetail) {
+                $book = Book::find($orderDetail->book_id);
+                $book->soluong += $orderDetail->quantity;
+                $book->save();
+            }
+
+            $order->warehouse1_id = Auth::id();
+            $order->delete();
+
+            flash('You confirmed take back books and finish Order#' . $order->id);
+            return redirect()->back();
+        }
     }
 }

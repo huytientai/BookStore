@@ -39,12 +39,16 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role == User::STAFF;
         });
 
-        Gate::define('warehouseman',function($user){
-           return $user->role==User::WAREHOUSEMAN ;
+        Gate::define('warehouseman', function ($user) {
+            return $user->role == User::WAREHOUSEMAN;
         });
 
-        Gate::define('seller',function($user){
-            return $user->role==User::SELLER ;
+        Gate::define('seller', function ($user) {
+            return $user->role == User::SELLER;
+        });
+
+        Gate::define('shipper', function ($user) {
+            return $user->role == User::SHIPPER;
         });
     }
 }

@@ -33,9 +33,6 @@ class Book extends Model
     {
         $data = $request->all();
 
-        if (!$data['soluong'])
-            unset($data['soluong']);
-
         if ($request->hasFile('image')) {
             $clientImageName = pathinfo($request->image->getClientOriginalName(), PATHINFO_FILENAME);
             $clientImageExtension = $request->image->getClientOriginalExtension();
@@ -44,7 +41,7 @@ class Book extends Model
         } else {
             $data['image'] = null;
         }
-        Book::create($data);
+        return Book::create($data);
     }
 
     public function updateBook($request)

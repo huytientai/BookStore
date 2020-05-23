@@ -46,11 +46,13 @@ Route::resource('/favorites', 'FavoritesController')->middleware(['auth']);
 
 Route::resource('/orders', 'OrdersController')->middleware(['auth']);
 Route::get('/orders/{id}/check', 'OrdersController@check')->name('orders.check')->middleware('auth');
+Route::get('/orders/{id}/requestExport', 'OrdersController@requestExport')->name('orders.requestExport')->middleware('auth');
+Route::get('/orders/{id}/confirmExport', 'OrdersController@confirmExport')->name('orders.confirmExport')->middleware('auth');
 Route::get('/orders/{id}/shipping', 'OrdersController@shipping')->name('orders.shipping')->middleware('auth');
-Route::get('/orders/{id}/finish', 'OrdersController@finish')->name('orders.finish')->middleware('auth');
-//Route::get('/orders/{id}/revertToWaiting', 'OrdersController@revertToWaiting')->name('orders.revertToWaiting')->middleware('auth');
+Route::get('/orders/{id}/shipped', 'OrdersController@shipped')->name('orders.shipped')->middleware('auth');
+Route::get('/orders/{id}/done', 'OrdersController@done')->name('orders.done')->middleware('auth');
+Route::get('/orders/{id}/revertToWaiting', 'OrdersController@revertToWaiting')->name('orders.revertToWaiting')->middleware('auth');
 Route::get('/orders/{id}/revertToChecked', 'OrdersController@revertToChecked')->name('orders.revertToChecked')->middleware('auth');
-Route::get('/orders/{id}/revertToShipping', 'OrdersController@revertToShipping')->name('orders.revertToShipping')->middleware('auth');
 
 
 Route::resource('/reviews', 'ReviewsController');

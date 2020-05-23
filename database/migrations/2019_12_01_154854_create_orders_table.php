@@ -34,6 +34,12 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('warehouseman_id')->nullable()->default(null);
             $table->foreign('warehouseman_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->unsignedBigInteger('shipper_id')->nullable()->default(null);
+            $table->foreign('shipper_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->unsignedBigInteger('warehouse1_id')->nullable()->default(null);
+            $table->foreign('warehouse1_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });
