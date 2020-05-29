@@ -12,9 +12,9 @@ class TacgiaTableSeeder extends Seeder
     public function run()
     {
         //
-		\App\Models\tacgia::truncate();
+		\App\Models\Tacgia::truncate();
 		//factory(\App\Models\tacgia::class, 10)->create();
-		 \App\Models\tacgia::create([
+		 \App\Models\Tacgia::create([
             'id' => '1', 
 			'name' => 'Xact Group', 
 			'email' => Str::random(10).'@gmail.com',
@@ -23,7 +23,7 @@ class TacgiaTableSeeder extends Seeder
              'image' => '1.jpg',
 			'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
-		\App\Models\tacgia::create([
+		\App\Models\Tacgia::create([
             'id' => '2', 
 			'name' => 'Nguyen Văn Thân', 
 			'email' => Str::random(10).'@gmail.com',
@@ -32,7 +32,7 @@ class TacgiaTableSeeder extends Seeder
             'image' => '2.jpg',
             'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
-		\App\Models\tacgia::create([
+		\App\Models\Tacgia::create([
             'id' => '3', 
 			'name' => 'Trần Văn Nghĩa', 
 			'email' => Str::random(10).'@gmail.com',
@@ -41,7 +41,7 @@ class TacgiaTableSeeder extends Seeder
             'image' => '3.jpg',
             'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
-		\App\Models\tacgia::create([
+		\App\Models\Tacgia::create([
             'id' => '4', 
 			'name' => 'Phạm Tam', 
 			'email' => Str::random(10).'@gmail.com',
@@ -50,7 +50,7 @@ class TacgiaTableSeeder extends Seeder
             'image' => '4.jpg',
             'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
-		\App\Models\tacgia::create([
+		\App\Models\Tacgia::create([
             'id' => '5', 
 			'name' => 'Nguyễn Thủy Liên', 
 			'email' => Str::random(10).'@gmail.com',
@@ -59,7 +59,7 @@ class TacgiaTableSeeder extends Seeder
             'image' => '5.jpg',
             'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
-		\App\Models\tacgia::create([
+		\App\Models\Tacgia::create([
             'id' => '6', 
 			'name' => 'Kamachi Kazuma', 
 			'email' => Str::random(10).'@gmail.com',
@@ -68,7 +68,7 @@ class TacgiaTableSeeder extends Seeder
             'image' => '6.jpg',
             'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
-		\App\Models\tacgia::create([
+		\App\Models\Tacgia::create([
             'id' => '7', 
 			'name' => 'Hoài Thanh', 
 			'email' => Str::random(10).'@gmail.com',
@@ -77,7 +77,7 @@ class TacgiaTableSeeder extends Seeder
             'image' => '7.jpg',
             'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
-		\App\Models\tacgia::create([
+		\App\Models\Tacgia::create([
             'id' => '8', 
 			'name' => 'Dale Carnegie', 
 			'email' => Str::random(10).'@gmail.com',
@@ -86,7 +86,7 @@ class TacgiaTableSeeder extends Seeder
             'image' => '8.jpg',
             'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
-		\App\Models\tacgia::create([
+		\App\Models\Tacgia::create([
             'id' => '9', 
 			'name' => 'Trần Trường Minh', 
 			'email' => Str::random(10).'@gmail.com',
@@ -95,7 +95,7 @@ class TacgiaTableSeeder extends Seeder
             'image' => '9.jpg',
             'created_at' => '2019-02-02', 'updated_at' => '2019-03-02',
         ]);
-		\App\Models\tacgia::create([
+		\App\Models\Tacgia::create([
             'id' => '10', 
 			'name' => 'Phạm Hồng', 
 			'email' => Str::random(10).'@gmail.com',
