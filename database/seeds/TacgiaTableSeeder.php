@@ -12,7 +12,7 @@ class TacgiaTableSeeder extends Seeder
     public function run()
     {
         //
-		\App\Models\Tacgia::truncate();
+		\App\Models\tacgia::truncate();
 		//factory(\App\Models\tacgia::class, 10)->create();
 		 \App\Models\tacgia::create([
             'id' => '1', 
