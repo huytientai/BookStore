@@ -110,7 +110,7 @@
                 @if(isset($orders[0]))
                     @foreach($orders as $order)
                         <div>
-                            <li class="orders">#Order{{ $order->id }} ({{ $order->created_at }})</li>
+                            <li class="orders" style="cursor:pointer">#Order{{ $order->id }} ({{ $order->created_at }})</li>
                             <div class="row order-details" style="display: none">
                                 <div class="col-md-12 col-sm-12 ol-lg-12">
                                     <div>Status: {{ \App\Models\Order::$status[$order->status] }}</div>

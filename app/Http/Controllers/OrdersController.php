@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Order;
 use App\Models\Orderdetail;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+
 
 class OrdersController extends Controller
 {
@@ -27,8 +29,8 @@ class OrdersController extends Controller
      */
     public function index(Request $request)
     {
-        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
-            $orders = $this->searchOrders($request->all());
+        if (Gate::any(['admin', 'staff', 'seller', 'warehouseman', 'shipper'], Auth::user())) {
+            $orders = $this->searchOrders($request->all(), Auth::user()->role);
 
             return view('orders.index')->with('orders', $orders);
         }
@@ -37,8 +39,13 @@ class OrdersController extends Controller
         return redirect()->back();
     }
 
-    public function searchOrders($data)
+    public function searchOrders($data, $role)
     {
+        if ($role == User::WAREHOUSEMAN || $role == User::SHIPPER) {
+            return $this->order->where('status', '>=', Order::REQUEST)->where('status', '!=', Order::DONE)->orderBy('status')->orderBy('id')->paginate();
+        }
+
+
         $builder = $this->order->with(['orderdetails' => function ($query) {
             $query->with(['book' => function ($query) {
                 $query->withTrashed();
@@ -248,7 +255,7 @@ class OrdersController extends Controller
      */
     public function requestExport($id)
     {
-        if (Gate::any(['admin', 'staff', 'warehouse'], Auth::user())) {
+        if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
             $order = $this->order->find($id);
             if ($order == null) {
                 flash('This order is not exist');
@@ -500,6 +507,15 @@ class OrdersController extends Controller
             if ($order->status < Order::CONFIRM) {
                 $order->seller_id = Auth::id();
                 $order->save();
+
+                $orderDetails = $this->orderDetail->where('order_id', $order->id)->get();
+
+                foreach ($orderDetails as $orderDetail) {
+                    $book = Book::find($orderDetail->book_id);
+                    $book->virtual_nums += $orderDetail->quantity;
+                    $book->save();
+                }
+
                 $order->delete();
                 flash('Order #' . $id . 'is canceled');
                 return redirect()->route('orders.index');

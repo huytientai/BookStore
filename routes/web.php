@@ -51,6 +51,7 @@ Route::get('/orders/{id}/confirmExport', 'OrdersController@confirmExport')->name
 Route::get('/orders/{id}/shipping', 'OrdersController@shipping')->name('orders.shipping')->middleware('auth');
 Route::get('/orders/{id}/shipped', 'OrdersController@shipped')->name('orders.shipped')->middleware('auth');
 Route::get('/orders/{id}/done', 'OrdersController@done')->name('orders.done')->middleware('auth');
+Route::get('/orders/{id}/confirmTackBackBook', 'OrdersController@confirmTakeBackBook')->name('orders.confirmTakeBackBook')->middleware('auth');
 Route::get('/orders/{id}/revertToWaiting', 'OrdersController@revertToWaiting')->name('orders.revertToWaiting')->middleware('auth');
 Route::get('/orders/{id}/revertToChecked', 'OrdersController@revertToChecked')->name('orders.revertToChecked')->middleware('auth');
 

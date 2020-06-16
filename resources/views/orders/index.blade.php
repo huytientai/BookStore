@@ -68,14 +68,14 @@
                 @if(count($orders))
                     @foreach($orders as $order)
                         @php
-                        $warn=0;
-                        foreach($order->orderdetails as $orderdetail)
-                            {
-                            if($orderdetail->book->deleted_at!=null){
-                            $warn=1;
-                            break;
+                            $warn=0;
+                            foreach($order->orderdetails as $orderdetail)
+                                {
+                                if($orderdetail->book->deleted_at!=null){
+                                $warn=1;
+                                break;
+                                }
                             }
-                        }
                         @endphp
                         <div>
                             <li class="orders" style="cursor: pointer;@if($order->status == \App\Models\Order::CHECKED && $warn) background-color:yellow @endif">#Order{{ $order->id }} ({{ $order->created_at }})</li>
@@ -101,15 +101,7 @@
                                     <div class="row">
                                         <div class="col-sm">
                                             <div>Total: {{ $order->total_price }}$</div>
-                                            @if($order->status == \App\Models\Order::WAITING)
-                                                <div class="">Status: {{ \App\Models\Order::$status[\App\Models\Order::WAITING] }}</div>
-                                            @elseif($order->status == \App\Models\Order::CHECKED)
-                                                <div>Status: {{  \App\Models\Order::$status[\App\Models\Order::CHECKED] }}</div>
-                                            @elseif($order->status == \App\Models\Order::SHIPPING)
-                                                <div>Status: {{  \App\Models\Order::$status[\App\Models\Order::SHIPPING] }}</div>
-                                            @else
-                                                <div>Status: {{  \App\Models\Order::$status[\App\Models\Order::DONE] }}</div>
-                                            @endif
+                                            <div>Status: {{  \App\Models\Order::$status[$order->status] }}</div>
                                         </div>
                                         <div class="col-sm">
                                             @if($order->deleted_at == null)
@@ -124,16 +116,37 @@
                                                     </div>
                                                 @elseif($order->status == \App\Models\Order::CHECKED)
                                                     <div class="row">
-                                                        <a class="btn btn-primary" href="{{ route('orders.shipping',$order->id) }}">Shipping</a>
-{{--                                                        <a class="btn btn-danger" href="{{ route('orders.revertToWaiting',$order->id) }}">Revert to Waiting</a>--}}
+                                                        <a class="btn btn-primary" href="{{ route('orders.requestExport',$order->id) }}">Request Export</a>
                                                     </div>
+
+                                                @elseif($order->status==\App\Models\Order::REQUEST)
+                                                    @can('warehouseman')
+                                                        <div class="row">
+                                                            <a class="btn btn-primary" href="{{ route('orders.confirmExport',$order->id) }}">Confirm Export</a>
+                                                        </div>
+                                                    @endcan
+                                                @elseif($order->status==\App\Models\Order::CONFIRM)
+                                                    @can('shipper')
+                                                        <div class="row">
+                                                            <a class="btn btn-primary" href="{{ route('orders.shipping',$order->id) }}">Shipping</a>
+                                                        </div>
+                                                    @endcan
                                                 @elseif($order->status == \App\Models\Order::SHIPPING)
+                                                    @can('shipper')
+                                                        <div class="row">
+                                                            <a class="btn btn-primary" href="{{ route('orders.shipped',$order->id) }}">Shipped</a>
+                                                        </div>
+                                                    @endcan
+                                                @elseif($order->status == \App\Models\Order::DONE)
                                                     <div class="row">
-                                                        <a class="btn btn-primary" href="{{ route('orders.finish',$order->id) }}">Finish</a>
-                                                        <a class="btn btn-danger" href="{{ route('orders.revertToChecked',$order->id) }}">Revert to Checked</a>
+
                                                     </div>
-                                                @else
-                                                    <a class="btn btn-danger" href="{{ route('orders.revertToShipping',$order->id) }}">Revert to Shipping</a>
+                                                @elseif($order->status == \App\Models\Order::CANCEL_AFTER_EXPORT)
+                                                    @can('warehouseman')
+                                                        <div class="row">
+                                                            <a class="btn btn-primary" href="{{ route('orders.confirmTakeBackBook',$order->id) }}">Confirm Take Back Books</a>
+                                                        </div>
+                                                    @endcan
                                                 @endif
                                             @else
                                                 <button class="btn btn-dark" style="cursor: not-allowed;">Canceled</button>
@@ -141,21 +154,26 @@
                                         </div>
                                     </div>
 
-                                    @if($order->status != \App\Models\Order::WAITING && $order->deleted_at == null)
+                                    @if($order->status != \App\Models\Order::WAITING && $order->status != \App\Models\Order::CANCEL_AFTER_EXPORT && $order->deleted_at == null)
                                         <div class="row">
-                                            <div class="col-sm">{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->finished->name }}</div>
-                                            @if($order->status == \App\Models\Order::CHECKED)
-                                                <div class="col-sm">
-                                                    <div class="row">
-                                                        <a class="btn btn-warning" href="{{ route('orders.edit',$order->id) }}">Edit</a>
-                                                        <form action="{{ route('orders.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-danger" type="submit">Cancel</button>
-                                                        </form>
+                                            <div class="col-sm">{{ ($order->status!=\App\Models\Order::DONE ? 'Checked by: ' :'Finished by: ') . $order->seller->name }}</div>
+                                            @canany(['admin','staff','seller'])
+                                                @if((Auth::user()->role == \App\Models\User::SELLER || Auth::user()->role == \App\Models\User::STAFF) && $order->status!=\App\Models\Order::CHECKED)
+                                                    @break
+                                                @endif
+                                                @if($order->status != \App\Models\Order::DONE)
+                                                    <div class="col-sm">
+                                                        <div class="row">
+                                                            {{--                                                        <a class="btn btn-warning" href="{{ route('orders.edit',$order->id) }}">Edit</a>--}}
+                                                            <form action="{{ route('orders.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-danger" type="submit">Cancel</button>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endif
+                                                @endif
+                                            @endcanany
                                         </div>
                                     @endif
                                     <br>
