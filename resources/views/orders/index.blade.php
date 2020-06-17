@@ -137,6 +137,12 @@
                                                             <a class="btn btn-primary" href="{{ route('orders.shipped',$order->id) }}">Shipped</a>
                                                         </div>
                                                     @endcan
+                                                @elseif($order->status == \App\Models\Order::SHIPPED)
+                                                    @canany(['admin','staff','seller'])
+                                                        <div class="row">
+                                                            <a class="btn btn-primary" href="{{ route('orders.done',$order->id) }}">Done</a>
+                                                        </div>
+                                                    @endcanany
                                                 @elseif($order->status == \App\Models\Order::DONE)
                                                     <div class="row">
 
@@ -159,9 +165,8 @@
                                             <div class="col-sm">{{ ($order->status!=\App\Models\Order::DONE ? 'Checked by: ' :'Finished by: ') . $order->seller->name }}</div>
                                             @canany(['admin','staff','seller'])
                                                 @if((Auth::user()->role == \App\Models\User::SELLER || Auth::user()->role == \App\Models\User::STAFF) && $order->status!=\App\Models\Order::CHECKED)
-                                                    @break
-                                                @endif
-                                                @if($order->status != \App\Models\Order::DONE)
+                                                    {{--nothing--}}
+                                                @elseif($order->status != \App\Models\Order::DONE)
                                                     <div class="col-sm">
                                                         <div class="row">
                                                             {{--                                                        <a class="btn btn-warning" href="{{ route('orders.edit',$order->id) }}">Edit</a>--}}

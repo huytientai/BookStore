@@ -323,7 +323,7 @@ class OrdersController extends Controller
      */
     public function shipping($id)
     {
-        if (Gate::any(['admin', 'staff', 'shipper'], Auth::user())) {
+        if (Gate::any(['admin', 'shipper'], Auth::user())) {
 
             $order = $this->order->find($id);
             if ($order == null) {
@@ -364,7 +364,11 @@ class OrdersController extends Controller
                 return back();
             }
 
-            $order->status = Order::SHIPPING;
+            if(Gate::allows('admin',Auth::user())){
+                $order->shipper_id=Auth::id();
+            }
+
+            $order->status = Order::SHIPPED;
             $order->save();
             flash('Order#' . $order->id . ' is shipped');
             return redirect()->back();

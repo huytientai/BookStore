@@ -85,7 +85,7 @@
                                     <div>Status: {{  \App\Models\Order::$status[$order->status] }}</div>
                                     @canany(['admin','staff','seller'])
                                         @if($order->status!=\App\Models\Order::WAITING)
-                                            <div>{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->finished->name }}</div>
+                                            <div>{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->seller->name }}</div>
                                         @endif
                                     @endcan
                                     <br>
