@@ -31,7 +31,7 @@ Route::resource('/loaisachs', 'LoaisachsController');
 Route::resource('/nhaxuatbans', 'NhaxuatbansController');
 Route::resource('/tacgias', 'TacgiasController');
 
-Route::get('neededImports','ImportsController@neededList')->name('imports.needed')->middleware('auth');
+Route::get('neededImports', 'ImportsController@neededList')->name('imports.needed')->middleware('auth');
 
 Route::resource('/imports', 'ImportsController')->middleware(['auth']);
 Route::get('/imports/{id}/accept', 'ImportsController@accept')->name('imports.accept')->middleware('auth');
@@ -68,3 +68,7 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+Route::post('/momo/checkout','CheckoutsController@momoRequest')->name('checkout.momo')->middleware('auth');
+Route::post('/momo/notify','CheckoutsController@momoNotify');
+Route::get
+Route::get('/momo/checkOrder/{id}','CheckoutsController@momoCheckOrder')->name('momo.checkOrder');

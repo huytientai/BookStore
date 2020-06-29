@@ -61,6 +61,13 @@ class CheckoutsController extends Controller
      */
     public function store(Request $request)
     {
+        //check is cart empty?
+        $cart = $this->cart->where('user_id', '=', Auth::id())->first();
+        if ($cart == null) {
+            flash('Order failed');
+            return redirect()->route('carts.index');
+        }
+
         $books = $request->books;
 
         $total = 0;
@@ -96,6 +103,110 @@ class CheckoutsController extends Controller
         return redirect()->route('carts.index');
     }
 
+    /**
+     * Checkout by MoMo (send request to MoMo)
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function momoRequest(Request $request)
+    {
+        //check is cart empty?
+        $cart = $this->cart->where('user_id', '=', Auth::id())->first();
+        if ($cart == null) {
+            flash('Order failed');
+            return redirect()->route('carts.index');
+        }
+
+        $books = $request->books;
+        $orderInfo = '';
+
+        $total = 0;
+        // create order
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            if ($book == null) {
+                $book = $this->book->withTrashed()->where('id', $value['id'])->get();
+                if ($book == null) {
+                    flash('Book #' . $value['id'] . 'is not exist');
+                    return back();
+                }
+                flash('Book ' . $book->name . 'was deleted');
+                return back();
+            }
+            $total += $book->price * $value['quantity'];
+        }
+        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+
+        // create order detail
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            $data['order_id'] = $order->id;
+            $data['book_id'] = $book->id;
+            $data['sell_price'] = $book->price;
+            $data['quantity'] = $value['quantity'];
+            $this->orderdetail->create($data);
+
+            $orderInfo .= $book->name . '  ' . $book->price . '$  x' . $value['quantity'] . '\n';
+        }
+
+        $this->cart->removeCartOfUser();
+
+        $orderInfo .= 'Total: ' . $order->total . '$';
+        $response = \MoMoAIO::purchase([
+            'amount' => $order->total_price * 20000,
+            'orderId' => $order->id,
+            'requestId' => $order->id,
+            'returnUrl' => 'https://bookstore-00.online/carts',
+            'notifyUrl' => 'https://bookstore-00.online/momo/notify',
+            'orderInfo' => $orderInfo,
+        ])->send();
+        if ($response->errorCode == 0) {
+            $redirectUrl = $response->getRedirectUrl();
+            $order->payment = 'MoMo';
+            $order->payUrl = $redirectUrl;
+            $order->save();
+            return redirect()->to($redirectUrl);
+        }
+
+        flash($response->getMessage());
+        return redirect()->back();
+    }
+
+    public function momoNotify(Request $request,$id){
+        $response = \MoMoAIO::notification()->send();
+
+        if ($response->isSuccessful()) {
+            print $response->amount;
+            print $response->orderId;
+
+            var_dump($response->getData()); // toàn bộ data do MoMo gửi sang.
+
+        } else {
+
+            print $response->getMessage();
+        }
+    }
+
+    /**
+     * Check Order 's Payment in MoMo
+     * @param Request $request
+     * @param $id
+     */
+    public function momoCheckOrder(Request $request, $id)
+    {
+        $response = \MoMoAIO::queryTransaction([
+            'orderId' => $id,
+            'requestId' => $id,
+        ])->send();
+        if ($response->isSuccessful()) {
+            dd($response);
+//            var_dump($response->getData()); // toàn bộ data do MoMo gửi về.
+
+        } else {
+            dd($response);
+            print $response->getMessage();
+        }
+    }
 
     /**
      * Update the specified resource in storage.

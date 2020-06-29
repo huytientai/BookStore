@@ -15,6 +15,9 @@ $factory->define(Order::class, function (Faker $faker) {
         'phone' => $faker->e164PhoneNumber,
         'email' => $faker->unique()->email,
         'seller_id' => $faker->randomElement(\App\Models\User::whereIn('role', [\App\Models\User::ADMIN, \App\Models\User::STAFF, \App\Models\User::SELLER])->get()->pluck('id')->toArray()),
+        'payment' => 'offline',
+        'payUrl' => null,
+        'pay_status' => false,
 
     ];
 })->afterCreating(\App\Models\Order::class, function (\App\Models\Order $order, Faker $faker) {

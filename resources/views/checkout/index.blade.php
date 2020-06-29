@@ -64,7 +64,7 @@
                                 <div class="margin_between">
                                     <div class="input_box space_between">
                                         <label>Name <span>*</span></label>
-                                        <input type="text" name="name" id="user-name-checkout" value="{{ Auth::user()->name }}" required >
+                                        <input type="text" name="name" id="user-name-checkout" value="{{ Auth::user()->name }}" required>
                                     </div>
 
                                 </div>
@@ -96,7 +96,7 @@
                                 <input type="hidden" name="books[{{$i++}}][quantity]" value="{{ $book->quantity }}">
                             @endforeach
 
-                            <button type="submit" class="btn cart__total__amount" style="width: 100%">Checkout</button>
+                            <button type="submit" class="btn cart__total__amount" style="width: 100%">Cash on Delivery</button>
                         </form>
                     </div>
                 </div>
@@ -174,7 +174,9 @@
                             </div>
                             <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
                                 <div class="payment-body">Pay with cash upon delivery.</div>
+                                <div class="payment-body" style="cursor: pointer;color: #0b75c9" id="momo">MoMo</div>
                             </div>
+                            <div></div>
                         </div>
                     </div>
 
@@ -184,6 +186,18 @@
     </section>
 
     <script>
+        document.getElementById('momo').addEventListener('click', function () {
+            changePaymnet('{{ route('checkout.momo') }}', 'Checkout By MoMo')
+        });
 
+        document.getElementById('headingThree').addEventListener('click', function () {
+            changePaymnet('{{ route('checkout.store') }}', 'Cash on Delivery')
+        });
+
+        function changePaymnet($form, $button) {
+            let checkout_form = document.getElementById('checkout-form');
+            checkout_form.action = $form;
+            checkout_form.getElementsByTagName('button').item(0).innerHTML = $button;
+        }
     </script>
 @endsection

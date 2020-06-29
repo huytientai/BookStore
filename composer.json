@@ -14,6 +14,8 @@
         "laracasts/flash": "^3.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
+        "phpviet/laravel-omnipay": "^1.0",
+        "simplesoftwareio/simple-qrcode": "^3.0",
         "unisharp/laravel-ckeditor": "^4.7"
     },
     "require-dev": {

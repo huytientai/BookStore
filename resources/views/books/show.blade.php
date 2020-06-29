@@ -69,7 +69,9 @@
                                         <p>DESCRIBE: {!! substr($book->desc,0,250) . ' ...' !!}</p>
                                     </div>
 
-                                    <h5>Nums in warehouse: {{ $book->soluong }}</h5>
+                                    @canany(['admin','staff','seller','warehouseman'])
+                                        <h5>Nums in warehouse: {{ $book->soluong }}</h5>
+                                    @endcanany
                                     <h5>Nums: {{ $book->virtual_nums }}</h5>
                                     <br>
                                     <div class="box-tocart d-flex row">

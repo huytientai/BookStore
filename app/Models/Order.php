@@ -25,6 +25,9 @@ class Order extends Model
         'seller_id',
         'warehouseman_id',
         'shipper_id',
+        'payment',
+        'payUrl',
+        'pay_status',
     ];
 
     const WAITING = 0;
@@ -34,7 +37,7 @@ class Order extends Model
     const SHIPPING = 4; //confirm and shipping
     const SHIPPED = 5;
     const DONE = 6;
-    const CANCEL_AFTER_EXPORT=10;
+    const CANCEL_AFTER_EXPORT = 10;
 
     public static $status = [
         self::WAITING => 'Waiting',
