@@ -69,6 +69,6 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::post('/momo/checkout','CheckoutsController@momoRequest')->name('checkout.momo')->middleware('auth');
-Route::post('/momo/notify','CheckoutsController@momoNotify');
-Route::get
+Route::get('/momo/notify','CheckoutsController@momoNotify');
+//Route::get('')
 Route::get('/momo/checkOrder/{id}','CheckoutsController@momoCheckOrder')->name('momo.checkOrder');

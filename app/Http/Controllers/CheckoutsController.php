@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\Orderdetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Ixudra\Curl\Facades\Curl;
 
 class CheckoutsController extends Controller
 {
@@ -172,19 +173,21 @@ class CheckoutsController extends Controller
         return redirect()->back();
     }
 
-    public function momoNotify(Request $request,$id){
-        $response = \MoMoAIO::notification()->send();
+    public function momoNotify(Request $request)
+    {
+//        $response = \MoMoAIO::notification()->send();
 
-        if ($response->isSuccessful()) {
-            print $response->amount;
-            print $response->orderId;
-
-            var_dump($response->getData()); // toàn bộ data do MoMo gửi sang.
-
-        } else {
-
-            print $response->getMessage();
+        if (isset($request->errorCode) && $request->errorCode == 0) {
+            $order = $this->order->where('id', '=', $request->orderId)->first();
+            if ($order == null) {
+                return false;
+            }
+            $order->pay_status = true;
+            $order->save();
+            return true;
         }
+
+        return false;
     }
 
     /**
