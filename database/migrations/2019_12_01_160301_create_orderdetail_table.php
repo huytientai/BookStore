@@ -19,7 +19,7 @@ class CreateOrderdetailTable extends Migration
 
             $table->primary(['order_id', 'book_id']);
 
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
             $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
 
             $table->float('sell_price');

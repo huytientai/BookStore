@@ -51,7 +51,7 @@ Route::get('/orders/{id}/confirmExport', 'OrdersController@confirmExport')->name
 Route::get('/orders/{id}/shipping', 'OrdersController@shipping')->name('orders.shipping')->middleware('auth');
 Route::get('/orders/{id}/shipped', 'OrdersController@shipped')->name('orders.shipped')->middleware('auth');
 Route::get('/orders/{id}/done', 'OrdersController@done')->name('orders.done')->middleware('auth');
-Route::get('/orders/{id}/confirmTackBackBook', 'OrdersController@confirmTakeBackBook')->name('orders.confirmTakeBackBook')->middleware('auth');
+Route::get('/orders/{id}/confirmTakeBackBook', 'OrdersController@confirmTakeBackBooks')->name('orders.confirmTakeBackBook')->middleware('auth');
 Route::get('/orders/{id}/revertToWaiting', 'OrdersController@revertToWaiting')->name('orders.revertToWaiting')->middleware('auth');
 Route::get('/orders/{id}/revertToChecked', 'OrdersController@revertToChecked')->name('orders.revertToChecked')->middleware('auth');
 
@@ -68,7 +68,16 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+
+//checkout Gateway
+                                // Checkout by momo
 Route::post('/momo/checkout','CheckoutsController@momoRequest')->name('checkout.momo')->middleware('auth');
-Route::get('/momo/notify','CheckoutsController@momoNotify');
+Route::get('/momo/success','CheckoutsController@getSuccessMomo')->name('momo.getSuccess')->middleware('auth');
+Route::post('/momo/notify','CheckoutsController@momoNotify')->name('momo.notify');
 //Route::get('')
 Route::get('/momo/checkOrder/{id}','CheckoutsController@momoCheckOrder')->name('momo.checkOrder');
+
+                                //checkout by vnpay
+
+
+

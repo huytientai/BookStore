@@ -9,7 +9,8 @@ use App\Models\Order;
 use App\Models\Orderdetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Ixudra\Curl\Facades\Curl;
+
+//use Ixudra\Curl\Facades\Curl;
 
 class CheckoutsController extends Controller
 {
@@ -104,6 +105,9 @@ class CheckoutsController extends Controller
         return redirect()->route('carts.index');
     }
 
+
+    //----------------------------- Checkout by MoMo ------------------------------------------------
+
     /**
      * Checkout by MoMo (send request to MoMo)
      * @param Request $request
@@ -150,6 +154,7 @@ class CheckoutsController extends Controller
             $orderInfo .= $book->name . '  ' . $book->price . '$  x' . $value['quantity'] . '\n';
         }
 
+
         $this->cart->removeCartOfUser();
 
         $orderInfo .= 'Total: ' . $order->total . '$';
@@ -157,10 +162,11 @@ class CheckoutsController extends Controller
             'amount' => $order->total_price * 20000,
             'orderId' => $order->id,
             'requestId' => $order->id,
-            'returnUrl' => 'https://bookstore-00.online/carts',
-            'notifyUrl' => 'https://bookstore-00.online/momo/notify',
+            'returnUrl' => route('momo.getSuccess'),
+            'notifyUrl' => route('momo.notify'),
             'orderInfo' => $orderInfo,
         ])->send();
+
         if ($response->errorCode == 0) {
             $redirectUrl = $response->getRedirectUrl();
             $order->payment = 'MoMo';
@@ -173,21 +179,35 @@ class CheckoutsController extends Controller
         return redirect()->back();
     }
 
+    public function getSuccessMomo(Request $request)
+    {
+        if ($request->errorCode == 0) {
+            flash('Order and Checkout successful');
+        } else
+            flash('Order and checkout fail');
+        return redirect()->route('carts.index');
+    }
+
     public function momoNotify(Request $request)
     {
-//        $response = \MoMoAIO::notification()->send();
 
-        if (isset($request->errorCode) && $request->errorCode == 0) {
-            $order = $this->order->where('id', '=', $request->orderId)->first();
-            if ($order == null) {
-                return false;
-            }
+        if (!isset($request->orderId) || !isset($request->errorCode)) {
+            return false;
+        }
+
+        $order = $this->order->find($request->orderId);
+        if ($order == null) {
+            return false;
+        }
+
+        if ($request->errorCode == 0) {
             $order->pay_status = true;
             $order->save();
             return true;
+        } else {
+            $order->forceDelete();
+            return false;
         }
-
-        return false;
     }
 
     /**
@@ -209,6 +229,8 @@ class CheckoutsController extends Controller
             dd($response);
             print $response->getMessage();
         }
+
+
     }
 
     /**

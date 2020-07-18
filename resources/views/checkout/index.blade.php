@@ -75,7 +75,14 @@
 
                                 <div class="input_box">
                                     <label>Address <span>*</span></label>
-                                    <input type="text" name="address" id="address-checkout" placeholder="delivery location" required>
+                                    <input type="text" name="address" id="address-checkout" placeholder="delivery location" list="addresses-list" required>
+                                    <datalist id="addresses-list">
+                                        <option value="Edge">
+                                        <option value="Firefox">
+                                        <option value="Chrome">
+                                        <option value="Opera">
+                                        <option value="Safari">
+                                    </datalist>
                                 </div>
 
                                 <div class="margin_between">
