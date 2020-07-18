@@ -42,6 +42,37 @@
     </div>
 </div>
 
+<div class="form-group row">
+    <label for="address1" class="col-sm-2 col-form-label @error('address1') text-danger @enderror">Address 1</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control  @error('address1') is-invalid @enderror" id="address1" name="address1" value="{{ old('address1') ?? $user->address1 ?? null }}">
+        @error('address1')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="address2" class="col-sm-2 col-form-label @error('address2') text-danger @enderror">Address 2</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control  @error('address2') is-invalid @enderror" id="address2" name="address2" value="{{ old('address2') ?? $user->address2 ?? null }}">
+        @error('address2')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="address3" class="col-sm-2 col-form-label @error('address3') text-danger @enderror">Address 3</label>
+    <div class="col-sm-5">
+        <input type="text" class="form-control  @error('address3') is-invalid @enderror" id="address3" name="address3" value="{{ old('address3') ?? $user->address3 ?? null }}">
+        @error('address3')
+        <div class="text-danger">{{ $message }}</div>
+        @enderror
+    </div>
+</div>
+
+
 {{--Số điện thoại--}}
 <div class="form-group row">
     <label for="phone" class="col-sm-2 col-form-label @error('phone') text-danger @enderror">Phone</label>

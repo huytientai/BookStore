@@ -29,6 +29,9 @@ class StoreUserRequest extends FormRequest
             'password_confirmation' => 'required_with:password|same:password',
             'name' => 'required|string|max:255',
             'address' => 'nullable|max:255',
+            'address1' => 'nullable|max:255',
+            'address2' => 'nullable|max:255',
+            'address3' => 'nullable|max:255',
             'phone' => 'digits_between:0,15',
         ];
     }

@@ -44,6 +44,11 @@
                                         @if($user->role != \App\Models\User::GUESS)
                                             <p>Position: {{ \App\Models\User::$roles[$user->role] }}</p>
                                         @endif
+                                        <br>
+                                        <p>Address 1: {{ $user->address1 }}</p>
+                                        <p>Address 2: {{ $user->address2 }}</p>
+                                        <p>Address 3: {{ $user->address3 }}</p>
+
                                         <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">edit</a>
                                     </div>
                                 </div>

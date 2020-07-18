@@ -76,14 +76,21 @@
                                 <div class="input_box">
                                     <label>Address <span>*</span></label>
                                     <input type="text" name="address" id="address-checkout" placeholder="delivery location" list="addresses-list" required>
-                                    <datalist id="addresses-list">
-                                        <option value="Edge">
-                                        <option value="Firefox">
-                                        <option value="Chrome">
-                                        <option value="Opera">
-                                        <option value="Safari">
-                                    </datalist>
+                                    @php($addresses_list = [Auth::user()->address,Auth::user()->address1,Auth::user()->address2,Auth::user()->address3])
+                                    @php($addresses_list = array_filter($addresses_list))
+
+                                    @if($addresses_list != null)
+                                        <datalist id="addresses-list">
+                                            @foreach($addresses_list as $address_list)
+                                                <option value="{{ $address_list }}">
+                                            @endforeach
+                                        </datalist>
+
+                                    @endif
+
+
                                 </div>
+
 
                                 <div class="margin_between">
                                     <div class="input_box space_between">
