@@ -55,8 +55,24 @@ class CheckoutsController extends Controller
     }
 
 
+    public function quickCheckout(Request $request)
+    {
+        if (!isset($request->books[0]['id'])) {
+            flash('Error. Please try again!')->error();
+            return redirect()->back();
+        }
+        $data = $request->duplicate();
+        $data->merge(['book_id' => $data->books[0]['id'], 'quantity' => $data->books[0]['quantity']]);
+        $data->offsetUnset('books');
+
+        $this->cart->saveCart($data);
+
+        return $this->index($request);
+    }
+
+
     /**
-     * Store a newly created resource in storage.
+     * Checkout offline
      *
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response

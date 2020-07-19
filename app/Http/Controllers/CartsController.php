@@ -44,6 +44,11 @@ class CartsController extends Controller
      */
     public function store(Request $request)
     {
+        if(!isset($request->book_id))
+        {
+            flash('Error. Please try again!')->error();
+            return redirect()->back();
+        }
         if ($this->cart->saveCart($request)) {
             return redirect()->route('carts.index');
         } else {

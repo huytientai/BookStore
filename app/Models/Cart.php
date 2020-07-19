@@ -47,7 +47,6 @@ class Cart extends Model
         }
         $data = $request->all();
         $data['user_id'] = Auth::id();
-
         Cart::create($data);
         return 1;
     }

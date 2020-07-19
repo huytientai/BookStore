@@ -39,6 +39,7 @@ Route::get('/imports/{id}/denies', 'ImportsController@denies')->name('imports.de
 Route::post('/imports/{id}/revert', 'ImportsController@revert')->name('imports.revert')->middleware('auth');
 
 Route::post('/checkout', 'CheckoutsController@index')->name('checkout.index')->middleware(['auth']);
+Route::post('/checkout/quick','CheckoutsController@quickCheckout')->name('checkout.quick')->middleware('auth');
 Route::post('/checkout/store', 'CheckoutsController@store')->name('checkout.store')->middleware(['auth']);
 
 Route::resource('/carts', 'CartsController')->middleware(['auth']);

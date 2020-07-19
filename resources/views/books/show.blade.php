@@ -84,9 +84,19 @@
                                                 <button class="tocart" type="submit" title="Add to Cart">Add to Cart</button>
                                             </div>
                                         </form>
-                                        {{--                                        <div class="product-addto-links clearfix">--}}
-                                        {{--                                            <a class="wishlist" href="#"></a>--}}
-                                        {{--                                        </div>--}}
+                                        <div>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+                                        <div class="product-addto-links clearfix">
+                                            <a class="wishlist" href="{{ route('favorites.show', $book->id) }}"></a>
+
+                                            <form action="{{ route('checkout.quick', $book->id) }}" method="post" style="display: inline-block">
+                                                @csrf
+                                                <input type="hidden" name="books[0][id]" value="{{ $book->id }}">
+                                                <input type="hidden" name="books[0][quantity]" value="1">
+                                                <a class="compare" href="#" onclick="this.parentElement.submit()"></a>
+                                            </form>
+                                        </div>
+
                                     </div>
                                     <div class="product_meta">
 											<span class="posted_in">Categories:
