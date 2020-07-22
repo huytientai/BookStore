@@ -92,7 +92,7 @@
                                             <form action="{{ route('checkout.quick', $book->id) }}" method="post" style="display: inline-block">
                                                 @csrf
                                                 <input type="hidden" name="books[0][id]" value="{{ $book->id }}">
-                                                <input type="hidden" name="books[0][quantity]" value="1">
+                                                <input type="hidden" id="qty-quickCheck" name="books[0][quantity]" value="1">
                                                 <a class="compare" href="#" onclick="this.parentElement.submit()"></a>
                                             </form>
                                         </div>
@@ -899,6 +899,7 @@
             var value = e.target
             if (isNaN(value.value) || value.value <= 0)
                 value.value = 1
+            document.getElementById('qty-quickCheck').value = value.value;
         })
 
         document.getElementsByClassName('review_form_field').item(0).getElementsByTagName('button').item(0).addEventListener('click', function (event) {
@@ -908,6 +909,7 @@
                 event.preventDefault()
             }
         })
+
 
         function vote(star) {
             var stars = star.parentElement

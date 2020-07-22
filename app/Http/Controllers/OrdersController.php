@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreOrderRequest;
 use App\Models\Book;
 use App\Models\Order;
 use App\Models\Orderdetail;
@@ -90,7 +91,7 @@ class OrdersController extends Controller
     }
 
     /**
-     * Show the form for editing the order after checked.
+     * Show the form for editing the order after checked.(for manager)
      *
      * @param int $id
      * @return \Illuminate\Http\Response
@@ -109,16 +110,40 @@ class OrdersController extends Controller
                 return back();
             }
 
-            if ($order->status == Order::CHECKED) {
+            if ($order->status < Order::CONFIRM) {
                 return view('orders.edit')->with('order', $order);
             }
-
             flash('Cant edit this order');
             return back();
         }
 
         flash('You are not authorized');
         return redirect()->back();
+    }
+
+    /**
+     * User edit order
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function userEdit($id)
+    {
+        $order = $this->order->find($id);
+
+        if ($order == null) {
+            flash('Order is not exist')->warning();
+            return back();
+        }
+        if ($order->user_id != Auth::id()) {
+            flash('This is not your order')->error();
+            return back();
+        }
+        if ($order->status >= Order::CONFIRM) {
+            flash('Cant update this order')->warning();
+            return back();
+        }
+
+        return view('orders.user_edit')->with('order', $order);
     }
 
     /**
@@ -195,6 +220,40 @@ class OrdersController extends Controller
 
         flash('You are not authorized');
         return back();
+    }
+
+    public function userUpdate(StoreOrderRequest $request, $id)
+    {
+        $order = $this->order->find($id);
+
+        if ($order == null) {
+            flash('Update failed(Order is not existed')->error();
+            return back();
+        }
+        if ($order->user_id != Auth::id()) {
+            flash('This is not your order')->error();
+            return back();
+        }
+        if ($order->status >= Order::CONFIRM) {
+            flash('Cant update this order')->warning();
+            return back();
+        }
+
+        $request['aa'] = 'aa';
+        $keys = ['name', 'phone', 'email', 'address', 'company'];
+        $data = [];
+
+        foreach ($keys as $key) {
+            if (isset($request[$key])) {
+                $data[$key] = $request[$key];
+            }
+        }
+        $data['updated_at'] = now();
+
+        $order->update($data);
+
+        flash('Update succeed');
+        return redirect()->route('carts.index');
     }
 
     /**
@@ -364,8 +423,8 @@ class OrdersController extends Controller
                 return back();
             }
 
-            if(Gate::allows('admin',Auth::user())){
-                $order->shipper_id=Auth::id();
+            if (Gate::allows('admin', Auth::user())) {
+                $order->shipper_id = Auth::id();
             }
 
             $order->status = Order::SHIPPED;
@@ -482,8 +541,57 @@ class OrdersController extends Controller
 
 //----------------------------------------------------------------------------------------------
 
+    public function cancel($id)
+    {
+        $order = $this->order->find($id);
+        if ($order == null) {
+            flash("This order is not existed")->error();
+            return back();
+        }
+
+        if ($order->user_id != Auth::id()) {
+            flash('This is not your order')->error();
+            return back();
+        }
+
+        if ($order->status >= Order::CONFIRM) {
+            flash('Cancel failed.This order is already exported')->error();
+            return back();
+        }
+
+        if ($order->pay_status == true) {
+
+            // MoMo
+            if ($order->payment == 'MoMo') {
+                $response = \MoMoAIO::refund([
+                    'orderId' => $order->id,
+                    'requestId' => $order->id,
+                    'transId' => $order->transId,
+                    'amount' => 0.9 * 20000 * $order->amount,
+                ])->send();
+
+                if ($response->isSuccessful()) {
+                    $order->payback = true;
+                    $order->delete();
+                    flash('Cancel Order#' . $order->id . ' succeed');
+                    return back();
+                } else {
+                    flash($response->getMessage())->error();
+                    return back();
+                }
+            }
+
+            flash('Something went wrong!Please contact to admin')->warning();
+            return back();
+        } else {
+            $order->delete();
+            flash('Cancel Order#' . $order->id . ' succeed');
+            return back();
+        }
+    }
+
     /**
-     * Cancel order
+     * Cancel order (function of manager)
      * seller when checked status
      * admin,staff when before
      *
@@ -495,7 +603,7 @@ class OrdersController extends Controller
         if (Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
             $order = $this->order->find($id);
             if ($order == null) {
-                flash("This order is not existed");
+                flash("This order is not existed")->error();
                 return back();
             }
 

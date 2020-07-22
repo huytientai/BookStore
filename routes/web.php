@@ -45,7 +45,12 @@ Route::post('/checkout/store', 'CheckoutsController@store')->name('checkout.stor
 Route::resource('/carts', 'CartsController')->middleware(['auth']);
 Route::resource('/favorites', 'FavoritesController')->middleware(['auth']);
 
-Route::resource('/orders', 'OrdersController')->middleware(['auth']);
+//---------------------------  Order ---------------------------------------------
+Route::resource('/orders', 'OrdersController')->middleware('auth');     // manager cancel in destroy function
+Route::delete('/orders/{id}/cancel', 'OrdersController@cancel')->name('orders.userCancel')->middleware('auth');    // user cancel
+Route::get('/orders/{id}/modify', 'OrdersController@userEdit')->name('orders.userEdit')->middleware('auth');      // user edit order
+Route::post('/orders/{id}/userUpdate', 'OrdersController@userUpdate')->name('orders.userUpdate')->middleware('auth');      // user edit order
+
 Route::get('/orders/{id}/check', 'OrdersController@check')->name('orders.check')->middleware('auth');
 Route::get('/orders/{id}/requestExport', 'OrdersController@requestExport')->name('orders.requestExport')->middleware('auth');
 Route::get('/orders/{id}/confirmExport', 'OrdersController@confirmExport')->name('orders.confirmExport')->middleware('auth');

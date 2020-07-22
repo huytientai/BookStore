@@ -46,7 +46,7 @@
                                     <div class="actions_inner">
                                         <ul class="add_to_links">
                                             <li>
-                                                <form action="{{ route('checkout.index',$book->id) }}" method="post">
+                                                <form action="{{ route('checkout.quick',$book->id) }}" method="post">
                                                     @csrf
                                                     <input type="hidden" name="books[{{ $key }}][id]" value="{{ $book->id }}">
                                                     <input type="hidden" name="books[{{ $key }}][quantity]" value="1">
@@ -166,7 +166,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index', $b0[$i]->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick', $b0[$i]->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b0[$i]->id }}">
                                                                 <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
@@ -235,7 +235,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index', $b0[$i+1]->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick', $b0[$i+1]->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b0[$i+1]->id }}">
                                                                 <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
@@ -314,7 +314,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index', $b1[$i]->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick', $b1[$i]->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b1[$i]->id }}">
                                                                 <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
@@ -383,7 +383,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index', $b1[$i+1]->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick', $b1[$i+1]->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b1[$i+1]->id }}">
                                                                 <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
@@ -461,7 +461,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index', $b2[$i]->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick', $b2[$i]->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b2[$i]->id }}">
                                                                 <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
@@ -530,7 +530,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index', $b2[$i+1]->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick', $b2[$i+1]->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b2[$i+1]->id }}">
                                                                 <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
@@ -609,7 +609,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index', $b3[$i]->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick', $b3[$i]->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b3[$i]->id }}">
                                                                 <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
@@ -678,7 +678,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index', $b3[$i+1]->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick', $b3[$i+1]->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b3[$i+1]->id }}">
                                                                 <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
@@ -756,7 +756,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index', $b4[$i]->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick', $b4[$i]->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b4[$i]->id }}">
                                                                 <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
@@ -825,7 +825,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index', $b4[$i+1]->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick', $b4[$i+1]->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b4[$i+1]->id }}">
                                                                 <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
@@ -975,7 +975,7 @@
                         <div class="actions_inner">
                             <ul class="add_to_links">
                                 <li>
-                                    <form action="{{ route('checkout.index', $best_books[0]->id) }}" method="post">
+                                    <form action="{{ route('checkout.quick', $best_books[0]->id) }}" method="post">
                                         @csrf
                                         <input type="hidden" name="books[0][id]" value="{{ $best_books[0]->id }}">
                                         <input type="hidden" name="books[0][quantity]" value="1">
@@ -1029,7 +1029,7 @@
                         <div class="actions_inner">
                             <ul class="add_to_links">
                                 <li>
-                                    <form action="{{ route('checkout.index', $best_books[1]->id) }}" method="post">
+                                    <form action="{{ route('checkout.quick', $best_books[1]->id) }}" method="post">
                                         @csrf
                                         <input type="hidden" name="books[0][id]" value="{{ $best_books[1]->id }}">
                                         <input type="hidden" name="books[0][quantity]" value="1">
@@ -1083,7 +1083,7 @@
                         <div class="actions_inner">
                             <ul class="add_to_links">
                                 <li>
-                                    <form action="{{ route('checkout.index', $best_books[2]->id) }}" method="post">
+                                    <form action="{{ route('checkout.quick', $best_books[2]->id) }}" method="post">
                                         @csrf
                                         <input type="hidden" name="books[0][id]" value="{{ $best_books[2]->id }}">
                                         <input type="hidden" name="books[0][quantity]" value="1">
@@ -1137,7 +1137,7 @@
                         <div class="actions_inner">
                             <ul class="add_to_links">
                                 <li>
-                                    <form action="{{ route('checkout.index', $best_books[3]->id) }}" method="post">
+                                    <form action="{{ route('checkout.quick', $best_books[3]->id) }}" method="post">
                                         @csrf
                                         <input type="hidden" name="books[0][id]" value="{{ $best_books[3]->id }}">
                                         <input type="hidden" name="books[0][quantity]" value="1">
@@ -1179,33 +1179,52 @@
             <!-- Single product start -->
             <div class="product product__style--3">
                 <div class="product__thumb">
-                    <a class="first__img" href="single-product.html"><img src="{{ asset('img/best-sell-product/5.jpg') }}" alt="product image"></a>
-                    {{--                    @if(isset($best_books[4]->image))--}}
-                    {{--                        <a class="first__img" href="{{ route('books.show', $best_books[4]->id) }}"><img src="/storage/book_images/{{ $best_books[4]->image }}" alt="product image"></a>--}}
-                    {{--                    @else--}}
-                    {{--                        <a class="first__img" href="{{ route('books.show', $best_books[4]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>--}}
-                    {{--                    @endif--}}
+                    @if(isset($best_books[7]->image))
+                        <a class="first__img" href="{{ route('books.show', $best_books[7]->id) }}"><img src="/storage/book_images/{{ $best_books[7]->image }}" alt="product image"></a>
+                    @else
+                        <a class="first__img" href="{{ route('books.show', $best_books[7]->id) }}"><img src="{{ asset('img/books/default_book.jpg') }}" alt="product image"></a>
+                    @endif
                 </div>
                 <div class="product__content content--center">
                     <div class="action">
                         <div class="actions_inner">
                             <ul class="add_to_links">
-                                <li><a class="cart" href="#"><i class="bi bi-shopping-bag4"></i></a></li>
                                 <li>
-                                    <a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a>
+                                    <form action="{{ route('checkout.quick', $best_books[7]->id) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="books[0][id]" value="{{ $best_books[7]->id }}">
+                                        <input type="hidden" name="books[0][quantity]" value="1">
+
+                                        <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                    </form>
                                 </li>
-                                <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
+                                <li>
+                                    <a class="wishlist" href="{{ route('carts.show', $best_books[7]->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
+                                </li>
+                                <li><a class="compare" href="{{ route('favorites.show', $best_books[7]->id) }}"><i class="bi bi-heart-beat"></i></a></li>
 
                             </ul>
                         </div>
                     </div>
+
+                    @php
+                        $sum=0;
+                        foreach($best_books[7]->reviews as $review){
+                            $sum+=$review->star;
+                        }
+                        if(count($best_books[7]->reviews)==0 )
+                            $avg=0;
+                        else
+                            $avg=ceil($sum/count($best_books[7]->reviews));
+                    @endphp
                     <div class="product__hover--content">
                         <ul class="rating d-flex">
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li class="on"><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
-                            <li><i class="fa fa-star-o"></i></li>
+                            @for($star=0;$star<$avg;$star++)
+                                <li class="on"><i class="fa fa-star-o"></i></li>
+                            @endfor
+                            @for($star=5;$star>$avg;$star--)
+                                <li><i class="fa fa-star-o"></i></li>
+                            @endfor
                         </ul>
                     </div>
                 </div>
@@ -1225,7 +1244,7 @@
                         <div class="actions_inner">
                             <ul class="add_to_links">
                                 <li>
-                                    <form action="{{ route('checkout.index', $best_books[4]->id) }}" method="post">
+                                    <form action="{{ route('checkout.quick', $best_books[4]->id) }}" method="post">
                                         @csrf
                                         <input type="hidden" name="books[0][id]" value="{{ $best_books[4]->id }}">
                                         <input type="hidden" name="books[0][quantity]" value="1">
@@ -1279,7 +1298,7 @@
                         <div class="actions_inner">
                             <ul class="add_to_links">
                                 <li>
-                                    <form action="{{ route('checkout.index', $best_books[5]->id) }}" method="post">
+                                    <form action="{{ route('checkout.quick', $best_books[5]->id) }}" method="post">
                                         @csrf
                                         <input type="hidden" name="books[0][id]" value="{{ $best_books[5]->id }}">
                                         <input type="hidden" name="books[0][quantity]" value="1">
@@ -1333,7 +1352,7 @@
                         <div class="actions_inner">
                             <ul class="add_to_links">
                                 <li>
-                                    <form action="{{ route('checkout.index', $best_books[6]->id) }}" method="post">
+                                    <form action="{{ route('checkout.quick', $best_books[6]->id) }}" method="post">
                                         @csrf
                                         <input type="hidden" name="books[0][id]" value="{{ $best_books[6]->id }}">
                                         <input type="hidden" name="books[0][quantity]" value="1">

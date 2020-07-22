@@ -86,7 +86,9 @@
                                 <th class="product-price">Price</th>
                                 <th class="product-quantity">Quantity</th>
                                 <th class="product-subtotal">Total</th>
-                                <th class="product-remove">Remove</th>
+                                {{--                                @canany(['admin','staff','seller'])--}}
+                                {{--                                    <th class="product-remove">Remove</th>--}}
+                                {{--                                @endcanany--}}
                             </tr>
                             </thead>
                             <tbody>
@@ -106,13 +108,16 @@
                                         <span class="amount">${{ $orderdetail->book->price }}</span>
                                     </td>
                                     <td class="product-quantity">
-                                        <input type="number" class="book-quantity" min="1" value="{{ $orderdetail->quantity }}">
-                                        <input type="hidden" class="book-id" name="book-id" value="{{ $orderdetail->book_id }}">
+                                        <span class="book-quantity" style="font-size: 16px;font-weight: 700;color: #333333">{{ $orderdetail->quantity }}</span>
+                                        {{--                                        <input type="number" class="book-quantity" min="1" value="{{ $orderdetail->quantity }}">--}}
+                                        {{--                                        <input type="hidden" class="book-id" name="book-id" value="{{ $orderdetail->book_id }}">--}}
                                     </td>
                                     <td class="product-subtotal">${{ $orderdetail->book->price * $orderdetail->quantity }}</td>
-                                    <td class="product-remove">
-                                        <button type="button" class="btn btn-danger">X</button>
-                                    </td>
+                                    {{--                                    @canany(['admin','staff','seller'])--}}
+                                    {{--                                        <td class="product-remove">--}}
+                                    {{--                                            <button type="button" class="btn btn-danger">X</button>--}}
+                                    {{--                                        </td>--}}
+                                    {{--                                    @endcanany--}}
                                 </tr>
                             @endforeach
 
@@ -121,86 +126,89 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <script>
-                sidebar = document.getElementsByClassName('sidebar-wrapper').item(0).getElementsByClassName('nav').item(0);
-                sidebar.getElementsByTagName('li').item(4).classList.add('active');
 
-                let quantityInput = document.getElementsByClassName('book-quantity')
-                for (i = 0; i < quantityInput.length; i++) {
-                    let input = quantityInput[i]
-                    input.addEventListener('change', function (event) {
-                        let value = event.target
-                        if (isNaN(value.value) || value.value <= 0) {
-                            value.value = 1
-                        }
-                        updateCartTotal()
-                    });
+    <script>
+        sidebar = document.getElementsByClassName('sidebar-wrapper').item(0).getElementsByClassName('nav').item(0);
+        sidebar.getElementsByTagName('li').item(4).classList.add('active');
+
+        let quantityInput = document.getElementsByClassName('book-quantity')
+        for (i = 0; i < quantityInput.length; i++) {
+            let input = quantityInput[i]
+            input.addEventListener('change', function (event) {
+                let value = event.target
+                if (isNaN(value.value) || value.value <= 0) {
+                    value.value = 1
+                }
+                updateCartTotal()
+            });
+        }
+
+        let rm_buttons = $(".product-remove .btn-danger")
+        for (let i = 0; i < rm_buttons.length; i++) {
+            let button = rm_buttons[i]
+            button.addEventListener('click', function (event) {
+                var buttonClicked = event.target
+                buttonClicked.parentElement.parentElement.remove()
+                updateCartTotal()
+            })
+        }
+
+        function update_cart() {
+            var cartItemContainer = document.getElementsByClassName('each-cart')
+            if (cartItemContainer.item(0) == null) {
+                return document.getElementById("update-form").submit();
+                ;
+            }
+
+            if (cartItemContainer.length) {
+                for (var i = 0; i < cartItemContainer.length; i++) {
+                    var input = document.createElement("input");
+                    var input1 = document.createElement("input");
+
+                    var quantityElement = cartItemContainer[i].getElementsByClassName('book-quantity')[0];
+                    var idElement = cartItemContainer[i].getElementsByClassName('book-id')[0];
+                    var quantity = quantityElement.value
+                    var book_id = idElement.value
+
+                    // set input
+                    input.setAttribute("type", "hidden");
+                    var name = "books[:i][id]"
+                    name = name.replace(':i', i)
+                    input.setAttribute("name", name);
+                    input.setAttribute("value", book_id);
+                    document.getElementById("update-form").appendChild(input);
+
+                    input1.setAttribute("type", "hidden");
+                    var name = "books[:i][quantity]"
+                    name = name.replace(':i', i)
+                    input1.setAttribute("name", name);
+                    input1.setAttribute("value", quantity);
+                    document.getElementById("update-form").appendChild(input1);
                 }
 
-                let rm_buttons = $(".product-remove .btn-danger")
-                for (let i = 0; i < rm_buttons.length; i++) {
-                    let button = rm_buttons[i]
-                    button.addEventListener('click', function (event) {
-                        var buttonClicked = event.target
-                        buttonClicked.parentElement.parentElement.remove()
-                        updateCartTotal()
-                    })
-                }
+                document.getElementById("update-form").submit();
+            }
+        }
 
-                function update_cart() {
-                    var cartItemContainer = document.getElementsByClassName('each-cart')
-                    if (cartItemContainer.item(0) == null) {
-                        return document.getElementById("update-form").submit();
-                        ;
-                    }
+        function updateCartTotal() {
+            var cartItemContainer = document.getElementsByClassName('each-cart')
 
-                    if (cartItemContainer.length) {
-                        for (var i = 0; i < cartItemContainer.length; i++) {
-                            var input = document.createElement("input");
-                            var input1 = document.createElement("input");
+            var total = 0
 
-                            var quantityElement = cartItemContainer[i].getElementsByClassName('book-quantity')[0];
-                            var idElement = cartItemContainer[i].getElementsByClassName('book-id')[0];
-                            var quantity = quantityElement.value
-                            var book_id = idElement.value
+            for (var i = 0; i < cartItemContainer.length; i++) {
+                var quantityElement = cartItemContainer[i].getElementsByClassName('book-quantity')[0];
+                var priceElement = cartItemContainer[i].getElementsByClassName('amount')[0];
 
-                            // set input
-                            input.setAttribute("type", "hidden");
-                            var name = "books[:i][id]"
-                            name = name.replace(':i', i)
-                            input.setAttribute("name", name);
-                            input.setAttribute("value", book_id);
-                            document.getElementById("update-form").appendChild(input);
+                var quantity = quantityElement.value
+                var price = priceElement.innerText.replace('$', '')
 
-                            input1.setAttribute("type", "hidden");
-                            var name = "books[:i][quantity]"
-                            name = name.replace(':i', i)
-                            input1.setAttribute("name", name);
-                            input1.setAttribute("value", quantity);
-                            document.getElementById("update-form").appendChild(input1);
-                        }
-
-                        document.getElementById("update-form").submit();
-                    }
-                }
-
-                function updateCartTotal() {
-                    var cartItemContainer = document.getElementsByClassName('each-cart')
-
-                    var total = 0
-
-                    for (var i = 0; i < cartItemContainer.length; i++) {
-                        var quantityElement = cartItemContainer[i].getElementsByClassName('book-quantity')[0];
-                        var priceElement = cartItemContainer[i].getElementsByClassName('amount')[0];
-
-                        var quantity = quantityElement.value
-                        var price = priceElement.innerText.replace('$', '')
-
-                        cartItemContainer[i].getElementsByClassName('product-subtotal').item(0).innerHTML = '$' + quantity * price
-                        total += quantity * price
-                    }
-                    document.getElementById('order-total').innerHTML = total + '$'
-                }
-            </script>
+                cartItemContainer[i].getElementsByClassName('product-subtotal').item(0).innerHTML = '$' + quantity * price
+                total += quantity * price
+            }
+            document.getElementById('order-total').innerHTML = total + '$'
+        }
+    </script>
 @endsection

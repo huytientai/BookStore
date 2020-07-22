@@ -90,7 +90,7 @@ class BooksController extends Controller
         $loaisachs = $this->loaisach->allLoaisachCount();
         $book = $this->book->find($id);
         if ($book == null) {
-            flash('This book is not existed');
+            flash('This book is not existed')->warning();
             return redirect()->route('home');
         }
 

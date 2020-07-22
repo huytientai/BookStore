@@ -109,7 +109,7 @@
                                                 <div class="actions_inner">
                                                     <ul class="add_to_links">
                                                         <li>
-                                                            <form action="{{ route('checkout.index',$book->id) }}" method="post">
+                                                            <form action="{{ route('checkout.quick',$book->id) }}" method="post">
                                                                 @csrf
                                                                 <input type="hidden" name="books[{{ $key }}][id]" value="{{ $book->id }}">
                                                                 <input type="hidden" name="books[{{ $key }}][quantity]" value="1">

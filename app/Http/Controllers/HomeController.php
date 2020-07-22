@@ -41,7 +41,6 @@ class HomeController extends Controller
 
         //hot books
         $b0 = $this->getHotBooks(null, 30, 10);
-
         $b1 = $this->getHotBooks(11, 30, 10);
         $b2 = $this->getHotBooks(12, 30, 10);
         $b3 = $this->getHotBooks(13, 30, 10);
@@ -49,7 +48,7 @@ class HomeController extends Controller
 
         $tacgias = $this->book->groupBy('tacgia_id')->orderByRaw('count(*) desc')->limit(3)->get()->pluck('tacgia');
 
-        $best_books = $this->getBestBooks();
+        $best_books = $this->getBestBooks(8);
 
         return view('home')->with(['b0' => $b0, 'b1' => $b1, 'b2' => $b2, 'b3' => $b3, 'b4' => $b4, 'tacgias' => $tacgias, 'best_books' => $best_books, 'new_books' => $new_books]);
     }
@@ -75,11 +74,12 @@ class HomeController extends Controller
 
         if (count($result) < $limit) {
             $x = $limit - count($result);
-            $books = $this->book->where('created_at', '<', now()->subDays($days)->toDateTimeString())->orderBy('created_at','desc')->limit($x)->get();
+            $books = $this->book->where('created_at', '<', now()->subDays($days)->toDateTimeString())->orderBy('created_at', 'desc')->limit($x)->get();
             foreach ($books as $book) {
                 array_push($result, $book);
             }
         }
+
         return $result;
     }
 
@@ -124,15 +124,15 @@ class HomeController extends Controller
     /** get best seller . if orderDetail<0 then get book follow id
      * @return array
      */
-    protected function getBestBooks()
+    protected function getBestBooks($limit)
     {
-        $limit = 7;
-        $pluck = $this->orderdetail->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit($limit)->get()->pluck('book');
+        $book_ids=$this->book->get()->pluck('id');
+        $pluck = $this->orderdetail->whereIn('book_id',$book_ids)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit($limit)->get()->pluck('book');
         $result = $this->convertArray($pluck);
 
         if (count($result) < $limit) {
             if (count($result))
-                $books = $this->book->whereNotIn('id', $result->pluck('id'))->limit($limit - count($result))->get();
+                $books = $this->book->whereNotIn('id', $pluck->pluck('id'))->limit($limit - count($result))->get();
             else
                 $books = $this->book->limit($limit - count($result))->get();
 
@@ -140,6 +140,7 @@ class HomeController extends Controller
                 array_push($result, $book);
             }
         }
+
         return $result;
     }
 }

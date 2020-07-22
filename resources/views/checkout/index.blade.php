@@ -85,10 +85,7 @@
                                                 <option value="{{ $address_list }}">
                                             @endforeach
                                         </datalist>
-
                                     @endif
-
-
                                 </div>
 
 

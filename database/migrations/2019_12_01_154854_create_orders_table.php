@@ -29,8 +29,10 @@ class CreateOrdersTable extends Migration
             $table->string('company', 255)->nullable();
 
             $table->string('payment',255)->default('offline');
+            $table->string('transId',255)->nullable();
             $table->string('payUrl', 255)->nullable();
             $table->boolean('pay_status')->default(false);
+            $table->boolean('payback')->default(false);
 
             $table->unsignedBigInteger('seller_id')->nullable()->default(null);
             $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade');

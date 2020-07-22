@@ -82,11 +82,30 @@
                                         <div class="col-sm">Phone: {{ $order->phone }}</div>
                                         <div class="col-sm">Email: {{ $order->email }}</div>
                                     </div>
-                                    <div>Company: {{ $order->company }}</div>
-                                    <br>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div>Company: {{ $order->company }}</div>
+                                            <br>
 
-                                    <div>Total: {{ $order->total_price }}$</div>
-                                    <br>
+                                            <div>Total: {{ $order->total_price }}$</div>
+                                        </div>
+                                        @if($order->status<\App\Models\Order::CONFIRM)
+                                            <div class="col-sm">
+                                                <br>
+                                                <div class="row">
+                                                    <a href="{{ route('orders.userEdit',$order->id) }}" class="btn btn-primary">Edit</a>
+
+                                                    <form action="{{ route('orders.userCancel',$order->id) }}" method="post" style="margin-bottom: 0rem;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger" type="submit">Cancel</button>
+                                                    </form>
+                                                </div>
+                                                <small>Note: you will lose 10% of the bill for fee if you cancel.</small>
+                                            </div>
+                                        @endif
+                                    </div>
+
                                     <div>Status: {{  \App\Models\Order::$status[$order->status] }}</div>
                                     @canany(['admin','staff','seller'])
                                         @if($order->status!=\App\Models\Order::WAITING)

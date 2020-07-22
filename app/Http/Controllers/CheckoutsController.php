@@ -57,7 +57,7 @@ class CheckoutsController extends Controller
 
     public function quickCheckout(Request $request)
     {
-        if (!isset($request->books[0]['id'])) {
+        if (!isset($request->books[0]['id']) || !isset($request->books[0]['quantity'])) {
             flash('Error. Please try again!')->error();
             return redirect()->back();
         }

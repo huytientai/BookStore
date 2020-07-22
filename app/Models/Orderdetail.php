@@ -40,10 +40,12 @@ class Orderdetail extends Model
             $order_ids = Order::where('created_at', '>=', now()->subDays($days)->toDateTimeString())->get()->pluck('id');
 
         if ($category == null) {
+            $book_ids = Book::all()->pluck('id');
+
             if ($limit == null)
-                $builder = $query->whereIn('order_id', $order_ids)->groupBy('book_id')->orderByRaw('sum(quantity) desc');
+                $builder = $query->whereIn('order_id', $order_ids)->whereIn('book_id', $book_ids)->groupBy('book_id')->orderByRaw('sum(quantity) desc');
             else
-                $builder = $query->whereIn('order_id', $order_ids)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit($limit);
+                $builder = $query->whereIn('order_id', $order_ids)->whereIn('book_id', $book_ids)->groupBy('book_id')->orderByRaw('sum(quantity) desc')->limit($limit);
         } else {
             $book_ids = Book::where('loaisach_id', '=', $category)->get()->pluck('id');
 

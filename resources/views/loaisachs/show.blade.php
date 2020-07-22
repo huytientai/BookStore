@@ -119,16 +119,19 @@
                                             <div class="actions_inner">
                                                 <ul class="add_to_links">
                                                     <li>
-                                                        <a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a>
+                                                        <form action="{{ route('checkout.quick', $book->id) }}" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="books[0][id]" value="{{ $book->id }}">
+                                                            <input type="hidden" name="books[0][quantity]" value="1">
+
+                                                            <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
+                                                        </form>
                                                     </li>
                                                     <li>
                                                         <a class="wishlist" href="{{ route('carts.show', $book->id) }}"><i class="bi bi-shopping-cart-full"></i></a>
                                                     </li>
                                                     <li>
-                                                        <a class="compare" href="#"><i class="bi bi-heart-beat"></i></a>
-                                                    </li>
-                                                    <li>
-                                                        <a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a>
+                                                        <a class="compare" href="{{ route('favorites.show', $book->id) }}"><i class="bi bi-heart-beat"></i></a>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -202,5 +205,9 @@
     </div>
     </div>
 
-
+    <script>
+        function checkout_submit(element) {
+            element.parentElement.submit();
+        }
+    </script>
 @endsection
