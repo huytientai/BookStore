@@ -121,7 +121,6 @@ class CheckoutsController extends Controller
         return redirect()->route('carts.index');
     }
 
-
     //----------------------------- Checkout by MoMo ------------------------------------------------
 
     /**
@@ -173,7 +172,7 @@ class CheckoutsController extends Controller
 
         $this->cart->removeCartOfUser();
 
-        $orderInfo .= 'Total: ' . $order->total . '$';
+        $orderInfo .= 'Total: ' . $order->total_price . '$';
         $response = \MoMoAIO::purchase([
             'amount' => $order->total_price * 20000,
             'orderId' => $order->id,
@@ -218,6 +217,7 @@ class CheckoutsController extends Controller
 
         if ($request->errorCode == 0) {
             $order->pay_status = true;
+            $order->transId = $request->transId;
             $order->save();
             return true;
         } else {
@@ -245,9 +245,260 @@ class CheckoutsController extends Controller
             dd($response);
             print $response->getMessage();
         }
+    }
 
+//    ----------------------------------  Checkout by VNPay  ---------------------------------
+
+    /**
+     * Checkout by MoMo (send request to MoMo)
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function vnpayRequest(Request $request)
+    {
+        //check is cart empty?
+        $cart = $this->cart->where('user_id', '=', Auth::id())->first();
+        if ($cart == null) {
+            flash('Order failed');
+            return redirect()->route('carts.index');
+        }
+
+        $books = $request->books;
+        $orderInfo = '';
+
+        $total = 0;
+        // create order
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            if ($book == null) {
+                $book = $this->book->withTrashed()->where('id', $value['id'])->get();
+                if ($book == null) {
+                    flash('Book #' . $value['id'] . 'is not exist');
+                    return back();
+                }
+                flash('Book ' . $book->name . 'was deleted');
+                return back();
+            }
+            $total += $book->price * $value['quantity'];
+        }
+        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+
+        // create order detail
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            $data['order_id'] = $order->id;
+            $data['book_id'] = $book->id;
+            $data['sell_price'] = $book->price;
+            $data['quantity'] = $value['quantity'];
+            $this->orderdetail->create($data);
+
+            $orderInfo .= $book->name . '  ' . $book->price . '$  x' . $value['quantity'] . '\n';
+        }
+
+
+        $this->cart->removeCartOfUser();
+
+        $orderInfo .= 'Total: ' . $order->total_price . '$';
+        $response = \VNPay::purchase([
+            'vnp_OrderType' => 150000,
+            'vnp_IpAddr' => $request->ip(),
+            'vnp_Amount' => $order->total_price * 20000,
+            'vnp_TxnRef' => $order->id,
+            'vnp_ReturnUrl' => route('vnpay.getSuccess'),
+            'vnp_OrderInfo' => $orderInfo,
+        ])->send();
+
+        if (!is_null($response->getRedirectUrl())) {
+            $redirectUrl = $response->getRedirectUrl();
+            $order->payment = 'VNPay';
+            $order->payUrl = $redirectUrl;
+            $order->save();
+            return redirect()->to($redirectUrl);
+        }
+
+        flash($response->getMessage())->error();
+        return redirect()->route('carts.index');
+    }
+
+    public function getSuccessVnpay(Request $request)
+    {
 
     }
+
+    public function vnpayNotify(Request $request)
+    {
+
+    }
+
+    //    ----------------------------------  Checkout by ONEPay  ---------------------------------
+
+    /**
+     * Checkout by MoMo (send request to MoMo)
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function onepayRequest(Request $request)
+    {
+        //check is cart empty?
+        $cart = $this->cart->where('user_id', '=', Auth::id())->first();
+        if ($cart == null) {
+            flash('Order failed');
+            return redirect()->route('carts.index');
+        }
+
+        $books = $request->books;
+        $orderInfo = '';
+
+        $total = 0;
+        // create order
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            if ($book == null) {
+                $book = $this->book->withTrashed()->where('id', $value['id'])->get();
+                if ($book == null) {
+                    flash('Book #' . $value['id'] . 'is not exist');
+                    return back();
+                }
+                flash('Book ' . $book->name . 'was deleted');
+                return back();
+            }
+            $total += $book->price * $value['quantity'];
+        }
+        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+
+        // create order detail
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            $data['order_id'] = $order->id;
+            $data['book_id'] = $book->id;
+            $data['sell_price'] = $book->price;
+            $data['quantity'] = $value['quantity'];
+            $this->orderdetail->create($data);
+
+            $orderInfo .= $book->name . '  ' . $book->price . '$  x' . $value['quantity'] . '\n';
+        }
+
+
+        $this->cart->removeCartOfUser();
+
+        $orderInfo .= 'Total: ' . $order->total . '$';
+        $response = \VNPay::purchase([
+            'vnp_OrderType' => 150000,
+            'vnp_IpAddr' => $request->ip(),
+            'vnp_Amount' => $order->total_price * 20000,
+            'vnp_TxnRef' => $order->id,
+            'vnp_ReturnUrl' => route('momo.getSuccess'),
+            'notifyUrl' => route('momo.notify'),
+            'vnp_OrderInfo' => $orderInfo,
+        ])->send();
+        dd($request);
+        if ($response->errorCode == 0) {
+            $redirectUrl = $response->getRedirectUrl();
+            $order->payment = 'MoMo';
+            $order->payUrl = $redirectUrl;
+            $order->save();
+            return redirect()->to($redirectUrl);
+        }
+
+        flash($response->getMessage());
+        return redirect()->back();
+    }
+
+    public function getSuccessOnepay(Request $request)
+    {
+
+    }
+
+    public function onepayNotify(Request $request)
+    {
+
+    }
+
+
+    //    ----------------------------------  Checkout by VTCPay  ---------------------------------
+
+    /**
+     * Checkout by MoMo (send request to MoMo)
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function vtcpayRequest(Request $request)
+    {
+        //check is cart empty?
+        $cart = $this->cart->where('user_id', '=', Auth::id())->first();
+        if ($cart == null) {
+            flash('Order failed');
+            return redirect()->route('carts.index');
+        }
+
+        $books = $request->books;
+        $orderInfo = '';
+
+        $total = 0;
+        // create order
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            if ($book == null) {
+                $book = $this->book->withTrashed()->where('id', $value['id'])->get();
+                if ($book == null) {
+                    flash('Book #' . $value['id'] . 'is not exist');
+                    return back();
+                }
+                flash('Book ' . $book->name . 'was deleted');
+                return back();
+            }
+            $total += $book->price * $value['quantity'];
+        }
+        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+
+        // create order detail
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            $data['order_id'] = $order->id;
+            $data['book_id'] = $book->id;
+            $data['sell_price'] = $book->price;
+            $data['quantity'] = $value['quantity'];
+            $this->orderdetail->create($data);
+
+            $orderInfo .= $book->name . '  ' . $book->price . '$  x' . $value['quantity'] . '\n';
+        }
+
+
+        $this->cart->removeCartOfUser();
+
+        $orderInfo .= 'Total: ' . $order->total . '$';
+        $response = \VNPay::purchase([
+            'vnp_OrderType' => 150000,
+            'vnp_IpAddr' => $request->ip(),
+            'vnp_Amount' => $order->total_price * 20000,
+            'vnp_TxnRef' => $order->id,
+            'vnp_ReturnUrl' => route('momo.getSuccess'),
+            'notifyUrl' => route('momo.notify'),
+            'vnp_OrderInfo' => $orderInfo,
+        ])->send();
+        dd($request);
+        if ($response->errorCode == 0) {
+            $redirectUrl = $response->getRedirectUrl();
+            $order->payment = 'MoMo';
+            $order->payUrl = $redirectUrl;
+            $order->save();
+            return redirect()->to($redirectUrl);
+        }
+
+        flash($response->getMessage());
+        return redirect()->back();
+    }
+
+    public function getSuccessVtcpay(Request $request)
+    {
+
+    }
+
+    public function vtcpayNotify(Request $request)
+    {
+
+    }
+
 
     /**
      * Update the specified resource in storage.

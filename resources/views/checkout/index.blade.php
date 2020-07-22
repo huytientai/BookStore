@@ -186,6 +186,10 @@
                             <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
                                 <div class="payment-body">Pay with cash upon delivery.</div>
                                 <div class="payment-body" style="cursor: pointer;color: #0b75c9" id="momo">MoMo</div>
+                                <div class="payment-body" style="cursor: pointer;color: #0b75c9" id="vnpay">VNPay</div>
+                                <div class="payment-body" style="cursor: pointer;color: #0b75c9" id="onepay">ONEPay</div>
+                                <div class="payment-body" style="cursor: pointer;color: #0b75c9" id="vtcpay">VTCPay</div>
+
                             </div>
                             <div></div>
                         </div>
@@ -199,6 +203,16 @@
     <script>
         document.getElementById('momo').addEventListener('click', function () {
             changePaymnet('{{ route('checkout.momo') }}', 'Checkout By MoMo')
+        });
+
+        document.getElementById('vnpay').addEventListener('click', function () {
+            changePaymnet('{{ route('checkout.vnpay') }}', 'Checkout By VNPay')
+        });
+        document.getElementById('onepay').addEventListener('click', function () {
+            changePaymnet('{{ route('checkout.onepay') }}', 'Checkout By ONEPay')
+        });
+        document.getElementById('VTCPay').addEventListener('click', function () {
+            changePaymnet('{{ route('checkout.vtcpay') }}', 'Checkout By VTCPay')
         });
 
         document.getElementById('headingThree').addEventListener('click', function () {

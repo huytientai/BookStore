@@ -39,13 +39,13 @@ Route::get('/imports/{id}/denies', 'ImportsController@denies')->name('imports.de
 Route::post('/imports/{id}/revert', 'ImportsController@revert')->name('imports.revert')->middleware('auth');
 
 Route::post('/checkout', 'CheckoutsController@index')->name('checkout.index')->middleware(['auth']);
-Route::post('/checkout/quick','CheckoutsController@quickCheckout')->name('checkout.quick')->middleware('auth');
+Route::post('/checkout/quick', 'CheckoutsController@quickCheckout')->name('checkout.quick')->middleware('auth');
 Route::post('/checkout/store', 'CheckoutsController@store')->name('checkout.store')->middleware(['auth']);
 
 Route::resource('/carts', 'CartsController')->middleware(['auth']);
 Route::resource('/favorites', 'FavoritesController')->middleware(['auth']);
 
-//---------------------------  Order ---------------------------------------------
+//---------------------------  Order  ---------------------------------------------
 Route::resource('/orders', 'OrdersController')->middleware('auth');     // manager cancel in destroy function
 Route::delete('/orders/{id}/cancel', 'OrdersController@cancel')->name('orders.userCancel')->middleware('auth');    // user cancel
 Route::get('/orders/{id}/modify', 'OrdersController@userEdit')->name('orders.userEdit')->middleware('auth');      // user edit order
@@ -75,15 +75,28 @@ Route::get('/about', function () {
 })->name('about');
 
 
-//checkout Gateway
-                                // Checkout by momo
-Route::post('/momo/checkout','CheckoutsController@momoRequest')->name('checkout.momo')->middleware('auth');
-Route::get('/momo/success','CheckoutsController@getSuccessMomo')->name('momo.getSuccess')->middleware('auth');
-Route::post('/momo/notify','CheckoutsController@momoNotify')->name('momo.notify');
-//Route::get('')
-Route::get('/momo/checkOrder/{id}','CheckoutsController@momoCheckOrder')->name('momo.checkOrder');
+//-------------------------------------  checkout Gateway  -----------------------------------------------
 
-                                //checkout by vnpay
+//                                       Checkout by MoMo
+Route::post('/momo/checkout', 'CheckoutsController@momoRequest')->name('checkout.momo')->middleware('auth');
+Route::get('/momo/success', 'CheckoutsController@getSuccessMomo')->name('momo.getSuccess')->middleware('auth');
+Route::post('/momo/notify', 'CheckoutsController@momoNotify')->name('momo.notify');
+Route::get('/momo/checkOrder/{id}', 'CheckoutsController@momoCheckOrder')->name('momo.checkOrder');
 
+//                                      Checkout by VNPay
+Route::post('/vnpay/checkout', 'CheckoutsController@vnpayRequest')->name('checkout.vnpay')->middleware('auth');
+Route::get('/vnpay/success', 'CheckoutsController@getSuccessVnpay')->name('vnpay.getSuccess')->middleware('auth');
+Route::post('/vnpay/notify', 'CheckoutsController@vnpayNotify')->name('vnpay.notify');
+//Route::get('/vnpay/checkOrder/{id}','CheckoutsController@vnnpayCheckOrder')->name('vnpay.checkOrder');
 
+//                                       Checkout by ONEPay
+Route::post('/onepay/checkout', 'CheckoutsController@onepayRequest')->name('checkout.onepay')->middleware('auth');
+Route::get('/onepay/success', 'CheckoutsController@getSuccessOnepay')->name('onepay.getSuccess')->middleware('auth');
+Route::post('/onepay/notify', 'CheckoutsController@onepayNotify')->name('onepay.notify');
+//Route::get('/onepay/checkOrder/{id}', 'CheckoutsController@onepayCheckOrder')->name('onepay.checkOrder');
 
+//                                       Checkout by VTCPay
+Route::post('/vtcpay/checkout', 'CheckoutsController@vtcpayRequest')->name('checkout.vtcpay')->middleware('auth');
+Route::get('/vtcpay/success', 'CheckoutsController@getSuccessVtcpay')->name('vtcpay.getSuccess')->middleware('auth');
+Route::post('/vtcpay/notify', 'CheckoutsController@vtcpayNotify')->name('vtcpay.notify');
+//Route::get('/vtcpay/checkOrder/{id}', 'CheckoutsController@vtcpayCheckOrder')->name('vtcpay.checkOrder');

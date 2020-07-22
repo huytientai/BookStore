@@ -48,8 +48,8 @@
                                             <li>
                                                 <form action="{{ route('checkout.quick',$book->id) }}" method="post">
                                                     @csrf
-                                                    <input type="hidden" name="books[{{ $key }}][id]" value="{{ $book->id }}">
-                                                    <input type="hidden" name="books[{{ $key }}][quantity]" value="1">
+                                                    <input type="hidden" name="books[0][id]" value="{{ $book->id }}">
+                                                    <input type="hidden" name="books[0][quantity]" value="1">
 
                                                     <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                 </form>
@@ -168,8 +168,8 @@
                                                         <li>
                                                             <form action="{{ route('checkout.quick', $b0[$i]->id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b0[$i]->id }}">
-                                                                <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
+                                                                <input type="hidden" name="books[0][id]" value="{{ $b0[$i]->id }}">
+                                                                <input type="hidden" name="books[0][quantity]" value="1">
 
                                                                 <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                             </form>
@@ -237,8 +237,8 @@
                                                         <li>
                                                             <form action="{{ route('checkout.quick', $b0[$i+1]->id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b0[$i+1]->id }}">
-                                                                <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
+                                                                <input type="hidden" name="books[0][id]" value="{{ $b0[$i+1]->id }}">
+                                                                <input type="hidden" name="books[0][quantity]" value="1">
 
                                                                 <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                             </form>
@@ -316,8 +316,8 @@
                                                         <li>
                                                             <form action="{{ route('checkout.quick', $b1[$i]->id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b1[$i]->id }}">
-                                                                <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
+                                                                <input type="hidden" name="books[0][id]" value="{{ $b1[$i]->id }}">
+                                                                <input type="hidden" name="books[0][quantity]" value="1">
 
                                                                 <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                             </form>
@@ -385,8 +385,8 @@
                                                         <li>
                                                             <form action="{{ route('checkout.quick', $b1[$i+1]->id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b1[$i+1]->id }}">
-                                                                <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
+                                                                <input type="hidden" name="books[0][id]" value="{{ $b1[$i+1]->id }}">
+                                                                <input type="hidden" name="books[0][quantity]" value="1">
 
                                                                 <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                             </form>
@@ -463,8 +463,8 @@
                                                         <li>
                                                             <form action="{{ route('checkout.quick', $b2[$i]->id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b2[$i]->id }}">
-                                                                <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
+                                                                <input type="hidden" name="books[0][id]" value="{{ $b2[$i]->id }}">
+                                                                <input type="hidden" name="books[0][quantity]" value="1">
 
                                                                 <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                             </form>
@@ -532,8 +532,8 @@
                                                         <li>
                                                             <form action="{{ route('checkout.quick', $b2[$i+1]->id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b2[$i+1]->id }}">
-                                                                <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
+                                                                <input type="hidden" name="books[0][id]" value="{{ $b2[$i+1]->id }}">
+                                                                <input type="hidden" name="books[0][quantity]" value="1">
 
                                                                 <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                             </form>
@@ -611,8 +611,8 @@
                                                         <li>
                                                             <form action="{{ route('checkout.quick', $b3[$i]->id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b3[$i]->id }}">
-                                                                <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
+                                                                <input type="hidden" name="books[0][id]" value="{{ $b3[$i]->id }}">
+                                                                <input type="hidden" name="books[0][quantity]" value="1">
 
                                                                 <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                             </form>
@@ -680,8 +680,8 @@
                                                         <li>
                                                             <form action="{{ route('checkout.quick', $b3[$i+1]->id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b3[$i+1]->id }}">
-                                                                <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
+                                                                <input type="hidden" name="books[0][id]" value="{{ $b3[$i+1]->id }}">
+                                                                <input type="hidden" name="books[0][quantity]" value="1">
 
                                                                 <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                             </form>
@@ -758,8 +758,8 @@
                                                         <li>
                                                             <form action="{{ route('checkout.quick', $b4[$i]->id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="books[{{ $i }}][id]" value="{{ $b4[$i]->id }}">
-                                                                <input type="hidden" name="books[{{ $i }}][quantity]" value="1">
+                                                                <input type="hidden" name="books[0][id]" value="{{ $b4[$i]->id }}">
+                                                                <input type="hidden" name="books[0][quantity]" value="1">
 
                                                                 <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                             </form>
@@ -827,8 +827,8 @@
                                                         <li>
                                                             <form action="{{ route('checkout.quick', $b4[$i+1]->id) }}" method="post">
                                                                 @csrf
-                                                                <input type="hidden" name="books[{{ $i+1 }}][id]" value="{{ $b4[$i+1]->id }}">
-                                                                <input type="hidden" name="books[{{ $i+1 }}][quantity]" value="1">
+                                                                <input type="hidden" name="books[0][id]" value="{{ $b4[$i+1]->id }}">
+                                                                <input type="hidden" name="books[0][quantity]" value="1">
 
                                                                 <a class="cart" href="#" onclick="checkout_submit(this)"><i class="bi bi-shopping-bag4"></i></a>
                                                             </form>
