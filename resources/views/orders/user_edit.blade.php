@@ -62,6 +62,7 @@
                         </div>
                         <br>
                         <button class="btn btn-primary" type="submit">Update</button>
+                        <a href="{{ route('carts.index') }}" class="btn btn-danger">Cancel</a>
                     </form>
                     <br>
                     <div></div>

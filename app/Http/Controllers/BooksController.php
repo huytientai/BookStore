@@ -71,6 +71,7 @@ class BooksController extends Controller
         if (Gate::none(['admin', 'staff'], Auth::user())) {
             return redirect()->route('books.index');
         }
+
         $book = $this->book->saveBook($request);
         $this->tableOfContents->saveTableOfContents($request,$book->id);
 

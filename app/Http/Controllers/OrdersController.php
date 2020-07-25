@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen;
 
 
 class OrdersController extends Controller
@@ -561,6 +562,11 @@ class OrdersController extends Controller
 
         if ($order->pay_status == true) {
 
+            if ($order->payback == true) {
+                flash('Something went wrong.Please contact to admin for more detail ')->warning();
+                return redirect()->route('carts.index');
+            }
+
             // MoMo
             if ($order->payment == 'MoMo') {
                 $response = \MoMoAIO::refund([
@@ -579,6 +585,12 @@ class OrdersController extends Controller
                     flash($response->getMessage())->error();
                     return back();
                 }
+            }
+
+            // VNPay
+            if ($order->payment == 'VNPay') {
+                flash('Cant payback by VNPay ')->warning();
+                return redirect()->route('carts.index');
             }
 
             flash('Something went wrong!Please contact to admin')->warning();

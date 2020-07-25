@@ -10,11 +10,13 @@
 
             <div class="col-md-8 col-sm-8">
                 <br>
-                @if($nhaxuatban->image)
-                    <img style="width: 100%" src="/storage/nhaxuatban_images/{{ $nhaxuatban->image }}">
-                @else
-                    <img style="width: 70%" src="/img/no_image.jpg">
-                @endif
+                <div style="width: 430px;height: 405px">
+                    @if($nhaxuatban->image)
+                        <img style="width: 100%" src="/storage/nhaxuatban_images/{{ $nhaxuatban->image }}">
+                    @else
+                        <img style="width: 70%" src="/img/no_image.jpg">
+                    @endif
+                </div>
             </div>
             <br>
             <h1>{{ $nhaxuatban->name }}</h1>

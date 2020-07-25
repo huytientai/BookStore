@@ -99,7 +99,7 @@ class UsersController extends Controller
     {
         if (Auth::user()->id == $id || Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
             $user = $this->user->find($id);
-            $orders = $this->order->where('user_id', $id)->orderBy('created_at', 'desc')->get();
+            $orders = $this->order->where('user_id', $id)->where('status', '=', Order::DONE)->orderBy('created_at', 'desc')->get();
             return view('users.show')->with(['user' => $user, 'orders' => $orders]);
         }
 
@@ -145,7 +145,7 @@ class UsersController extends Controller
             } else {
                 flash('Cap nhat that bai')->error();
             }
-            return redirect()->route('users.index');
+            return redirect()->route('users.show', $request->id);
         } elseif (Auth::user()->id == $request->id) {
             if ($this->user->updateUser($request)) {
                 flash('Cap nhat thanh cong')->success();

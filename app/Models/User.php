@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'name',
+        'avatar',
         'address',
         'address1',
         'address2',
@@ -166,6 +167,15 @@ class User extends Authenticatable
             $data['password'] = Hash::make($data['password']);
         } else {
             unset($data['password']);
+        }
+
+        if ($request->hasFile('avatar')) {
+            $clientImageName = pathinfo($request->avatar->getClientOriginalName(), PATHINFO_FILENAME);
+            $clientImageExtension = $request->avatar->getClientOriginalExtension();
+            $data['avatar'] = $clientImageName . '_' . time() . '.' . $clientImageExtension;
+            $request->file('avatar')->storeAs('public/avatar', $data['avatar']);
+        } else {
+            $data['avatar'] = null;
         }
 
         return $this->find($request->id)->update($data);

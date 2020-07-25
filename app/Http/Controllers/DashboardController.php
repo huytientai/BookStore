@@ -36,8 +36,8 @@ class DashboardController extends Controller
         }
 
         // info
-        $free = ceil(disk_free_space('D:') / 1024 / 1024 / 1024 * 100) / 100;
-        $total = ceil(disk_total_space('D:') / 1024 / 1024 / 1024);
+        $free = ceil(disk_free_space('/') / 1024 / 1024 / 1024 * 100) / 100;
+        $total = ceil(disk_total_space('/') / 1024 / 1024 / 1024);
 
         $used = $total - $free;
 //        $used *= 10;

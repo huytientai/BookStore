@@ -44,7 +44,7 @@
                                         </td>
                                         <td class="product-subtotal">${{ $cart->book->price * $cart->quantity }}</td>
                                         <td class="product-remove">
-                                            <button type="button" class="btn btn-danger">X</button>
+                                            <button type="button" class="btn btn-danger btn_remove">X</button>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -114,6 +114,10 @@
                             <div class="row order-details" style="display: none">
                                 <div class="col-md-12 col-sm-12 ol-lg-12">
                                     <div>Status: {{ \App\Models\Order::$status[$order->status] }}</div>
+                                    <div>Paid: {{ $order->pay_status ? 'Yes':'No' }}</div>
+                                    @if($order->pay_status)
+                                        <div>Payment: {{ $order->payment }}</div>
+                                    @endif
                                     <br>
                                     <div class="row">
                                         <div class="col-sm">Name: {{ $order->name }}</div>
@@ -130,7 +134,7 @@
 
                                             <div>Total: {{ $order->total_price }}$</div>
                                         </div>
-                                        @if($order->status < \App\Models\Order::CONFIRM)
+                                        @if($order->status < \App\Models\Order::CONFIRM && $order->deleted_at == null)
                                             <div class="col-sm">
                                                 <br>
                                                 <div class="row">
@@ -143,6 +147,15 @@
                                                     </form>
                                                 </div>
                                                 <small>Note: you will lose 10% of the bill for fee if you cancel.</small>
+                                            </div>
+                                        @endif
+
+                                        @if($order->deleted_at != null)
+                                            <div class="col-sm">
+                                                <br>
+                                                <div class="row">
+                                                    <button class="btn btn-dark" style="cursor: not-allowed">Cancel</button>
+                                                </div>
                                             </div>
                                         @endif
                                     </div>
@@ -202,7 +215,7 @@
     <script>
         updateCartTotal()
 
-        var removeCartItemButtons = document.getElementsByClassName('btn-danger');
+        var removeCartItemButtons = document.getElementsByClassName('btn_remove');
         for (var i = 0; i < removeCartItemButtons.length; i++) {
             var button = removeCartItemButtons[i];
             button.addEventListener('click', function (event) {

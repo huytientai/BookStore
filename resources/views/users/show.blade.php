@@ -30,7 +30,11 @@
                             <div class="col-lg-6 col-12">
                                 <div class="wn__fotorama__wrapper">
                                     <div class="fotorama wn__fotorama__action" data-nav="thumbs">
-                                        <a href="1.jpg"><img src="/img/product/1.jpg" alt=""></a>
+                                        @if($user->avatar == null)
+                                            <img src="{{ asset('storage/avatar/default.jpg') }}" alt="">
+                                        @else
+                                            <img src="{{ asset('storage/avatar/' . $user->avatar) }}">
+                                        @endif
                                     </div>
                                 </div>
                             </div>

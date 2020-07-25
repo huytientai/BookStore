@@ -82,6 +82,9 @@
                                                 @can('seller')
                                                     <a class="currency-trigger" href="{{ route('orders.index') }}">Orders List</a>
                                                 @endcan
+                                                @can('shipper')
+                                                        <a class="currency-trigger" href="{{ route('orders.index') }}">Orders List</a>
+                                                @endcan
 
                                                 <a class="currency-trigger" href="{{ route('users.show',Auth::user()->id) }}">Your Profile</a>
                                                 <a class="currency-trigger" href="{{ route('logout') }}" onclick="event.preventDefault();

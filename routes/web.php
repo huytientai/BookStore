@@ -18,6 +18,15 @@ Route::get('/app', function () {
     return view('app');
 });
 
+// for server
+Route::get('/linkstorage', function () {
+    if(!is_dir('/home/u441737116/public_html/storage')){
+        symlink('/home/u441737116/domains/bookstore-00.hostingerapp.com/storage/app/public','/home/u441737116/public_html/storage');
+        return 'storage link done';
+    }
+    return 'It is already link';;
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -86,7 +95,7 @@ Route::get('/momo/checkOrder/{id}', 'CheckoutsController@momoCheckOrder')->name(
 //                                      Checkout by VNPay
 Route::post('/vnpay/checkout', 'CheckoutsController@vnpayRequest')->name('checkout.vnpay')->middleware('auth');
 Route::get('/vnpay/success', 'CheckoutsController@getSuccessVnpay')->name('vnpay.getSuccess')->middleware('auth');
-Route::post('/vnpay/notify', 'CheckoutsController@vnpayNotify')->name('vnpay.notify');
+//Route::post('/vnpay/notify', 'CheckoutsController@vnpayNotify')->name('vnpay.notify');
 //Route::get('/vnpay/checkOrder/{id}','CheckoutsController@vnnpayCheckOrder')->name('vnpay.checkOrder');
 
 //                                       Checkout by ONEPay
