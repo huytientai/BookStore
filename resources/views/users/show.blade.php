@@ -68,6 +68,9 @@
     <div class="cart-main-area section-padding--lg bg--white">
         <div class="container">
             <br>
+            <div>Point: {{ $user->point }} <img style="width: 25px" src="{{ asset('img/icons/coin-icon.jpg') }}"></div>
+
+            <br>
             <h2>Your Bought</h2>
             <br>
             <ol>

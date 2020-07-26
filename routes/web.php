@@ -83,6 +83,8 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
+//                                       Checkout with point
+Route::post('/checkout/point', 'CheckoutsController@checkoutByPoint')->name('checkout.point')->middleware('auth');
 
 //-------------------------------------  checkout Gateway  -----------------------------------------------
 

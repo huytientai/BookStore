@@ -154,7 +154,7 @@
                                             <div class="col-sm">
                                                 <br>
                                                 <div class="row">
-                                                    <button class="btn btn-dark" style="cursor: not-allowed">Cancel</button>
+                                                    <button class="btn btn-dark" style="cursor: not-allowed">Cancelled</button>
                                                 </div>
                                             </div>
                                         @endif

@@ -7,6 +7,7 @@ use App\Models\Book;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Orderdetail;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -121,6 +122,71 @@ class CheckoutsController extends Controller
         return redirect()->route('carts.index');
     }
 
+    //----------------------------- Checkout by point  ----------------------------------------------
+    public function checkoutByPoint(Request $request)
+    {
+        //check is cart empty?
+        $cart = $this->cart->where('user_id', '=', Auth::id())->first();
+        if ($cart == null) {
+            flash('Order failed');
+            return redirect()->route('carts.index');
+        }
+
+        $books = $request->books;
+
+        $total = 0;
+        // create order
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            if ($book == null) {
+                $book = $this->book->withTrashed()->where('id', $value['id'])->get();
+                if ($book == null) {
+                    flash('Book #' . $value['id'] . 'is not exist');
+                    return back();
+                }
+                flash('Book ' . $book->name . 'was deleted');
+                return back();
+            }
+            $total += $book->price * $value['quantity'];
+        }
+
+        if ($total > Auth::user()->point) {
+            flash('Not enoungh point to buy')->warning();
+            return redirect()->route('carts.index');
+        }
+
+        $user = Auth::user();
+        $user->point -= $total;
+        $user->save();
+
+        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'payment' => 'point', 'pay_status' => true]);
+
+        // create order detail
+        foreach ($books as $value) {
+            $book = $this->book->find($value['id']);
+            $data['order_id'] = $order->id;
+            $data['book_id'] = $book->id;
+            $data['sell_price'] = $book->price;
+            $data['quantity'] = $value['quantity'];
+            $this->orderdetail->create($data);
+        }
+
+        $this->cart->removeCartOfUser();
+
+        flash('Order Succeed')->success();
+        return redirect()->route('carts.index');
+    }
+
+    //----------------------------- Checkout online common  -------------------------------------------
+    public function savePoint($user_id, $total_price)
+    {
+        $save = 3 / 100;
+
+        $user = User::find($user_id);
+        $user->point += floor($total_price * $save * 10) / 10;
+        $user->save();
+    }
+
     //----------------------------- Checkout by MoMo ------------------------------------------------
 
     /**
@@ -205,7 +271,6 @@ class CheckoutsController extends Controller
 
     public function momoNotify(Request $request)
     {
-
         if (!isset($request->orderId) || !isset($request->errorCode)) {
             return false;
         }
@@ -219,6 +284,8 @@ class CheckoutsController extends Controller
             $order->pay_status = true;
             $order->transId = $request->transId;
             $order->save();
+
+            $this->savePoint($order->user_id, $order->total_price);
             return true;
         } else {
             $order->forceDelete();
@@ -250,7 +317,7 @@ class CheckoutsController extends Controller
 //    ----------------------------------  Checkout by VNPay  ---------------------------------
 
     /**
-     * Checkout by MoMo (send request to MoMo)
+     * Checkout by VNPay
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -335,6 +402,8 @@ class CheckoutsController extends Controller
             $order->pay_status = true;
             $order->transId = $request->transId;
             $order->save();
+            $this->savePoint($order->user_id, $order->total_price);
+
             flash('Order and Checkout successful');
         } else {
             $order->forceDelete();
@@ -352,11 +421,12 @@ class CheckoutsController extends Controller
     //    ----------------------------------  Checkout by ONEPay  ---------------------------------
 
     /**
-     * Checkout by MoMo (send request to MoMo)
+     * Checkout by ONEPay
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function onepayRequest(Request $request){
+    public function onepayRequest(Request $request)
+    {
 
     }
 
@@ -378,7 +448,8 @@ class CheckoutsController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function vtcpayRequest(Request $request){
+    public function vtcpayRequest(Request $request)
+    {
 
     }
 

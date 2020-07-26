@@ -592,9 +592,20 @@ class OrdersController extends Controller
                 return redirect()->route('carts.index');
             }
 
+            if ($order->payment == 'point') {
+                $order->payback = true;
+                $order->delete();
+                $user = Auth::user();
+                $user->point += ceil(0.9 * $order->total_price * 10) / 10;
+                $user->save();
+                flash('Cancel Order successful')->warning();
+                return back();
+            }
+
             flash('Something went wrong!Please contact to admin')->warning();
             return back();
         } else {
+            //offline
             $order->delete();
             flash('Cancel Order#' . $order->id . ' succeed');
             return back();

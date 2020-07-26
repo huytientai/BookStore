@@ -160,11 +160,17 @@
                         <div class="payment">
                             <div class="che__header" role="tab" id="headingTwo">
                                 <a class="collapsed checkout__title" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    <span>Cheque Payment</span>
+                                    <span>Use Point</span>
                                 </a>
                             </div>
                             <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
-                                <div class="payment-body">Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</div>
+                                <div class="payment-body">Your Point: {{ Auth::user()->point }}
+                                    <img src="{{ asset('img/icons/coin-icon.jpg') }}" style="width: 25px"></div>
+                                @if(Auth::user()->point >= $total)
+                                    <button class="btn btn-primary" onclick="usePoint()" id="use_point">Use</button>
+                                @else
+                                    <small class="text-danger" style="padding-left: 10px">Not enough point</small>
+                                @endif
                             </div>
                         </div>
                         <div class="payment">
@@ -180,16 +186,13 @@
                         <div class="payment">
                             <div class="che__header" role="tab" id="headingFour">
                                 <a class="collapsed checkout__title" data-toggle="collapse" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                    <span>PayPal <img src="{{ asset('img/icons/payment.png') }}" alt="payment images"> </span>
+                                    <span>PayPal <small>(Save 3% into your point) </small><img src="{{ asset('img/icons/payment.png') }}" alt="payment images"> </span>
                                 </a>
                             </div>
                             <div id="collapseFour" class="collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
                                 <div class="payment-body">Pay with cash upon delivery.</div>
                                 <div class="payment-body" style="cursor: pointer;color: #0b75c9" id="momo">MoMo</div>
                                 <div class="payment-body" style="cursor: pointer;color: #0b75c9" id="vnpay">VNPay</div>
-                                <div class="payment-body" style="cursor: pointer;color: #0b75c9" id="onepay">ONEPay</div>
-                                <div class="payment-body" style="cursor: pointer;color: #0b75c9" id="vtcpay">VTCPay</div>
-
                             </div>
                             <div></div>
                         </div>
@@ -201,6 +204,10 @@
     </section>
 
     <script>
+        function usePoint() {
+            changePaymnet('{{ route('checkout.point') }}', 'Checkout with point');
+        }
+
         document.getElementById('momo').addEventListener('click', function () {
             changePaymnet('{{ route('checkout.momo') }}', 'Checkout By MoMo')
         });
