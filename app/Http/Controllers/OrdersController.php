@@ -662,12 +662,12 @@ class OrdersController extends Controller
         }
 
         if ($order->status == Order::SHIPPED || $order->status == Order::DONE) {
-            if ($order->returnsRequest != Order::HAS_RETURNS) {
+            if ($order->returns_request != Order::HAS_RETURNS) {
                 flash('This order doesnt have returns request.');
                 return back();
             }
 
-            $order->returnsRequest = Order::NO_RETURNS;
+            $order->returns_request = Order::NO_RETURNS;
             $order->save();
 
             flash('Cancel successful');
@@ -689,12 +689,12 @@ class OrdersController extends Controller
         }
 
         if ($order->status == Order::SHIPPED || $order->status == Order::DONE) {
-            if ($order->returnsRequest != Order::HAS_RETURNS) {
+            if ($order->returns_request != Order::HAS_RETURNS) {
                 flash('This order doesnt have returns request.');
                 return back();
             }
 
-            $order->returnsRequest = Order::ACCEPTED_RETURNS;
+            $order->returns_request = Order::ACCEPTED_RETURNS;
             $order->save();
 
             flash('Accepted successful');
@@ -715,12 +715,12 @@ class OrdersController extends Controller
         }
 
         if ($order->status == Order::SHIPPED || $order->status == Order::DONE) {
-            if ($order->returnsRequest != Order::HAS_RETURNS) {
+            if ($order->returns_request != Order::HAS_RETURNS) {
                 flash('This order doesnt have returns request.');
                 return back();
             }
 
-            $order->returnsRequest = Order::DENIES_RETURNS;
+            $order->returns_request = Order::DENIES_RETURNS;
             $order->save();
 
             flash('Denies successful');
@@ -735,7 +735,9 @@ class OrdersController extends Controller
     public function returnsRequestsList()
     {
         $status_arr = [Order::SHIPPED, Order::DONE];
-        $orders = $this->order->where('returns_request', '=', Order::HAS_RETURNS)->whereIn('status', $status_arr)->paginate();
+        $returns_arr = [Order::HAS_RETURNS, Order::ACCEPTED_RETURNS, Order::DENIES_RETURNS];
+
+        $orders = $this->order->withTrashed()->whereIn('returns_request', $returns_arr)->whereIn('status', $status_arr)->paginate();
         return view('returnsRequests.index')->with('orders', $orders);
     }
 

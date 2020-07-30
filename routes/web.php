@@ -72,7 +72,9 @@ Route::get('/orders/{id}/revertToChecked', 'OrdersController@revertToChecked')->
 
 Route::get('/orders/{id}/createReturnsRequest', 'OrdersController@createReturnsRequest')->name('orders.createReturnsRequest')->middleware('auth');
 Route::get('/returnsRequestsList', 'OrdersController@returnsRequestsList')->name('orders.returnsRequestsList')->middleware('auth');
-
+Route::post('/orders/{id}/acceptReturnsRequest', 'OrdersController@acceptReturnsRequest')->name('orders.acceptReturnsRequest')->middleware('auth');
+Route::post('/orders/{id}/deniesReturnsRequest', 'OrdersController@deniesReturnsRequest')->name('orders.deniesReturnsRequest')->middleware('auth');
+Route::delete('/orders/{id}/cancelReturnsRequest','OrdersController@cancelReturnsRequest')->name('orders.cancelReturnsRequest')->middleware('auth');
 
 Route::resource('/reviews', 'ReviewsController');
 
