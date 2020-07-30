@@ -135,6 +135,13 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('orders.returnsRequestsList') }}">
+                        <i class="material-icons">content_paste</i>
+                        <p>Returns Requests List</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="./map.html">
                         <i class="material-icons">location_ons</i>
                         <p>Maps</p>

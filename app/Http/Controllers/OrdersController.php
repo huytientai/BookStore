@@ -428,6 +428,7 @@ class OrdersController extends Controller
             }
 
             $order->status = Order::SHIPPED;
+            $order->updated_at = now();
             $order->save();
             flash('Order#' . $order->id . ' is shipped');
             return redirect()->back();
@@ -611,6 +612,133 @@ class OrdersController extends Controller
             return back();
         }
     }
+
+//    ---------------------------- returns request ---------------------------------
+
+    public function createReturnsRequest($id)
+    {
+        $order = $this->order->find($id);
+        if ($order == null) {
+            flash("This Order is not existed");
+            return back();
+        }
+
+        if ($order->user_id != Auth::id()) {
+            flash('This is not your order');
+            return back();
+        }
+
+        if (!($order->status == Order::DONE || $order->status == Order::SHIPPED)) {
+            flash('Cant create returns request.');
+            return back();
+        }
+
+        if ($order->returns_request != Order::NO_RETURNS) {
+            flash('This order has been created returns request');
+            return back();
+        }
+
+        $limit = 8; //time limit(hour)
+
+        if (strtotime('now') >= (strtotime($order->updated_at) + $limit * 60 * 60)) {
+            flash('This order has been out of date to create returns request');
+            return back();
+        }
+
+
+        $order->returns_request = Order::HAS_RETURNS;
+        $order->save();
+
+        flash('Create returns request successful');
+        return back();
+    }
+
+    public function cancelReturnsRequest($order_id)
+    {
+        $order = $this->order->find($order_id);
+        if ($order == null) {
+            flash('This Order is not existed');
+            return back();
+        }
+
+        if ($order->status == Order::SHIPPED || $order->status == Order::DONE) {
+            if ($order->returnsRequest != Order::HAS_RETURNS) {
+                flash('This order doesnt have returns request.');
+                return back();
+            }
+
+            $order->returnsRequest = Order::NO_RETURNS;
+            $order->save();
+
+            flash('Cancel successful');
+            return back();
+        }
+
+
+        flash('This Order is not Shipped or Done');
+        return back();
+    }
+
+
+    public function acceptReturnsRequest($order_id)
+    {
+        $order = $this->order->find($order_id);
+        if ($order == null) {
+            flash('This Order is not existed');
+            return back();
+        }
+
+        if ($order->status == Order::SHIPPED || $order->status == Order::DONE) {
+            if ($order->returnsRequest != Order::HAS_RETURNS) {
+                flash('This order doesnt have returns request.');
+                return back();
+            }
+
+            $order->returnsRequest = Order::ACCEPTED_RETURNS;
+            $order->save();
+
+            flash('Accepted successful');
+            return back();
+        }
+
+
+        flash('This Order is not Shipped or Done');
+        return back();
+    }
+
+    public function deniesReturnsRequest($order_id)
+    {
+        $order = $this->order->find($order_id);
+        if ($order == null) {
+            flash('This Order is not existed');
+            return back();
+        }
+
+        if ($order->status == Order::SHIPPED || $order->status == Order::DONE) {
+            if ($order->returnsRequest != Order::HAS_RETURNS) {
+                flash('This order doesnt have returns request.');
+                return back();
+            }
+
+            $order->returnsRequest = Order::DENIES_RETURNS;
+            $order->save();
+
+            flash('Denies successful');
+            return back();
+        }
+
+
+        flash('This Order is not Shipped or Done');
+        return back();
+    }
+
+    public function returnsRequestsList()
+    {
+        $status_arr = [Order::SHIPPED, Order::DONE];
+        $orders = $this->order->where('returns_request', '=', Order::HAS_RETURNS)->whereIn('status', $status_arr)->paginate();
+        return view('returnsRequests.index')->with('orders', $orders);
+    }
+
 
     /**
      * Cancel order (function of manager)

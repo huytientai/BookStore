@@ -34,6 +34,8 @@ class CreateOrdersTable extends Migration
             $table->boolean('pay_status')->default(false);
             $table->boolean('payback')->default(false);
 
+            $table->integer('returns_request')->default(0);
+
             $table->unsignedBigInteger('seller_id')->nullable()->default(null);
             $table->foreign('seller_id')->references('id')->on('users')->onDelete('cascade');
 

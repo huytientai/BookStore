@@ -1,69 +1,15 @@
 @extends('layouts.admin')
 
-@section('title', 'Orders')
+@section('title', 'Ruturns requests list')
 
 @section('content')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/table.css') }}">
-
     <div class="cart-main-area section-padding--lg bg--white">
+        <br>
+        <h2>Returns Requests List</h2>
+        <br>
         <div class="container">
             @include('flash::message')
             <br>
-            <h2>Orders List</h2>
-            <br>
-
-            <div class="container">
-                <form action="{{ route('orders.index') }}" class="form-group" method="get">
-                    @csrf
-                    <div class="row">
-                        <div class="col-auto">
-                            <input class="form-control mr-sm-0" type="search" placeholder="Order ID" name="order_id" value="{{ request('order_id') }}">
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-control mr-sm-0" type="search" placeholder="Name" name="name" value="{{ request('name') }}">
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-control mr-sm-0" type="search" placeholder="User Id" name="user_id" value="{{ request('user_id') }}">
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-control mr-sm-0" type="search" placeholder="Phone" name="phone" value="{{ request('phone') }}">
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-control mr-sm-0" type="search" placeholder="Email" name="email" value="{{ request('email') }}">
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-control mr-sm-0" type="search" placeholder="Address" name="address" value="{{ request('address') }}">
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-control mr-sm-0" type="search" placeholder="Company" name="company" value="{{ request('company') }}">
-                        </div>
-                        <div class="col-auto">
-                            <input class="form-control mr-sm-0" type="date" name="date" value="{{ request('date') }}">
-                        </div>
-                        <div class="col-auto" style="padding-top: 4px">
-                            <select class="browser-default custom-select mr-sm-0" name="status" style="height: 37px">
-                                <option value="">Status</option>
-                                @foreach(\App\Models\Order::$status as $key => $value)
-                                    <option value="{{ $key }}" {{ ((request('status') ?? -1) == $key) ? 'selected' : '' }}>{{ $value }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <siv class="col-auto" style="padding-top: 4px">
-                            <select class="browser-default custom-select mr-sm-0" name="deleted" style="height: 37px">
-                                <option value="">Deleted</option>
-                                <option value="true" {{ (request('deleted') == "true") ? 'selected' : '' }}>True</option>
-                                <option value="false" {{ (request('deleted') == "false") ? 'selected' : '' }}>False</option>
-                            </select>
-                        </siv>
-
-                    </div>
-
-                    <button class="btn btn-primary my-2 my-sm-10 container d-flex justify-content-center" type="submit">Search</button>
-                </form>
-            </div>
-
-            <br>
-
             <ol>
                 @if(count($orders))
                     @foreach($orders as $order)
@@ -236,7 +182,8 @@
             </ol>
         </div>
     </div>
-    <script>
+
+    <script type="text/javascript">
         var orders = document.getElementsByClassName('orders')
         for (var i = 0; i < orders.length; i++) {
             var toggle = orders[i];
@@ -252,6 +199,6 @@
         }
 
         sidebar = document.getElementsByClassName('sidebar-wrapper').item(0).getElementsByClassName('nav').item(0);
-        sidebar.getElementsByTagName('li').item(4).classList.add('active');
+        sidebar.getElementsByTagName('li').item(7).classList.add('active');
     </script>
 @endsection

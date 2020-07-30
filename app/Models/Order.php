@@ -30,6 +30,7 @@ class Order extends Model
         'pay_status',
     ];
 
+    // for status
     const WAITING = 0;
     const CHECKED = 1;
     const REQUEST = 2;
@@ -49,6 +50,22 @@ class Order extends Model
         self::DONE => 'Done',
         self::CANCEL_AFTER_EXPORT => 'Cancel after export',
     ];
+
+    // for returns request
+    const DENIES_RETURNS = -1;
+    const NO_RETURNS=0;
+    const HAS_RETURNS = 1;
+    const ACCEPTED_RETURNS = 2;
+    const DONE_RETURNS=3;
+
+    public static $returnsRequest = [
+        self::DENIES_RETURNS => 'Returns request is denied',
+        self::NO_RETURNS => 'Dont have return request',
+        self::HAS_RETURNS => 'Returns Request is created',
+        self::ACCEPTED_RETURNS => 'Return Request is accepted',
+        self::DONE_RETURNS => 'Returns is Done',
+    ];
+
 
     protected $perPage = 10;
 

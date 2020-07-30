@@ -111,6 +111,14 @@
                                                 <small>Note: you will lose 10% of the bill for fee if you cancel.</small>
                                             </div>
                                         @endif
+                                        <div class="col-sm">
+                                            <br>
+                                            @if($order->returns_request == \App\Models\Order::NO_RETURNS)
+                                                <a href="{{ route('orders.createReturnsRequest', $order->id) }}" class="btn-sm btn-warning">Create returns request</a>
+                                            @else
+                                                <b>{{ \App\Models\Order::$returnsRequest[$order->returns_request] }}</b>
+                                            @endif
+                                        </div>
                                     </div>
 
                                     <div>Status: {{  \App\Models\Order::$status[$order->status] }}</div>
@@ -121,7 +129,7 @@
                                     @endcan
                                     <br>
 
-                                    <div>Created At: {{ $order->created_at }}</div>
+                                    <div>Shipped At: {{ $order->updated_at }}</div>
                                     <br>
 
                                     <div class="table-content wnro__table table-responsive">

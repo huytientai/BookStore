@@ -70,6 +70,9 @@ Route::get('/orders/{id}/confirmTakeBackBook', 'OrdersController@confirmTakeBack
 Route::get('/orders/{id}/revertToWaiting', 'OrdersController@revertToWaiting')->name('orders.revertToWaiting')->middleware('auth');
 Route::get('/orders/{id}/revertToChecked', 'OrdersController@revertToChecked')->name('orders.revertToChecked')->middleware('auth');
 
+Route::get('/orders/{id}/createReturnsRequest', 'OrdersController@createReturnsRequest')->name('orders.createReturnsRequest')->middleware('auth');
+Route::get('/returnsRequestsList', 'OrdersController@returnsRequestsList')->name('orders.returnsRequestsList')->middleware('auth');
+
 
 Route::resource('/reviews', 'ReviewsController');
 
@@ -111,3 +114,7 @@ Route::post('/vtcpay/checkout', 'CheckoutsController@vtcpayRequest')->name('chec
 Route::get('/vtcpay/success', 'CheckoutsController@getSuccessVtcpay')->name('vtcpay.getSuccess')->middleware('auth');
 Route::post('/vtcpay/notify', 'CheckoutsController@vtcpayNotify')->name('vtcpay.notify');
 //Route::get('/vtcpay/checkOrder/{id}', 'CheckoutsController@vtcpayCheckOrder')->name('vtcpay.checkOrder');
+
+
+//--------------------------------------  Returns  --------------------------------------------
+Route::resource('/returns','ReturnsController');
