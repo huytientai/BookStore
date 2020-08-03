@@ -70,11 +70,17 @@ Route::get('/orders/{id}/confirmTakeBackBook', 'OrdersController@confirmTakeBack
 Route::get('/orders/{id}/revertToWaiting', 'OrdersController@revertToWaiting')->name('orders.revertToWaiting')->middleware('auth');
 Route::get('/orders/{id}/revertToChecked', 'OrdersController@revertToChecked')->name('orders.revertToChecked')->middleware('auth');
 
+// returns request
 Route::get('/orders/{id}/createReturnsRequest', 'OrdersController@createReturnsRequest')->name('orders.createReturnsRequest')->middleware('auth');
 Route::get('/returnsRequestsList', 'OrdersController@returnsRequestsList')->name('orders.returnsRequestsList')->middleware('auth');
 Route::post('/orders/{id}/acceptReturnsRequest', 'OrdersController@acceptReturnsRequest')->name('orders.acceptReturnsRequest')->middleware('auth');
 Route::post('/orders/{id}/deniesReturnsRequest', 'OrdersController@deniesReturnsRequest')->name('orders.deniesReturnsRequest')->middleware('auth');
 Route::delete('/orders/{id}/cancelReturnsRequest','OrdersController@cancelReturnsRequest')->name('orders.cancelReturnsRequest')->middleware('auth');
+
+// returns info
+Route::resource('/returns','ReturnsController')->middleware('auth');
+Route::get('/returns/list/xxx', 'ReturnsController@list')->name('returns.user_list')->middleware('auth');
+
 
 Route::resource('/reviews', 'ReviewsController');
 

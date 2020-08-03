@@ -30,7 +30,7 @@ class CartsController extends Controller
     public function index()
     {
         $carts = $this->cart->where('user_id', Auth::id())->orderBy('id')->get();
-        $orders = $this->order->withTrashed()->where('user_id', Auth::id())->where('status', '!=', Order::DONE)->orderBy('status')->orderBy('created_at', 'desc')->get();
+        $orders = $this->order->withTrashed()->where('user_id', Auth::id())->where('status', '!=', Order::DONE)->where('status', '!=', Order::SHIPPED)->orderBy('status')->orderBy('created_at', 'desc')->get();
 
         return view('carts.index')->with(['carts' => $carts, 'orders' => $orders]);
     }
@@ -44,8 +44,7 @@ class CartsController extends Controller
      */
     public function store(Request $request)
     {
-        if(!isset($request->book_id))
-        {
+        if (!isset($request->book_id)) {
             flash('Error. Please try again!')->error();
             return redirect()->back();
         }

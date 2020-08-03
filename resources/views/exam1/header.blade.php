@@ -83,10 +83,11 @@
                                                     <a class="currency-trigger" href="{{ route('orders.index') }}">Orders List</a>
                                                 @endcan
                                                 @can('shipper')
-                                                        <a class="currency-trigger" href="{{ route('orders.index') }}">Orders List</a>
+                                                    <a class="currency-trigger" href="{{ route('orders.index') }}">Orders List</a>
                                                 @endcan
 
                                                 <a class="currency-trigger" href="{{ route('users.show',Auth::user()->id) }}">Your Profile</a>
+                                                <a class="currency-trigger" href="{{ route('returns.user_list') }}">Returns List</a>
                                                 <a class="currency-trigger" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Log out</a>
                                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

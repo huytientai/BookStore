@@ -150,19 +150,6 @@
                                             </div>
                                         @endif
 
-{{--                                        returns request button--}}
-
-{{--                                        @if($order->deleted_at == null)--}}
-{{--                                            @if($order->returns_request == \App\Models\Order::NO_RETURNS)--}}
-{{--                                                <div class="col-sm">--}}
-{{--                                                    <br>--}}
-{{--                                                    <a href="{{ route('orders.createReturnsRequest', $order->id) }}" class="btn-sm btn-warning">Create returns request</a>--}}
-{{--                                                </div>--}}
-{{--                                            @elseif($order->returns_request == \App\Models\Order::HAS_RETURNS)--}}
-
-{{--                                            @endif--}}
-{{--                                        @endif--}}
-
                                         @if($order->deleted_at != null)
                                             <div class="col-sm">
                                                 <br>

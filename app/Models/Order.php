@@ -53,17 +53,17 @@ class Order extends Model
 
     // for returns request
     const DENIES_RETURNS = -1;
-    const NO_RETURNS=0;
+    const NO_RETURNS = 0;
     const HAS_RETURNS = 1;
     const ACCEPTED_RETURNS = 2;
-    const DONE_RETURNS=3;
+    const DONE_RETURNS = 3;
 
     public static $returnsRequest = [
         self::DENIES_RETURNS => 'Returns request is denied',
         self::NO_RETURNS => 'Dont have return request',
         self::HAS_RETURNS => 'Returns Request is created',
         self::ACCEPTED_RETURNS => 'Return Request is accepted',
-        self::DONE_RETURNS => 'Returns is Done',
+        self::DONE_RETURNS => 'Returns Request is Done',
     ];
 
 
@@ -133,5 +133,10 @@ class Order extends Model
     public function seller()
     {
         return $this->belongsTo('App\Models\User', 'seller_id');
+    }
+
+    public function returns()
+    {
+        return $this->hasOne('App\Models\Returns');
     }
 }

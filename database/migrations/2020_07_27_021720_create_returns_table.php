@@ -14,13 +14,13 @@ class CreateReturnsTable extends Migration
     public function up()
     {
         Schema::create('returns', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->primary();
-            $table->foreign('id')->references('id')->on('orders')->onDelete('cascade');
+            $table->unsignedBigInteger('order_id')->primary();
+            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
 
             $table->integer('status');
 
             $table->string('ship_merchant', 255);
-            $table->string('ship_code', 255);
+            $table->string('ship_id', 255);
 
             $table->string('image', 255)->nullable();
             $table->timestamps();
