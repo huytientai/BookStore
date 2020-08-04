@@ -53,6 +53,7 @@
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Send Ship Info</button>
+                    <a class="btn btn-danger" href="{{ route('users.show', Auth::id()) }}">Cancel</a>
                 </div>
             </form>
         </div>

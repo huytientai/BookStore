@@ -20,8 +20,8 @@ Route::get('/app', function () {
 
 // for server
 Route::get('/linkstorage', function () {
-    if(!is_dir('/home/u441737116/public_html/storage')){
-        symlink('/home/u441737116/domains/bookstore-00.hostingerapp.com/storage/app/public','/home/u441737116/public_html/storage');
+    if (!is_dir('/home/u441737116/public_html/storage')) {
+        symlink('/home/u441737116/domains/bookstore-00.hostingerapp.com/storage/app/public', '/home/u441737116/public_html/storage');
         return 'storage link done';
     }
     return 'It is already link';;
@@ -75,11 +75,7 @@ Route::get('/orders/{id}/createReturnsRequest', 'OrdersController@createReturnsR
 Route::get('/returnsRequestsList', 'OrdersController@returnsRequestsList')->name('orders.returnsRequestsList')->middleware('auth');
 Route::post('/orders/{id}/acceptReturnsRequest', 'OrdersController@acceptReturnsRequest')->name('orders.acceptReturnsRequest')->middleware('auth');
 Route::post('/orders/{id}/deniesReturnsRequest', 'OrdersController@deniesReturnsRequest')->name('orders.deniesReturnsRequest')->middleware('auth');
-Route::delete('/orders/{id}/cancelReturnsRequest','OrdersController@cancelReturnsRequest')->name('orders.cancelReturnsRequest')->middleware('auth');
-
-// returns info
-Route::resource('/returns','ReturnsController')->middleware('auth');
-Route::get('/returns/list/xxx', 'ReturnsController@list')->name('returns.user_list')->middleware('auth');
+Route::delete('/orders/{id}/cancelReturnsRequest', 'OrdersController@cancelReturnsRequest')->name('orders.cancelReturnsRequest')->middleware('auth');
 
 
 Route::resource('/reviews', 'ReviewsController');
@@ -125,4 +121,6 @@ Route::post('/vtcpay/notify', 'CheckoutsController@vtcpayNotify')->name('vtcpay.
 
 
 //--------------------------------------  Returns  --------------------------------------------
-Route::resource('/returns','ReturnsController');
+Route::resource('/returns', 'ReturnsController')->middleware(['auth']);
+Route::get('/returns/{order_id}/check', 'ReturnsController@check')->name('returns.check')->middleware('auth');
+Route::get('/returns/{order_id}/done', 'ReturnsController@done')->name('returns.done')->middleware('auth');

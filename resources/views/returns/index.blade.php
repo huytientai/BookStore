@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
-@section('title', 'Returns requests list')
+@section('title', 'Returns list')
 
 @section('content')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/table.css') }}">
 
     <div class="cart-main-area section-padding--lg bg--white">
         <br>
-        <h2>Returns Requests List</h2>
+        <h2>Returns List</h2>
         <br>
         <div class="container">
             @include('flash::message')
@@ -51,33 +51,43 @@
                                             <div>Total: {{ $order->total_price }}$</div>
                                             <div>Status: {{  \App\Models\Order::$status[$order->status] }}</div>
                                             <br>
-
-                                            <b>{{ \App\Models\Order::$returnsRequest[$order->returns_request] }}</b>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <b>Returns Ship Info:</b>
+                                            <div style="margin-left: 10px">
+                                                <div>Ship Merchant: {{ $order->returns->ship_merchant }}</div>
+                                                <div>Ship ID: {{ $order->returns->ship_id }}</div>
+                                                <div>IMG:</div>
+                                                @if($order->returns->image == null)
+                                                    <p>No IMG</p>
+                                                @else
+                                                    <img style="width: 300px;height: 300px" src="{{ asset('storage\returns_images\\' . $order->returns->image) }}">
+                                                @endif
+                                            </div>
                                         </div>
                                         <div class="col-sm">
-                                            @if($order->deleted_at == null)
-                                                @if($order->returns_request == \App\Models\Order::HAS_RETURNS)
-                                                    <div class="row">
-                                                        <form action="{{ route('orders.acceptReturnsRequest',$order->id) }}" method="post">
-                                                            @csrf
-                                                            <button class="btn btn-primary" type="submit">Accept</button>
-                                                        </form>
-                                                        <form action="{{ route('orders.deniesReturnsRequest',$order->id) }}" method="post">
-                                                            @csrf
-                                                            <button class="btn btn-danger" type="submit">Denies</button>
-                                                        </form>
-                                                    </div>
-                                                    <div class="row">
-                                                        <form action="{{ route('orders.cancelReturnsRequest',$order->id) }}" method="post">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button class="btn btn-light" type="submit">Cancel</button>
-                                                        </form>
-                                                    </div>
+                                            <div>Returns Status: {{ \App\Models\Returns::$status[$order->returns->status] }}</div>
+                                            <div class="row">
+                                                @if($order->returns->status == \App\Models\Returns::WAITING)
+                                                    <a href="{{ route('returns.check', $order->id) }}" class="btn btn-primary">Check</a>
+                                                    <form action="{{ route('returns.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger" type="submit">Cancel</button>
+                                                    </form>
+                                                @elseif($order->returns->status == \App\Models\Returns::CHECKED)
+                                                    <a href="{{ route('returns.done',$order->id) }}" class="btn btn-primary">Done</a>
+                                                    <form action="{{ route('returns.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-danger" type="submit">Cancel</button>
+                                                    </form>
+                                                @elseif($order->returns->status == \App\Models\Returns::DONE)
+
                                                 @endif
-                                            @else
-                                                <button class="btn btn-dark" style="cursor: not-allowed;">Canceled</button>
-                                            @endif
+                                            </div>
                                         </div>
                                     </div>
 
@@ -153,6 +163,6 @@
         }
 
         sidebar = document.getElementsByClassName('sidebar-wrapper').item(0).getElementsByClassName('nav').item(0);
-        sidebar.getElementsByTagName('li').item(7).classList.add('active');
+        sidebar.getElementsByTagName('li').item(8).classList.add('active');
     </script>
 @endsection

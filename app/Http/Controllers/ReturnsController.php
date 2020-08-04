@@ -25,7 +25,8 @@ class ReturnsController extends Controller
      */
     public function index()
     {
-
+        $orders = $this->order->has('returns')->paginate();
+        return view('returns.index')->with('orders', $orders);
     }
 
     /**
@@ -103,7 +104,7 @@ class ReturnsController extends Controller
         }
 
         $returns = $this->returns->saveReturns($request);
-        $order->returns_request = Order::DONE_RETURNS;
+        $order->returns_request = Order::SENT_RETURNS;
         $order->save();
 
         flash('Send successful');
@@ -198,7 +199,54 @@ class ReturnsController extends Controller
         }
 
         $this->returns->updateReturns($request);
-        return redirect()->route('returns.user_list');
+
+        flash('Update succeed');
+        return redirect()->route('users.show', Auth::id());
+    }
+
+    public function check($order_id)
+    {
+        $order = $this->order->find($order_id);
+        if ($order == null || $order->returns == null) {
+            flash('This returns is not existed');
+            return back();
+        }
+
+        if ($order->returns->status != Returns::WAITING) {
+            flash('It is not waitting status right now')->warning();
+            return back();
+        }
+
+        $returns = $this->returns->find($order_id);
+        $returns->status = Returns::CHECKED;
+        $returns->save();
+
+        flash('Checked succeed');
+        return back();
+    }
+
+    public function done($order_id)
+    {
+        $order = $this->order->find($order_id);
+        if ($order == null || $order->returns == null) {
+            flash('This returns is not existed');
+            return back();
+        }
+
+        if ($order->returns->status != Returns::CHECKED) {
+            flash('It is not waitting status right now')->warning();
+            return back();
+        }
+
+        $order->returns_request = Order::DONE_RETURNS;
+        $order->save();
+
+        $returns = $this->returns->find($order_id);
+        $returns->status = Returns::DONE;
+        $returns->save();
+
+        flash('Done succeed');
+        return back();
     }
 
     /**
@@ -209,14 +257,14 @@ class ReturnsController extends Controller
      */
     public function destroy($id)
     {
-        //
-    }
+        $returns = $this->returns->find($id);
+        if ($returns == null) {
+            flash('This returns is not existed');
+            return back();
+        }
 
-    public function list()
-    {
-        $orders = Order::has('returns')->get();
-//        $orders = $this->order->find(1);
-        dd($orders[0]->returns);
+        $returns->delete();
+        flash('Cancelled succeed');
+        return back();
     }
-
 }

@@ -142,6 +142,13 @@
                 </li>
 
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('returns.index') }}">
+                        <i class="material-icons">content_paste</i>
+                        <p>Returns List</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a class="nav-link" href="./map.html">
                         <i class="material-icons">location_ons</i>
                         <p>Maps</p>
