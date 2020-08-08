@@ -21,8 +21,11 @@ class CreateReturnsTable extends Migration
 
             $table->string('ship_merchant', 255);
             $table->string('ship_id', 255);
-
             $table->string('image', 255)->nullable();
+
+            $table->unsignedBigInteger('warehouseman_id')->nullable();
+            $table->foreign('warehouseman_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

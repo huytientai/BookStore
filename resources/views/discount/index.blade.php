@@ -21,6 +21,8 @@
                     <th>ID</th>
                     <th>Code</th>
                     <th>Discount</th>
+                    <th>Price condition</th>
+                    <th>Num condition</th>
                     <th>Start</th>
                     <th>End</th>
                     @canany(['admin', 'staff'])
@@ -34,6 +36,8 @@
                         <td>{{ $discounts->firstItem() + $key }}</td>
                         <td style="color: #0b75c9">{{ $discount->code }}</td>
                         <td>{{ $discount->discount }}</td>
+                        <td>{{ $discount->price_condition }}</td>
+                        <td>{{ $discount->num_condition }}</td>
                         <td>{{ $discount->start_time }}</td>
                         <td>{{ $discount->end_time }}</td>
 

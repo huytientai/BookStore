@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Returns;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ReturnsController extends Controller
 {
@@ -25,8 +26,12 @@ class ReturnsController extends Controller
      */
     public function index()
     {
-        $orders = $this->order->has('returns')->paginate();
-        return view('returns.index')->with('orders', $orders);
+        if (Gate::any(['admin', 'staff', 'seller', 'warehouseman'], Auth::user())) {
+            $orders = $this->order->has('returns')->paginate();
+            return view('returns.index')->with('orders', $orders);
+        }
+        flash('you are not authorized');
+        return redirect()->back();
     }
 
     /**
@@ -204,8 +209,16 @@ class ReturnsController extends Controller
         return redirect()->route('users.show', Auth::id());
     }
 
+
+//    --------------------------- manager ----------------------------
+
     public function check($order_id)
     {
+        if (!Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+            flash('you are not authorized');
+            return redirect()->route('home');
+        }
+
         $order = $this->order->find($order_id);
         if ($order == null || $order->returns == null) {
             flash('This returns is not existed');
@@ -213,7 +226,7 @@ class ReturnsController extends Controller
         }
 
         if ($order->returns->status != Returns::WAITING) {
-            flash('It is not waitting status right now')->warning();
+            flash('It is not waiting status right now')->warning();
             return back();
         }
 
@@ -225,8 +238,13 @@ class ReturnsController extends Controller
         return back();
     }
 
-    public function done($order_id)
+    public function requestWarehouseman($order_id)
     {
+        if (!Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+            flash('you are not authorized');
+            return redirect()->route('home');
+        }
+
         $order = $this->order->find($order_id);
         if ($order == null || $order->returns == null) {
             flash('This returns is not existed');
@@ -234,7 +252,60 @@ class ReturnsController extends Controller
         }
 
         if ($order->returns->status != Returns::CHECKED) {
-            flash('It is not waitting status right now')->warning();
+            flash('It is not Checked status right now')->warning();
+            return back();
+        }
+
+        $returns = $this->returns->find($order_id);
+        $returns->status = Returns::REQUEST;
+        $returns->save();
+
+        flash('Requested succeed');
+        return back();
+    }
+
+    public function ConfirmFromWarehouseman($order_id)
+    {
+        if (Gate::denies('warehouseman', Auth::user())) {
+            flash('you are not authorized')->warning();
+            return redirect()->back();
+        }
+
+        $order = $this->order->find($order_id);
+        if ($order == null || $order->returns == null) {
+            flash('This returns is not existed');
+            return back();
+        }
+
+        if ($order->returns->status != Returns::REQUEST) {
+            flash('It is not Requested status right now')->warning();
+            return back();
+        }
+
+        $returns = $this->returns->find($order_id);
+        $returns->status = Returns::CONFIRM;
+        $returns->warehouseman_id = Auth::id();
+        $returns->save();
+
+        flash('Confirmed succeed');
+        return back();
+    }
+
+    public function done($order_id)
+    {
+        if (!Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+            flash('you are not authorized');
+            return redirect()->route('home');
+        }
+
+        $order = $this->order->find($order_id);
+        if ($order == null || $order->returns == null) {
+            flash('This returns is not existed');
+            return back();
+        }
+
+        if ($order->returns->status != Returns::CONFIRM) {
+            flash('It is not Confirm status from warehouseman right now')->warning();
             return back();
         }
 
@@ -257,6 +328,11 @@ class ReturnsController extends Controller
      */
     public function destroy($id)
     {
+        if (!Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+            flash('you are not authorized');
+            return redirect()->route('home');
+        }
+
         $returns = $this->returns->find($id);
         if ($returns == null) {
             flash('This returns is not existed');

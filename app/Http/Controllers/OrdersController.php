@@ -46,7 +46,6 @@ class OrdersController extends Controller
             return $this->order->where('status', '>=', Order::REQUEST)->where('status', '!=', Order::DONE)->orderBy('status')->orderBy('id')->paginate();
         }
 
-
         $builder = $this->order->with(['orderdetails' => function ($query) {
             $query->with(['book' => function ($query) {
                 $query->withTrashed();

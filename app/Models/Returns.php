@@ -18,17 +18,22 @@ class Returns extends Model
         'ship_merchant',
         'ship_id',
         'image',
+        'warehouseman_id',
     ];
 
     protected $perPage = 5;
 
     const WAITING = 0;
     const CHECKED = 1;
-    const DONE = 2;
+    const REQUEST=2;
+    const CONFIRM=3;
+    const DONE = 4;
 
     public static $status=[
         self::WAITING => 'Waitting',
         self::CHECKED => 'Checked',
+        self::REQUEST => 'Request warehouseman take back',
+        self::CONFIRM => 'Confirm take back',
         self::DONE => 'Done',
     ];
 
@@ -65,6 +70,11 @@ class Returns extends Model
         }
 
         return $this->find($request->order_id)->update($data);
+    }
+
+    public function warehouseman()
+    {
+        return $this->belongsTo('App\Models\User','warehouseman_id');
     }
 
     public function order()

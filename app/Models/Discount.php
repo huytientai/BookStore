@@ -15,6 +15,8 @@ class Discount extends Model
     protected $fillable = [
         'code',
         'discount',
+        'price_condition',
+        'num_condition',
         'start_time',
         'end_time',
     ];

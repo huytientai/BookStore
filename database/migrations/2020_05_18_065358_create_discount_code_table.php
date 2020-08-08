@@ -17,6 +17,9 @@ class CreateDiscountCodeTable extends Migration
             $table->bigIncrements('id');
             $table->string('code');
             $table->float('discount');
+            $table->float('price_condition')->nullable();
+            $table->integer('num_condition')->nullable();
+
             $table->date('start_time');
             $table->date('end_time')->nullable();
 

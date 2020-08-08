@@ -55,7 +55,7 @@ class DiscountController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
