@@ -277,6 +277,10 @@ class OrdersController extends Controller
             $orderDetails = $this->orderDetail->where('order_id', $order->id)->get();
             $error = '';
             foreach ($orderDetails as $orderDetail) {
+                if ($orderDetail->book == null) {
+                    $error = 'Cant check(book is deleted)';
+                    break;
+                }
                 if ($orderDetail->book->virtual_nums < $orderDetail->quantity) {
                     if ($error == null) {
                         $error = 'Not Enough Quantity:';

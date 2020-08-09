@@ -287,6 +287,8 @@ class ReturnsController extends Controller
         $returns->warehouseman_id = Auth::id();
         $returns->save();
 
+//        $books = $order->orderDet
+
         flash('Confirmed succeed');
         return back();
     }

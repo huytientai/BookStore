@@ -30,7 +30,11 @@ class CartsController extends Controller
     public function index()
     {
         $carts = $this->cart->where('user_id', Auth::id())->orderBy('id')->get();
-        $orders = $this->order->withTrashed()->where('user_id', Auth::id())->where('status', '!=', Order::DONE)->where('status', '!=', Order::SHIPPED)->orderBy('status')->orderBy('created_at', 'desc')->get();
+        $orders = $this->order->withTrashed()->with(['orderdetails' => function ($query) {
+            $query->with(['book' => function ($query) {
+                $query->withTrashed();
+            }]);
+        }])->where('user_id', Auth::id())->where('status', '!=', Order::DONE)->where('status', '!=', Order::SHIPPED)->orderBy('status')->orderBy('created_at', 'desc')->get();
 
         return view('carts.index')->with(['carts' => $carts, 'orders' => $orders]);
     }
