@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Order;
 use App\Models\Returns;
 use Illuminate\Http\Request;
@@ -251,6 +252,7 @@ class ReturnsController extends Controller
             return back();
         }
 
+
         if ($order->returns->status != Returns::CHECKED) {
             flash('It is not Checked status right now')->warning();
             return back();
@@ -287,7 +289,12 @@ class ReturnsController extends Controller
         $returns->warehouseman_id = Auth::id();
         $returns->save();
 
-//        $books = $order->orderDet
+        foreach ($order->orderdetails as $orderdetail) {
+            $book = Book::withTrashed()->find($orderdetail->book_id);
+            $book->soluong += $orderdetail->quantity;
+            $book->virtual_nums += $orderdetail->quantity;
+            $book->save();
+        }
 
         flash('Confirmed succeed');
         return back();

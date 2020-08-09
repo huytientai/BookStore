@@ -588,8 +588,7 @@ class OrdersController extends Controller
         }
 
         if ($order->status >= Order::CHECKED) {
-            foreach($order->orderdetails as $orderdetail)
-            {
+            foreach ($order->orderdetails as $orderdetail) {
                 $book = Book::withTrashed()->find($orderdetail->book_id);
                 $book->virtual_nums += $orderdetail->quantity;
                 $book->save();
@@ -762,7 +761,6 @@ class OrdersController extends Controller
             return back();
         }
 
-
         flash('This Order is not Shipped or Done');
         return back();
     }
@@ -860,6 +858,7 @@ class OrdersController extends Controller
             foreach ($orderDetails as $orderDetail) {
                 $book = Book::find($orderDetail->book_id);
                 $book->soluong += $orderDetail->quantity;
+                $book->virtual_nums += $orderDetail->quantity;
                 $book->save();
             }
 
