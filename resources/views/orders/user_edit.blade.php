@@ -83,7 +83,7 @@
 
                     @if($order->status != \App\Models\Order::WAITING)
                         <div class="row">
-                            <div class="col-sm">{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->finished->name }}</div>
+                            <div class="col-sm">{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->seller->name }}</div>
                             @if($order->status == \App\Models\Order::CHECKED)
                                 <div class="col-sm">
                                     <div class="row">

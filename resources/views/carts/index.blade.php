@@ -177,7 +177,7 @@
                                             </thead>
                                             <tbody>
                                             @foreach($order->orderdetails as $orderdetail)
-                                                <tr>
+                                                <tr @if($orderdetail->book->deleted_at)style="background-color: #9c9692" @endif>
                                                     <td class="product-thumbnail">
                                                         @if(isset($orderdetail->book->image))
                                                             <a href="{{ route('books.show', $orderdetail->book_id) }}"><img src="/storage/book_images/{{ $orderdetail->book->image }}"></a>

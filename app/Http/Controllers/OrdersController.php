@@ -127,7 +127,11 @@ class OrdersController extends Controller
      */
     public function userEdit($id)
     {
-        $order = $this->order->find($id);
+        $order = $this->order->with(['orderdetails' => function ($query) {
+            $query->with(['book' => function ($query) {
+                $query->withTrashed();
+            }]);
+        }])->find($id);
 
         if ($order == null) {
             flash('Order is not exist')->warning();
@@ -322,6 +326,13 @@ class OrdersController extends Controller
             if ($order == null) {
                 flash('This order is not exist');
                 return redirect()->back();
+            }
+
+            foreach ($order->orderdetails as $orderdetail) {
+                if ($orderdetail->book == null) {
+                    flash('Cant request(Book is deleted)')->warning();
+                    return back();
+                }
             }
 
             if ($order->status != Order::CHECKED) {

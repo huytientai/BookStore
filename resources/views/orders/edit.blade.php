@@ -22,7 +22,7 @@
     <div class="row order-details">
         <div class="col-md-12 col-sm-12 ol-lg-12">
             <div class="row">
-                <div class="col-sm">Name: {{ $order->aaname }}</div>
+                <div class="col-sm">Name: {{ $order->name }}</div>
                 <div class="col-sm">
                     <a href="{{ route('users.show',$order->user_id) }}">User_Id: {{ $order->user_id }}</a>
                 </div>
@@ -55,7 +55,7 @@
 
             @if($order->status != \App\Models\Order::WAITING)
                 <div class="row">
-                    <div class="col-sm">{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->finished->name }}</div>
+                    <div class="col-sm">{{ ($order->status==\App\Models\Order::CHECKED || $order->status==\App\Models\Order::SHIPPING ? 'Checked by: ' :'Finished by: ') . $order->seller->name }}</div>
                     @if($order->status == \App\Models\Order::CHECKED)
                         <div class="col-sm">
                             <div class="row">
