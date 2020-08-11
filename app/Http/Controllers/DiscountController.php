@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDiscount;
 use App\Models\Discount;
 use Illuminate\Http\Request;
 
@@ -41,9 +42,12 @@ class DiscountController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDiscount $request)
     {
-        //
+        $this->discount->create($request->all());
+
+        flash('Created succeeded');
+        return redirect()->route('discount.index');
     }
 
 
@@ -55,7 +59,14 @@ class DiscountController extends Controller
      */
     public function edit($id)
     {
+        $discount = $this->discount->find($id);
 
+        if ($discount == null) {
+            flash('This discount code is not existed')->warning();
+            return back();
+        }
+
+        return view('discount.edit')->with('discount', $discount);
     }
 
     /**
@@ -65,9 +76,11 @@ class DiscountController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreDiscount $request, $id)
     {
-        //
+        $this->discount->find($id)->update($request->all());
+        flash('Update succeeded');
+        return redirect()->route('discount.index');
     }
 
     /**
