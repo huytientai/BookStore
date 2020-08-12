@@ -19,8 +19,12 @@ class Discount extends Model
         'num_condition',
         'start_time',
         'end_time',
+        'creator_id',
     ];
     protected $perPage = 10;
 
-
+    public function creator()
+    {
+        return $this->belongsTo('App\Models\User', 'creator_id');
+    }
 }

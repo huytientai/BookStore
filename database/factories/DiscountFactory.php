@@ -12,5 +12,6 @@ $factory->define(\App\Models\Discount::class, function (Faker $faker) {
         'end_time' => date_add(now(), date_interval_create_from_date_string('30 days')),
         'price_condition' => 100,
         'num_condition' => 5,
+        'creator_id' => 1,
     ];
 });

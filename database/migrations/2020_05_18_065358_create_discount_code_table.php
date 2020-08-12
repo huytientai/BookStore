@@ -23,6 +23,9 @@ class CreateDiscountCodeTable extends Migration
             $table->date('start_time');
             $table->date('end_time')->nullable();
 
+            $table->unsignedBigInteger('creator_id');
+            $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

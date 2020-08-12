@@ -32,8 +32,10 @@
                 </thead>
 
                 @foreach($discounts as $key => $discount)
-                    <tr class="text-center">
-                        <td>{{ $discounts->firstItem() + $key }}</td>
+                    <tr class="text-center" @if($discount->deleted_at) style="background-color: #9c9692" @endif>
+                        <td>
+                            <a href="{{ route('discount.show', $discount->id) }}">{{ $discounts->firstItem() + $key }}</a>
+                        </td>
                         <td style="color: #0b75c9">{{ $discount->code }}</td>
                         <td>{{ $discount->discount }}</td>
                         <td>{{ $discount->price_condition }}</td>
@@ -42,14 +44,18 @@
                         <td>{{ $discount->end_time }}</td>
 
                         @canany(['admin', 'staff'])
-                            <td class="row">
-                                <a class="btn btn-primary" href="{{ route('discount.edit', $discount->id) }}">Edit</a>
-                                <form action="{{ route('discount.destroy', $discount->id) }}" method="post" style="margin-bottom: 0px">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-xs btn-danger" type="submit">Delete</button>
-                                </form>
-                            </td>
+                            @if($discount->deleted_at)
+                                <td class="row"></td>
+                            @else
+                                <td class="row">
+                                    <a class="btn btn-primary" href="{{ route('discount.edit', $discount->id) }}">Edit</a>
+                                    <form action="{{ route('discount.destroy', $discount->id) }}" method="post" style="margin-bottom: 0px">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-xs btn-danger" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                            @endif
                         @endcan
                     </tr>
                 @endforeach

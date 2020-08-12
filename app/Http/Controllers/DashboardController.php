@@ -31,7 +31,7 @@ class DashboardController extends Controller
     public function index()
     {
         if (!(Gate::allows('admin', Auth::user()) || Gate::allows('staff', Auth::user()))) {
-            flash("You are not authorized");
+            flash("You are not authorized")->warning();
             return back();
         }
 

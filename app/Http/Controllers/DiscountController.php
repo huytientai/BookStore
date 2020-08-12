@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDiscount;
 use App\Models\Discount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class DiscountController extends Controller
 {
@@ -22,8 +24,23 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        $discounts = $this->discount->paginate();
+        if (!Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
+            flash("You are not authorized")->warning();
+            return back();
+        }
+        $discounts = $this->discount->withTrashed()->paginate();
         return view('discount.index')->with('discounts', $discounts);
+    }
+
+    public function show($id)
+    {
+        $discount = $this->discount->find($id);
+        if ($discount == null) {
+            flash('This code is not existed')->warning();
+            return back();
+        }
+
+        return view('discount.show')->with(['discount' => $discount]);
     }
 
     /**
@@ -33,6 +50,11 @@ class DiscountController extends Controller
      */
     public function create()
     {
+        if (!Gate::any(['admin', 'staff'], Auth::user())) {
+            flash("You are not authorized")->warning();
+            return back();
+        }
+
         return view('discount.create');
     }
 
@@ -44,6 +66,11 @@ class DiscountController extends Controller
      */
     public function store(StoreDiscount $request)
     {
+        if (!Gate::any(['admin', 'staff'], Auth::user())) {
+            flash("You are not authorized")->warning();
+            return back();
+        }
+
         $this->discount->create($request->all());
 
         flash('Created succeeded');
@@ -59,6 +86,11 @@ class DiscountController extends Controller
      */
     public function edit($id)
     {
+        if (!Gate::any(['admin', 'staff'], Auth::user())) {
+            flash("You are not authorized")->warning();
+            return back();
+        }
+
         $discount = $this->discount->find($id);
 
         if ($discount == null) {
@@ -78,6 +110,11 @@ class DiscountController extends Controller
      */
     public function update(StoreDiscount $request, $id)
     {
+        if (!Gate::any(['admin', 'staff'], Auth::user())) {
+            flash("You are not authorized")->warning();
+            return back();
+        }
+
         $this->discount->find($id)->update($request->all());
         flash('Update succeeded');
         return redirect()->route('discount.index');
@@ -91,6 +128,19 @@ class DiscountController extends Controller
      */
     public function destroy($id)
     {
+        if (!Gate::any(['admin', 'staff'], Auth::user())) {
+            flash("You are not authorized")->warning();
+            return back();
+        }
 
+        $discount = $this->discount->find($id);
+        if ($discount == null) {
+            flash('This code is not existed')->warning();
+            return back();
+        }
+
+        $discount->delete();
+        flash('Deleted code ' . $discount->code . ' successfully');
+        return back();
     }
 }

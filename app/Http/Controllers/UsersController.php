@@ -103,6 +103,7 @@ class UsersController extends Controller
             return view('users.show')->with(['user' => $user, 'orders' => $orders]);
         }
 
+        flash('You are not authorized')->warning();
         return redirect()->route('home');
     }
 
