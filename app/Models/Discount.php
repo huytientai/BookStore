@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Discount extends Model
 {
@@ -22,6 +23,14 @@ class Discount extends Model
         'creator_id',
     ];
     protected $perPage = 10;
+
+    public function saveDiscount($request)
+    {
+        $data = $request->all();
+
+        $data['creator_id'] = Auth::id();
+        return $this->create($data);
+    }
 
     public function creator()
     {

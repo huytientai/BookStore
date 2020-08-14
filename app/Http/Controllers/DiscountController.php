@@ -34,7 +34,8 @@ class DiscountController extends Controller
 
     public function show($id)
     {
-        $discount = $this->discount->find($id);
+        $discount = $this->discount->withTrashed()->find($id);
+
         if ($discount == null) {
             flash('This code is not existed')->warning();
             return back();
@@ -71,7 +72,7 @@ class DiscountController extends Controller
             return back();
         }
 
-        $this->discount->create($request->all());
+        $this->discount->saveDiscount($request);
 
         flash('Created succeeded');
         return redirect()->route('discount.index');

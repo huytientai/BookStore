@@ -38,7 +38,7 @@
             <div class="form-group row">
                 <label for="start_time" class="col-sm-2 col-form-label @error('start_time') text-danger @enderror">start_time</label>
                 <div class="col-sm-5">
-                    <input type="date" class="form-control @error('start_time') is-invalid @enderror" id="start_time" name="start_time">
+                    <input type="date" class="form-control @error('start_time') is-invalid @enderror" id="start_time" name="start_time" required>
                     <script>
                         if ({{ $discount->start_time != null }}) {
                             document.getElementById('start_time').valueAsDate = new Date({{ date("Y", strtotime($discount->start_time)) }}, {{ date("m", strtotime($discount->start_time)) - 1 }}, {{ date("d", strtotime($discount->start_time)) + 1 }});

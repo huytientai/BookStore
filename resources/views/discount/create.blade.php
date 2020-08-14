@@ -36,7 +36,7 @@
             <div class="form-group row">
                 <label for="start_time" class="col-sm-2 col-form-label @error('start_time') text-danger @enderror">start_time</label>
                 <div class="col-sm-5">
-                    <input type="date" class="form-control @error('start_time') is-invalid @enderror" id="start_time" name="start_time" value="{{ old('start_time') ?? $discount->start_time ?? null }}">
+                    <input type="date" class="form-control @error('start_time') is-invalid @enderror" id="start_time" name="start_time" value="{{ old('start_time') ?? $discount->start_time ?? null }}" required>
                     @error('start_time')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror

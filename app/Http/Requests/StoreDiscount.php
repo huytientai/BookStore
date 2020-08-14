@@ -26,7 +26,7 @@ class StoreDiscount extends FormRequest
         return [
             'code' => 'required|string|max:100|unique:discount_code,code,' . $this->id ?? '',
             'discount' => 'required|regex:/^\d*(\.\d{1,2})?$/',
-            'start_time' => 'nullable',
+            'start_time' => 'required',
             'end_time' => 'nullable|after:start_time',
             'price_condition' => 'nullable',
             'num_condition' => 'nullable',
