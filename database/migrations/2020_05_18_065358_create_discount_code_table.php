@@ -20,8 +20,8 @@ class CreateDiscountCodeTable extends Migration
             $table->float('price_condition')->nullable();
             $table->integer('num_condition')->nullable();
 
-            $table->date('start_time');
-            $table->date('end_time')->nullable();
+            $table->dateTime('start_time');
+            $table->dateTime('end_time')->nullable();
 
             $table->unsignedBigInteger('creator_id');
             $table->foreign('creator_id')->references('id')->on('users')->onDelete('cascade');

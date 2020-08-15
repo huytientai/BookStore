@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDiscount;
 use App\Models\Discount;
+use Faker\Provider\DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -93,7 +94,6 @@ class DiscountController extends Controller
         }
 
         $discount = $this->discount->find($id);
-
         if ($discount == null) {
             flash('This discount code is not existed')->warning();
             return back();
