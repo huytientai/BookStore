@@ -42,12 +42,10 @@
                             <a class="showcoupon" href="#">Click here to enter your code</a>
                         </div>
                         <div class="checkout_coupon">
-                            <form action="#">
-                                <div class="form__coupon">
-                                    <input type="text" placeholder="Coupon code">
-                                    <button>Apply coupon</button>
-                                </div>
-                            </form>
+                            <div class="form__coupon">
+                                <input type="text" placeholder="Coupon code" name="code" id="code">
+                                <button id="checkCode" type="button" onclick="checkCode()">Apply coupon</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -208,18 +206,38 @@
             changePaymnet('{{ route('checkout.point') }}', 'Checkout with point');
         }
 
+        function checkCode() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('discount.checkCode') }}",
+                type: "post",
+                data: {'code': $("#code").val()},
+                success: function (result) {
+                    if (!result) {
+                        console.log("result = null");
+                        return;
+                    }
+                    console.log(result);
+                    
+
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            })
+        }
+
         document.getElementById('momo').addEventListener('click', function () {
             changePaymnet('{{ route('checkout.momo') }}', 'Checkout By MoMo')
         });
 
         document.getElementById('vnpay').addEventListener('click', function () {
             changePaymnet('{{ route('checkout.vnpay') }}', 'Checkout By VNPay')
-        });
-        document.getElementById('onepay').addEventListener('click', function () {
-            changePaymnet('{{ route('checkout.onepay') }}', 'Checkout By ONEPay')
-        });
-        document.getElementById('VTCPay').addEventListener('click', function () {
-            changePaymnet('{{ route('checkout.vtcpay') }}', 'Checkout By VTCPay')
         });
 
         document.getElementById('headingThree').addEventListener('click', function () {

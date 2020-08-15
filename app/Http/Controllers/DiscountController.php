@@ -144,4 +144,42 @@ class DiscountController extends Controller
         flash('Deleted code ' . $discount->code . ' successfully');
         return back();
     }
+
+    public function checkCode(Request $request)
+    {
+        if (!isset($request->code)) {
+            return ;
+        }
+
+        $discount = $this->discount->where('code', $request->code)->first();
+
+        if (empty($discount)) {
+            return ;
+        }
+
+        $xmlDocument = new \DOMDocument('1.0');
+        $xmlDocument->preserveWhiteSpace = false;
+        $xmlDocument->formatOutput = true;
+
+        $element = $xmlDocument->createElement('coupon_code');
+        $xmlDocument->appendChild($element);
+
+        $element1 = $xmlDocument->createElement('code', $discount->code);
+        $element->appendChild($element1);
+        $element1 = $xmlDocument->createElement('discount', $discount->discount);
+        $element->appendChild($element1);
+        $element1 = $xmlDocument->createElement('start_time', $discount->start_time);
+        $element->appendChild($element1);
+        $element1 = $xmlDocument->createElement('end_time', $discount->end_time);
+        $element->appendChild($element1);
+        $element1 = $xmlDocument->createElement('price_condition', $discount->price_condition);
+        $element->appendChild($element1);
+        $element1 = $xmlDocument->createElement('num_condition', $discount->num_condition);
+        $element->appendChild($element1);
+
+
+        echo $xmlDocument->saveXML();
+
+        return;
+    }
 }

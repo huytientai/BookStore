@@ -84,6 +84,7 @@ Route::get('/charts', 'ChartController@index')->name('charts.index')->middleware
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard')->middleware('auth');
 
+Route::post('/discount/checkCode', 'DiscountController@checkCode')->name('discount.checkCode')->middleware('auth');
 Route::resource('/discount', 'DiscountController')->middleware('auth');
 
 Route::get('/about', function () {
