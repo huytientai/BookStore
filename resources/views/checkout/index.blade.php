@@ -43,7 +43,7 @@
                         </div>
                         <div class="checkout_coupon">
                             <div class="form__coupon">
-                                <input type="text" placeholder="Coupon code" name="code" id="code">
+                                <input type="text" placeholder="Coupon code" id="code">
                                 <button id="checkCode" type="button" onclick="checkCode()">Apply coupon</button>
                             </div>
                         </div>
@@ -104,6 +104,7 @@
                                 <input type="hidden" name="books[{{$i}}][id]" value="{{ $book->id }}">
                                 <input type="hidden" name="books[{{$i++}}][quantity]" value="{{ $book->quantity }}">
                             @endforeach
+                            <input type="hidden" name="discount" id="discount">
 
                             <button type="submit" class="btn cart__total__amount" style="width: 100%">Cash on Delivery</button>
                         </form>
@@ -127,6 +128,7 @@
                         </ul>
                         <ul class="shipping__method">
                             <li>Cart Subtotal <span>${{ $total }}</span></li>
+                            <li>Discount <span id="discount-order">$0</span></li>
                             <li>Shipping
                                 <ul>
                                     <li>
@@ -141,7 +143,7 @@
                             </li>
                         </ul>
                         <ul class="total__amount">
-                            <li>Order Total <span>${{ $total }}</span></li>
+                            <li>Order Total <span id="order-total">${{ $total }}</span></li>
                         </ul>
                     </div>
                     <div id="accordion" class="checkout_accordion mt--30" role="tablist">
@@ -219,12 +221,61 @@
                 data: {'code': $("#code").val()},
                 success: function (result) {
                     if (!result) {
-                        console.log("result = null");
+                        if ($("#code").css('border') != 'solid red') {
+                            $("#code").css('border', "solid red");
+                        }
                         return;
                     }
-                    console.log(result);
-                    
 
+                    let keys = ['code', 'discount', 'start_time', 'end_time', 'price_condition', 'num_condition',]
+                    let data = []
+                    keys.forEach(function (key) {
+                        data[key] = $(result).find(key).text()
+                    })
+
+                    //check code
+                    if (new Date(data['start_time']) > Date.now()) {
+                        if ($("#code").css('border') != 'solid red') {
+                            $("#code").css('border', 'solid red');
+                        }
+                        alert("this code start at " + data['start_time']);
+                        return;
+                    }
+                    if (new Date(data['end_time']) < Date.now()) {
+                        if ($("#code").css('border') != 'solid red') {
+                            $("#code").css('border', 'solid red');
+                        }
+                        alert("This code is expired");
+                        return;
+                    }
+
+                    if (parseFloat(data['price_condition']) > {{ $total }} ) {
+                        if ($("#code").css('border') != 'solid red') {
+                            $("#code").css('border', 'solid red');
+                        }
+                        alert("Price condition >= " + data['price_condition']);
+                        return;
+                    }
+
+                    if (data['num_condition'] == '0') {
+                        if ($("#code").css('border') != 'solid red') {
+                            $("#code").css('border', 'solid red');
+                        }
+                        alert("Out of turn to use");
+                        return;
+                    }
+
+                    // code is success
+                    $("#code").css('border', 'solid blue');
+                    $("#discount-order").text("$" + data['discount']);
+
+                    $("#discount").val(data['code']);
+
+                    if (parseFloat(data['discount']) <= {{ $total }}) {
+                        $("#order-total").text("$" + ({{ $total }} -parseFloat(data['discount'])));
+                    } else {
+                        $("#order-total").text("$0");
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.log(error);

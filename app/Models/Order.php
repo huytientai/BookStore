@@ -22,6 +22,8 @@ class Order extends Model
         'address',
         'email',
         'company',
+        'discount_id',
+        'discount',
         'seller_id',
         'warehouseman_id',
         'shipper_id',
@@ -130,6 +132,11 @@ class Order extends Model
     public function orderdetails()
     {
         return $this->hasMany('App\Models\Orderdetail');
+    }
+
+    public function discount()
+    {
+        return $this->belongsTo('App\Models\Discount', 'discount_id');
     }
 
     public function seller()

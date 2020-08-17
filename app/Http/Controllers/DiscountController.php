@@ -176,8 +176,7 @@ class DiscountController extends Controller
         $element->appendChild($element1);
         $element1 = $xmlDocument->createElement('num_condition', $discount->num_condition);
         $element->appendChild($element1);
-
-
+        
         echo $xmlDocument->saveXML();
 
         return;

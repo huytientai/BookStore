@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreOrderRequest;
 use App\Models\Book;
 use App\Models\Cart;
+use App\Models\Discount;
 use App\Models\Order;
 use App\Models\Orderdetail;
 use App\Models\User;
@@ -19,13 +20,15 @@ class CheckoutsController extends Controller
     protected $order;
     protected $orderdetail;
     protected $book;
+    protected $discount;
 
-    public function __construct(Cart $cart, Order $order, Orderdetail $orderdetail, Book $book)
+    public function __construct(Cart $cart, Order $order, Orderdetail $orderdetail, Book $book, Discount $discount)
     {
         $this->cart = $cart;
         $this->order = $order;
         $this->orderdetail = $orderdetail;
         $this->book = $book;
+        $this->discount = $discount;
     }
 
     /**
@@ -72,6 +75,18 @@ class CheckoutsController extends Controller
     }
 
 
+    public function checkCouponCode($request, $total)
+    {
+        if (isset($request->discount) && $request->discount != null) {
+            $discount = $this->discount->where('code', $request->discount)->first();
+
+            if ($discount != null && date($discount->start_time) <= now() && (is_null($discount->end_time) || (!is_null($discount->end_time) && date($discount->end_time) >= now())) && (is_null($discount->price_condition) || (!is_null($discount->price_condition) && $discount->price_condition < $total)) && (is_null($discount->num_condition) || (!is_null($discount->num_condition) && $discount->num_condition > 0))) {
+                return true;
+            }
+            return false;
+        }
+    }
+
     /**
      * Checkout offline
      *
@@ -104,6 +119,20 @@ class CheckoutsController extends Controller
             }
             $total += $book->price * $value['quantity'];
         }
+
+        //check coupon code
+        $checkCoupon = $this->checkCouponCode($request, $total);
+        $discount = null;
+        if ($checkCoupon) {
+            $discount = $this->discount->where('code', $request->discount)->first();
+            if ($total > $discount->discount) {
+                $total -= $discount->discount;
+            } else {
+                $total = 0;
+            }
+        }
+
+        // create order
         $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
 
         // create order detail
