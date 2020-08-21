@@ -143,7 +143,7 @@
                             </li>
                         </ul>
                         <ul class="total__amount">
-                            <li>Order Total <span id="order-total">${{ $total }}</span></li>
+                            <li>Order Total <span class="row">$<p id="order-total">{{ $total }}</p></span></li>
                         </ul>
                     </div>
                     <div id="accordion" class="checkout_accordion mt--30" role="tablist">
@@ -166,11 +166,14 @@
                             <div id="collapseTwo" class="collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
                                 <div class="payment-body">Your Point: {{ Auth::user()->point }}
                                     <img src="{{ asset('img/icons/coin-icon.jpg') }}" style="width: 25px"></div>
-                                @if(Auth::user()->point >= $total)
-                                    <button class="btn btn-primary" onclick="usePoint()" id="use_point">Use</button>
-                                @else
-                                    <small class="text-danger" style="padding-left: 10px">Not enough point</small>
-                                @endif
+                                {{--                                @if(Auth::user()->point >= $total)--}}
+                                {{--                                    <button class="btn btn-primary" onclick="usePoint()" id="use_point">Use</button>--}}
+                                {{--                                @else--}}
+                                {{--                                    <small class="text-danger" style="padding-left: 10px">Not enough point</small>--}}
+                                {{--                                @endif--}}
+                                <button class="btn btn-primary" onclick="usePoint()" id="use_point">Use</button>
+                                <small class="text-danger" style="padding-left: 10px" id="check_point"></small>
+
                             </div>
                         </div>
                         <div class="payment">
@@ -204,10 +207,6 @@
     </section>
 
     <script>
-        function usePoint() {
-            changePaymnet('{{ route('checkout.point') }}', 'Checkout with point');
-        }
-
         function checkCode() {
             $.ajaxSetup({
                 headers: {
@@ -272,22 +271,32 @@
                     $("#discount").val(data['code']);
 
                     if (parseFloat(data['discount']) <= {{ $total }}) {
-                        $("#order-total").text("$" + ({{ $total }} -parseFloat(data['discount'])));
+                        $("#order-total").text({{ $total }} -parseFloat(data['discount']));
                     } else {
-                        $("#order-total").text("$0");
+                        $("#order-total").text("0");
+                        $("#headingThree").click();
                     }
+
                 },
                 error: function (xhr, status, error) {
-                    console.log(error);
+                    alert("Server not response.Please try again!");
                 }
             })
         }
 
         document.getElementById('momo').addEventListener('click', function () {
+            if ($("#order-total").text() == 0) {
+                $("#headingThree").click();
+                return;
+            }
             changePaymnet('{{ route('checkout.momo') }}', 'Checkout By MoMo')
         });
 
         document.getElementById('vnpay').addEventListener('click', function () {
+            if ($("#order-total").text() == 0) {
+                $("#headingThree").click();
+                return;
+            }
             changePaymnet('{{ route('checkout.vnpay') }}', 'Checkout By VNPay')
         });
 
@@ -295,10 +304,28 @@
             changePaymnet('{{ route('checkout.store') }}', 'Cash on Delivery')
         });
 
+        function usePoint() {
+            if ($("#order-total").text() == 0) {
+                $("#headingThree").click();
+                return;
+            }
+
+            let order_total = parseFloat($("#order-total").text());
+
+            if (order_total > {{ Auth::user()->point }}) {
+                $('#check_point').text("Not enough point");
+            } else {
+                $('#check_point').text("");
+                changePaymnet('{{ route('checkout.point') }}', 'Checkout with point');
+            }
+        }
+
         function changePaymnet($form, $button) {
             let checkout_form = document.getElementById('checkout-form');
             checkout_form.action = $form;
             checkout_form.getElementsByTagName('button').item(0).innerHTML = $button;
         }
+
+
     </script>
 @endsection

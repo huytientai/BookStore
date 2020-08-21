@@ -125,7 +125,9 @@ class CheckoutsController extends Controller
         $discount = null;
         if ($checkCoupon) {
             $discount = $this->discount->where('code', $request->discount)->first();
-            if ($total > $discount->discount) {
+            $discount->num_condition--;
+            $discount->save();
+            if ($total - $discount->discount > 0) {
                 $total -= $discount->discount;
             } else {
                 $total = 0;
@@ -133,7 +135,11 @@ class CheckoutsController extends Controller
         }
 
         // create order
-        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+        if ($discount == null) {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+        } else {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount]);
+        }
 
         // create order detail
         foreach ($books as $value) {
@@ -179,8 +185,23 @@ class CheckoutsController extends Controller
             $total += $book->price * $value['quantity'];
         }
 
+        //check coupon code
+        $checkCoupon = $this->checkCouponCode($request, $total);
+        $discount = null;
+        if ($checkCoupon) {
+            $discount = $this->discount->where('code', $request->discount)->first();
+            $discount->num_condition--;
+            $discount->save();
+
+            if ($total - $discount->discount > 0) {
+                $total -= $discount->discount;
+            } else {
+                $total = 0;
+            }
+        }
+
         if ($total > Auth::user()->point) {
-            flash('Not enoungh point to buy')->warning();
+            flash('Not enough point to buy')->warning();
             return redirect()->route('carts.index');
         }
 
@@ -188,7 +209,11 @@ class CheckoutsController extends Controller
         $user->point -= $total;
         $user->save();
 
-        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'payment' => 'point', 'pay_status' => true]);
+        if ($discount == null) {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'payment' => 'point', 'pay_status' => true]);
+        } else {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount, 'payment' => 'point', 'pay_status' => true]);
+        }
 
         // create order detail
         foreach ($books as $value) {
@@ -250,7 +275,28 @@ class CheckoutsController extends Controller
             }
             $total += $book->price * $value['quantity'];
         }
-        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+
+        //check coupon code
+        $checkCoupon = $this->checkCouponCode($request, $total);
+        $discount = null;
+        if ($checkCoupon) {
+            $discount = $this->discount->where('code', $request->discount)->first();
+            $discount->num_condition--;
+            $discount->save();
+
+            if ($total - $discount->discount > 0) {
+                $total -= $discount->discount;
+            } else {
+                $total = 0;
+            }
+        }
+
+        // create order
+        if ($discount == null) {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+        } else {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount]);
+        }
 
         // create order detail
         foreach ($books as $value) {
@@ -377,7 +423,26 @@ class CheckoutsController extends Controller
             }
             $total += $book->price * $value['quantity'];
         }
-        $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+
+        //check coupon code
+        $checkCoupon = $this->checkCouponCode($request, $total);
+        $discount = null;
+        if ($checkCoupon) {
+            $discount = $this->discount->where('code', $request->discount)->first();
+            $discount->num_condition--;
+            $discount->save();
+            if ($total - $discount->discount > 0) {
+                $total -= $discount->discount;
+            } else {
+                $total = 0;
+            }
+        }
+
+        if ($discount == null) {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+        } else {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount]);
+        }
 
         // create order detail
         foreach ($books as $value) {
