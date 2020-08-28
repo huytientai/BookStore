@@ -109,6 +109,15 @@
                             <button type="submit" class="btn cart__total__amount" style="width: 100%">Cash on Delivery</button>
                         </form>
                     </div>
+
+                    <br><br>
+                    <iframe
+                        width="100%"
+                        height="450"
+                        frameborder="0" style="border:0"
+                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAoFSvjKPJMynwCntJ34AJtNscYMv-JsOc&q=Quảng+Trường+C1,+Đại+Học+Bách+Khoa+Hà+Nội" allowfullscreen>
+                        {{--                        src="https://www.google.com/maps/embed/v1/view?key=AIzaSyAoFSvjKPJMynwCntJ34AJtNscYMv-JsOc&center=21.006242,105.843127&zoom=18" allowfullscreen--}}
+                    </iframe>
                 </div>
                 <div class="col-lg-6 col-12 md-mt-40 sm-mt-40">
                     <div class="wn__order__box">
