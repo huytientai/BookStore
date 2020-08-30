@@ -47,26 +47,6 @@
                             @endforeach
                         </ul>
                     </aside>
-                    <aside class="wedget__categories pro--range">
-                        <h3 class="wedget__title">Filter by price</h3>
-                        <div class="content-shopby">
-                            <div class="price_filter s-filter clear">
-                                <form action="#" method="GET">
-                                    <div id="slider-range"></div>
-                                    <div class="slider__range--output">
-                                        <div class="price__output--wrap">
-                                            <div class="price--output">
-                                                <span>Price :</span><input type="text" id="amount" readonly="">
-                                            </div>
-                                            <div class="price--filter">
-                                                <a href="#">Filter</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </aside>
 
                     <aside class="wedget__categories sidebar--banner">
                         <img src="{{ asset('img/others/banner_left.jpg') }}" alt="banner images">
@@ -188,8 +168,15 @@
                                             <li class="cart">
                                                 <a href="{{ route('carts.show', $book->id) }}">Add to cart</a>
                                             </li>
-                                            <li class="wishlist"><a href="cart.html"></a></li>
-                                            <li class="compare"><a href="cart.html"></a></li>
+                                            <li class="wishlist"><a href="{{ route('favorites.show', $book->id) }}"></a></li>
+                                            <li class="compare">
+                                                <form action="{{ route('checkout.quick', $book->id) }}" method="post" style="display: inline-block">
+                                                    @csrf
+                                                    <input type="hidden" name="books[0][id]" value="{{ $book->id }}">
+                                                    <input type="hidden" id="qty-quickCheck" name="books[0][quantity]" value="1">
+                                                    <a class="compare" href="#" onclick="this.parentElement.submit()"></a>
+                                                </form>
+                                            </li>
                                         </ul>
 
                                     </div>

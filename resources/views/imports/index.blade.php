@@ -36,44 +36,47 @@
 
     <br>
     @if(count($imports))
-        <table class="table">
-            <thead class="thead-light text-center">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Book</th>
-                <th>Quantity</th>
-                <th>From</th>
-                <th>Note</th>
-                <th>Time</th>
-                <th>Accepted</th>
-            </tr>
-            </thead>
-
-            @foreach($imports as $key => $import)
-                <tr class="text-left">
-                    <td class="text-center">
-                        <a href="{{ route('imports.show',$import->id) }}">{{ $imports->firstItem() + $key }}</a></td>
-                    <td class="text-center">
-                        <a href="{{ route('users.show',$import->user->id) }}">{{ $import->user->name }}</a></td>
-                    <td class="text-center">
-                        <a href="{{ route('books.show',$import->book->id) }}">{{ $import->book->name }}</a></td>
-                    <td class="text-center">{{ $import->quantity }}</td>
-                    <td class="text-center">{{ $import->from }}</td>
-                    @if(strlen($import->note)<30)
-                        <td class="text-center">{!! $import->note !!}</td>
-                    @else
-                        <td class="text-center">{!! substr($import->note,0,30) . ' ...' !!}</td>
-                    @endif
-                    <td class="text-center">{{ $import->updated_at }}</td>
-                    <td class="text-center">
-                        @if($import->status)
-                            <a href="{{ route('users.show',$import->accepted->id) }}">{{ $import->accepted->name }}</a>
-                        @endif
-                    </td>
+        <div style="overflow-x: auto">
+            <table class="table">
+                <thead class="thead-light text-center">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Book</th>
+                    <th>Quantity</th>
+                    <th>From</th>
+                    <th>Note</th>
+                    <th>Time</th>
+                    <th>Accepted</th>
                 </tr>
-            @endforeach
-        </table>
+                </thead>
+
+                @foreach($imports as $key => $import)
+                    <tr class="text-left">
+                        <td class="text-center">
+                            <a href="{{ route('imports.show',$import->id) }}">{{ $imports->firstItem() + $key }}</a>
+                        </td>
+                        <td class="text-center">
+                            <a href="{{ route('users.show',$import->user->id) }}">{{ $import->user->name }}</a></td>
+                        <td class="text-center">
+                            <a href="{{ route('books.show',$import->book->id) }}">{{ $import->book->name }}</a></td>
+                        <td class="text-center">{{ $import->quantity }}</td>
+                        <td class="text-center">{{ $import->from }}</td>
+                        @if(strlen($import->note)<30)
+                            <td class="text-center">{!! $import->note !!}</td>
+                        @else
+                            <td class="text-center">{!! substr($import->note,0,30) . ' ...' !!}</td>
+                        @endif
+                        <td class="text-center">{{ $import->updated_at }}</td>
+                        <td class="text-center">
+                            @if($import->status)
+                                <a href="{{ route('users.show',$import->accepted->id) }}">{{ $import->accepted->name }}</a>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
         {!! $imports->appends(request()->input())->links() !!}
     @else
         <p class="text-center">No result.</p>

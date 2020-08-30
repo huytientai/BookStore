@@ -11,7 +11,7 @@
             </a>
         @endcan
         <br><br>
-            @include('flash::message')
+        @include('flash::message')
 
         <div class="container">
             <form action="{{ route('users.index') }}" class="form-group" method="get">
@@ -37,39 +37,41 @@
 
         <br>
         @if(count($users))
-            <table class="table">
-                <thead class="thead-light text-center">
-                <tr>
-                    <th>STT</th>
-                    <th>Account</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Phone</th>
-                    <th width="120">Role</th>
-                    @can('admin')
-                        <th width="230">Action</th>
-                    @endcan
-                </tr>
-                </thead>
-
-                @foreach($users as $key => $user)
-                    <tr class="text-left">
-                        <td>{{ $users->firstItem() + $key }}</td>
-                        <td><a href="{{ route('users.show',$user->id) }}">{{ $user->email }}</a></td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->address }}</td>
-                        <td>{{ $user->phone }}</td>
-                        <td>{{ \App\Models\User::$roles[$user->role] }}</td>
-
+            <div style="overflow-x:auto">
+                <table class="table">
+                    <thead class="thead-light text-center">
+                    <tr>
+                        <th>STT</th>
+                        <th>Account</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Phone</th>
+                        <th width="120">Role</th>
                         @can('admin')
-                            <td>
-                                <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Update</a>
-                                <button data-toggle="modal" onclick="deleteData({{ $user->id }})" data-target="#delete-modal" class="btn btn-xs btn-danger">Xóa</button>
-                            </td>
+                            <th width="230">Action</th>
                         @endcan
                     </tr>
-                @endforeach
-            </table>
+                    </thead>
+
+                    @foreach($users as $key => $user)
+                        <tr class="text-left">
+                            <td>{{ $users->firstItem() + $key }}</td>
+                            <td><a href="{{ route('users.show',$user->id) }}">{{ $user->email }}</a></td>
+                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->address }}</td>
+                            <td>{{ $user->phone }}</td>
+                            <td>{{ \App\Models\User::$roles[$user->role] }}</td>
+
+                            @can('admin')
+                                <td>
+                                    <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Update</a>
+                                    <button data-toggle="modal" onclick="deleteData({{ $user->id }})" data-target="#delete-modal" class="btn btn-xs btn-danger">Xóa</button>
+                                </td>
+                            @endcan
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
             {!! $users->appends(request()->input())->links() !!}
         @else
             <p class="text-center">No Result.</p>

@@ -6,57 +6,61 @@
     <div class="container">
         <h3>Warehouse (<50)</h3>
         @if(count($needed1))
-            <table class="table">
-                <thead class="thead-light text-center">
-                <tr>
-                    <th>ID</th>
-                    <th>Book</th>
-                    <th>Nums</th>
-                    <th>Virtual Nums</th>
-                </tr>
-                </thead>
-
-                @foreach($needed1 as $key => $book)
-                    <tr class="text-left">
-                        <td class="text-center">
-                            <a href="{{ route('books.show',$book->id) }}">{{ $book->id }}</a>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ route('books.show',$book->id) }}">{{ $book->name }}</a></td>
-                        <td class="text-center">
-                            {{ $book->soluong }}</td>
-                        <td class="text-center">{{ $book->virtual_nums }}</td>
+            <div style="overflow-x: auto">
+                <table class="table">
+                    <thead class="thead-light text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Book</th>
+                        <th>Nums</th>
+                        <th>Virtual Nums</th>
                     </tr>
-                @endforeach
-            </table>
+                    </thead>
+
+                    @foreach($needed1 as $key => $book)
+                        <tr class="text-left">
+                            <td class="text-center">
+                                <a href="{{ route('books.show',$book->id) }}">{{ $book->id }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ route('books.show',$book->id) }}">{{ $book->name }}</a></td>
+                            <td class="text-center">
+                                {{ $book->soluong }}</td>
+                            <td class="text-center">{{ $book->virtual_nums }}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
         @endif
 
 
         <h3>Virtual Nums (<20)</h3>
         @if(count($needed2))
-            <table class="table">
-                <thead class="thead-light text-center">
-                <tr>
-                    <th>ID</th>
-                    <th>Book</th>
-                    <th>Nums</th>
-                    <th>Virtual Nums</th>
-                </tr>
-                </thead>
-
-                @foreach($needed2 as $key => $book)
-                    <tr class="text-left">
-                        <td class="text-center">
-                            <a href="{{ route('books.show',$book->id) }}">{{ $book->id }}</a>
-                        </td>
-                        <td class="text-center">
-                            <a href="{{ route('books.show',$book->id) }}">{{ $book->name }}</a></td>
-                        <td class="text-center">
-                            {{ $book->soluong }}</td>
-                        <td class="text-center">{{ $book->virtual_nums }}</td>
+            <div style="overflow-x: auto">
+                <table class="table">
+                    <thead class="thead-light text-center">
+                    <tr>
+                        <th>ID</th>
+                        <th>Book</th>
+                        <th>Nums</th>
+                        <th>Virtual Nums</th>
                     </tr>
-                @endforeach
-            </table>
+                    </thead>
+
+                    @foreach($needed2 as $key => $book)
+                        <tr class="text-left">
+                            <td class="text-center">
+                                <a href="{{ route('books.show',$book->id) }}">{{ $book->id }}</a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{{ route('books.show',$book->id) }}">{{ $book->name }}</a></td>
+                            <td class="text-center">
+                                {{ $book->soluong }}</td>
+                            <td class="text-center">{{ $book->virtual_nums }}</td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
         @endif
 
     </div>

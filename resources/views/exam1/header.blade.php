@@ -109,37 +109,26 @@
                 <nav class="mobilemenu__nav">
                     <ul class="meninmenu">
                         <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="#">Pages</a>
+                        <li><a href="{{ route('books.index') }}">Books</a>
                             <ul>
-                                <li><a href="about.html">About Page</a></li>
-                                <li><a href="portfolio.html">Portfolio</a>
+                                <li><a class="title" href="/loaisachs">Categories</a>
                                     <ul>
-                                        <li><a href="portfolio.html">Portfolio</a></li>
-                                        <li><a href="portfolio-details.html">Portfolio Details</a></li>
+                                        @foreach(\App\Models\Loaisach::all() as $loaisach)
+                                            <li>
+                                                <a href="{{ route('loaisachs.show',$loaisach->id) }}">{{ $loaisach->name }}</a>
+                                            </li>
+                                        @endforeach()
                                     </ul>
+
                                 </li>
-                                <li><a href="my-account.html">My Account</a></li>
-                                <li><a href="cart.html">Cart Page</a></li>
-                                <li><a href="checkout.html">Checkout Page</a></li>
-                                <li><a href="wishlist.html">Wishlist Page</a></li>
-                                <li><a href="error404.html">404 Page</a></li>
-                                <li><a href="faq.html">Faq Page</a></li>
-                                <li><a href="team.html">Team Page</a></li>
                             </ul>
                         </li>
-                        <li><a href="#">Shop</a>
-                            <ul>
-                                <li><a href="#">Shop Grid</a></li>
-                                <li><a href="single-product.html">Single Product</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="blog.html">Blog</a>
-                            <ul>
-                                <li><a href="blog.html">Blog Page</a></li>
-                                <li><a href="blog-details.html">Blog Details</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="contact.html">Contact</a></li>
+                        @canany(['admin','staff'])
+                            <li><a href="{{ route('loaisachs.index') }}">Categories</a></li>
+                        @endcanany
+                        <li><a href="{{ route('tacgias.index') }}">Author</a></li>
+                        <li><a href="{{ route('nhaxuatbans.index') }}">Publishing Company</a></li>
+                        <li><a href="{{ route('about') }}">About Us</a></li>
                     </ul>
                 </nav>
             </div>
