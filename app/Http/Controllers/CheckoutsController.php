@@ -120,6 +120,8 @@ class CheckoutsController extends Controller
             $total += $book->price * $value['quantity'];
         }
 
+        $total += $request->shipFee;
+
         //check coupon code
         $checkCoupon = $this->checkCouponCode($request, $total);
         $discount = null;
@@ -184,6 +186,8 @@ class CheckoutsController extends Controller
             }
             $total += $book->price * $value['quantity'];
         }
+
+        $total += $request->shipFee;
 
         //check coupon code
         $checkCoupon = $this->checkCouponCode($request, $total);
@@ -275,6 +279,8 @@ class CheckoutsController extends Controller
             }
             $total += $book->price * $value['quantity'];
         }
+
+        $total += $request->shipFee;
 
         //check coupon code
         $checkCoupon = $this->checkCouponCode($request, $total);
@@ -423,6 +429,8 @@ class CheckoutsController extends Controller
             }
             $total += $book->price * $value['quantity'];
         }
+
+        $total += $request->shipFee;
 
         //check coupon code
         $checkCoupon = $this->checkCouponCode($request, $total);

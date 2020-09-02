@@ -1,6 +1,12 @@
 @extends('exam1.default')
 
 @section('title', 'Checkout')
+@section('style')
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoFSvjKPJMynwCntJ34AJtNscYMv-JsOc"
+        defer
+    ></script>
+@endsection
 
 @section('content')
 
@@ -72,7 +78,7 @@
                                 </div>
 
                                 <div class="input_box">
-                                    <label>Address <span>*</span></label>
+                                    <label>Address (shipFee=km * 2.000d /20.000)<span>*</span></label>
                                     <input type="text" name="address" id="address-checkout" placeholder="delivery location" list="addresses-list" required>
                                     @php($addresses_list = [Auth::user()->address,Auth::user()->address1,Auth::user()->address2,Auth::user()->address3])
                                     @php($addresses_list = array_filter($addresses_list))
@@ -105,19 +111,20 @@
                                 <input type="hidden" name="books[{{$i++}}][quantity]" value="{{ $book->quantity }}">
                             @endforeach
                             <input type="hidden" name="discount" id="discount">
+                            <input type="hidden" name="shipFee" id="ship">
 
                             <button type="submit" class="btn cart__total__amount" style="width: 100%">Cash on Delivery</button>
                         </form>
                     </div>
 
                     <br><br>
-                    <iframe
-                        width="100%"
-                        height="450"
-                        frameborder="0" style="border:0"
-                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAoFSvjKPJMynwCntJ34AJtNscYMv-JsOc&q=Quảng+Trường+C1,+Đại+Học+Bách+Khoa+Hà+Nội" allowfullscreen>
-                        {{--                        src="https://www.google.com/maps/embed/v1/view?key=AIzaSyAoFSvjKPJMynwCntJ34AJtNscYMv-JsOc&center=21.006242,105.843127&zoom=18" allowfullscreen--}}
-                    </iframe>
+                    {{--                    <iframe--}}
+                    {{--                        width="100%"--}}
+                    {{--                        height="450"--}}
+                    {{--                        frameborder="0" style="border:0"--}}
+                    {{--                        src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAoFSvjKPJMynwCntJ34AJtNscYMv-JsOc&q=Quảng+Trường+C1,+Đại+Học+Bách+Khoa+Hà+Nội" allowfullscreen>--}}
+                    {{--                                                src="https://www.google.com/maps/embed/v1/view?key=AIzaSyAoFSvjKPJMynwCntJ34AJtNscYMv-JsOc&center=21.006242,105.843127&zoom=18" allowfullscreen--}}
+                    {{--                    </iframe>--}}
                 </div>
                 <div class="col-lg-6 col-12 md-mt-40 sm-mt-40">
                     <div class="wn__order__box">
@@ -139,16 +146,7 @@
                             <li>Cart Subtotal <span>${{ $total }}</span></li>
                             <li>Discount <span id="discount-order">$0</span></li>
                             <li>Shipping
-                                <ul>
-                                    <li>
-                                        <input name="shipping_method[0]" data-index="0" value="legacy_flat_rate" checked="checked" type="radio">
-                                        <label>Nomal</label>
-                                    </li>
-                                    <li>
-                                        <input name="shipping_method[0]" data-index="0" value="legacy_flat_rate" type="radio">
-                                        <label>Fast(2h)</label>
-                                    </li>
-                                </ul>
+                                <span id="ship-order">$0</span>
                             </li>
                         </ul>
                         <ul class="total__amount">
@@ -279,13 +277,7 @@
 
                     $("#discount").val(data['code']);
 
-                    if (parseFloat(data['discount']) <= {{ $total }}) {
-                        $("#order-total").text({{ $total }} -parseFloat(data['discount']));
-                    } else {
-                        $("#order-total").text("0");
-                        $("#headingThree").click();
-                    }
-
+                    update_order_total();
                 },
                 error: function (xhr, status, error) {
                     alert("Server not response.Please try again!");
@@ -336,5 +328,49 @@
         }
 
 
+        $(document).ready(function () {
+            $('#address-checkout').blur(function () {
+                let origin = 'Quảng Trường C1, Đại Học Bách Khoa Hà Nội';
+
+                let address = $('#address-checkout').val();
+                address = $.trim(address)
+                if (address == '') {
+                    return;
+                }
+                let destination = address;
+
+                let service = new google.maps.DistanceMatrixService();
+                service.getDistanceMatrix(
+                    {
+                        origins: [origin],
+                        destinations: [destination],
+                        travelMode: 'DRIVING',
+                    }, callback)
+
+                function callback(response, status) {
+                    let feePerKm = 2000;
+                    $('#address-checkout').val(response.destinationAddresses[0]);
+                    $('#ship-order').text("$" + (Math.ceil(response.rows[0].elements[0].distance.value / 1000 / 20000 * feePerKm * 100) / 100));
+                    update_order_total();
+                }
+            })
+        })
+
+        function update_order_total() {
+            let discount = parseFloat($('#discount-order').text().substring(1));
+            let ship = parseFloat($('#ship-order').text().substring(1));
+
+            let amount = {{ $total }} +ship;
+            let order_total = 0;
+            if (amount > discount) {
+                order_total = Math.floor((amount - discount) * 100) / 100;
+            } else {
+                order_total = 0;
+                $("#headingThree").click();
+            }
+
+            $('#order-total').text(order_total);
+            $('#ship').val(ship);
+        }
     </script>
 @endsection
