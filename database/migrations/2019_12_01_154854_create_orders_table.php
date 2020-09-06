@@ -20,16 +20,19 @@ class CreateOrdersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->float('total_price');
+            $table->float('ship_fee')->default(0);
             $table->integer('status')->default(0);
 
+            // customer info
             $table->string('name', 255);
             $table->string('phone', 15);
             $table->string('email', 100);
             $table->string('address', 255);
             $table->string('company', 255)->nullable();
 
-            $table->string('payment',255)->default('offline');
-            $table->string('transId',255)->nullable();
+            // payment
+            $table->string('payment', 255)->default('offline');
+            $table->string('transId', 255)->nullable();
             $table->string('payUrl', 255)->nullable();
             $table->boolean('pay_status')->default(false);
             $table->boolean('payback')->default(false);

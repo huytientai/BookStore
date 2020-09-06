@@ -14,7 +14,7 @@ class AddDiscountToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->unsignedBigInteger('discount_id')->nullable()->default(null)->after('company');
+            $table->unsignedBigInteger('discount_id')->nullable()->default(null)->after('total_price');
             $table->foreign('discount_id')->references('id')->on('discount_code')->onDelete('cascade');
             $table->float('discount')->nullable()->default(null)->after('discount_id');
         });

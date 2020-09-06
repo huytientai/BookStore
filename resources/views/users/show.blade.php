@@ -94,6 +94,8 @@
                                             <div>Company: {{ $order->company }}</div>
                                             <br>
 
+                                            <div>Ship Fee: {{ $order->ship_fee }}$</div>
+                                            <div @if($order->discount_id != null) title="Code: {{ \App\Models\Discount::withTrashed()->find($order->discount_id)->code }}" @endif>Discount: {{ $order->discount ? $order->discount : 0 }}$</div>
                                             <div>Total: {{ $order->total_price }}$</div>
                                         </div>
                                         @if($order->status<\App\Models\Order::CONFIRM)

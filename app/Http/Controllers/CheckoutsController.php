@@ -105,6 +105,7 @@ class CheckoutsController extends Controller
         $books = $request->books;
 
         $total = 0;
+
         // create order
         foreach ($books as $value) {
             $book = $this->book->find($value['id']);
@@ -136,11 +137,17 @@ class CheckoutsController extends Controller
             }
         }
 
+        if (!isset($request->shipFee) || $request->shipFee < 0) {
+            $ship_fee = 0;
+        } else {
+            $ship_fee = $request->shipFee;
+        }
+
         // create order
         if ($discount == null) {
-            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'ship_fee' => $ship_fee, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
         } else {
-            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount]);
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'ship_fee' => $ship_fee, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount]);
         }
 
         // create order detail
@@ -213,10 +220,16 @@ class CheckoutsController extends Controller
         $user->point -= $total;
         $user->save();
 
-        if ($discount == null) {
-            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'payment' => 'point', 'pay_status' => true]);
+        if (!isset($request->shipFee) || $request->shipFee < 0) {
+            $ship_fee = 0;
         } else {
-            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount, 'payment' => 'point', 'pay_status' => true]);
+            $ship_fee = $request->shipFee;
+        }
+
+        if ($discount == null) {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'ship_fee' => $ship_fee, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'payment' => 'point', 'pay_status' => true]);
+        } else {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'ship_fee' => $ship_fee, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount, 'payment' => 'point', 'pay_status' => true]);
         }
 
         // create order detail
@@ -297,11 +310,17 @@ class CheckoutsController extends Controller
             }
         }
 
+        if (!isset($request->shipFee) || $request->shipFee < 0) {
+            $ship_fee = 0;
+        } else {
+            $ship_fee = $request->shipFee;
+        }
+
         // create order
         if ($discount == null) {
-            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'ship_fee' => $ship_fee, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
         } else {
-            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount]);
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'ship_fee' => $ship_fee, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount]);
         }
 
         // create order detail
@@ -446,10 +465,16 @@ class CheckoutsController extends Controller
             }
         }
 
-        if ($discount == null) {
-            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+        if (!isset($request->shipFee) || $request->shipFee < 0) {
+            $ship_fee = 0;
         } else {
-            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount]);
+            $ship_fee = $request->shipFee;
+        }
+
+        if ($discount == null) {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'ship_fee' => $ship_fee, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company]);
+        } else {
+            $order = $this->order->create(['user_id' => Auth::id(), 'total_price' => $total, 'ship_fee' => $ship_fee, 'name' => $request->name, 'phone' => $request->phone, 'email' => $request->email, 'address' => $request->address, 'company' => $request->company, 'discount_id' => $discount->id, 'discount' => $discount->discount]);
         }
 
         // create order detail

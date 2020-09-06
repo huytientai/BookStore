@@ -100,7 +100,11 @@
                                     <div></div>
                                     <div class="row">
                                         <div class="col-sm">
+                                            <div>Ship Fee: {{ $order->ship_fee }}$</div>
+                                            <div @if($order->discount_id != null) title="Code: {{ \App\Models\Discount::withTrashed()->find($order->discount_id)->code }}" @endif>Discount: {{ $order->discount ? $order->discount : 0 }}$</div>
                                             <div>Total: {{ $order->total_price }}$</div>
+
+                                            <br>
                                             <div>Status: {{  \App\Models\Order::$status[$order->status] }}</div>
                                         </div>
                                         <div class="col-sm">

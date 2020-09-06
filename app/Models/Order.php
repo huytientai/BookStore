@@ -15,15 +15,19 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
+
         'total_price',
+        'discount_id',
+        'discount',
+        'ship_fee',
         'status',
+
         'name',
         'phone',
         'address',
         'email',
         'company',
-        'discount_id',
-        'discount',
+
         'seller_id',
         'warehouseman_id',
         'shipper_id',
