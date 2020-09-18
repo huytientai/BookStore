@@ -38,8 +38,8 @@
                             </div>
 
                             @if($import->status)
-                                <p>Accepted by:
-                                    <a href="{{ route('users.show',$import->id) }}">{{ $import->accepted->name }}</a>
+                                <p>Done by:
+                                    <a href="{{ route('users.show',$import->warehouseman->id) }}">{{ $import->warehouseman->name }}</a>
                                 </p>
                                 <form action="{{ route('imports.revert',$import->id) }}" method="post">
                                     @csrf
@@ -47,12 +47,19 @@
                                 </form>
                             @else
                                 <div class="row">
-                                    <form action="{{ route('imports.accept',$import->id) }}" method="get">
-                                        <button class="btn btn-primary" type="submit">Accept</button>
-                                    </form>
-                                    <form action="{{ route('imports.denies',$import->id) }}" method="get">
-                                        <button class="btn btn-danger">Denies</button>
-                                    </form>
+                                    @can('warehouseman')
+                                        <form action="{{ route('imports.done',$import->id) }}" method="get">
+                                            <button class="btn btn-primary" type="submit">Done</button>
+                                        </form>
+                                    @endcan
+
+                                    @if(Auth::user()->role == \App\Models\User::ADMIN || Auth::id() == $import->user_id)
+                                        <form action="{{ route('imports.destroy',$import->id) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                    @endif
                                 </div>
                             @endif
                         </div>

@@ -47,7 +47,7 @@
                     <th>From</th>
                     <th>Note</th>
                     <th>Time</th>
-                    <th>Accepted</th>
+                    <th>Warehouseman</th>
                 </tr>
                 </thead>
 
@@ -70,7 +70,7 @@
                         <td class="text-center">{{ $import->updated_at }}</td>
                         <td class="text-center">
                             @if($import->status)
-                                <a href="{{ route('users.show',$import->accepted->id) }}">{{ $import->accepted->name }}</a>
+                                <a href="{{ route('users.show',$import->warehouseman->id) }}">{{ $import->warehouseman->name }}</a>
                             @endif
                         </td>
                     </tr>

@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Import extends Model
 {
     protected $table = 'imports';
     public $primaryKey = 'id';
     public $timestamps = true;
+    use  SoftDeletes;
 
     protected $fillable = [
         'user_id',
@@ -16,16 +18,10 @@ class Import extends Model
         'quantity',
         'from',
         'note',
-        'accepted_id',
+        'warehouseman_id',
         'status',
     ];
     protected $perPage = 10;
-
-//    const WAITING=0;
-//    const ACCEPTED=1;
-//    const DENIES=2;
-//
-//    public static $status = [];
 
 
     public function user()
@@ -33,9 +29,9 @@ class Import extends Model
         return $this->belongsTo('App\Models\User','user_id');
     }
 
-    public function accepted()
+    public function warehouseman()
     {
-        return $this->belongsTo('App\Models\User','accepted_id');
+        return $this->belongsTo('App\Models\User','warehouseman_id');
     }
 
     public function book()
