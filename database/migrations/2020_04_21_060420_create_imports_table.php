@@ -27,10 +27,11 @@ class CreateImportsTable extends Migration
             $table->string('note', 1000)->nullable();
 
             $table->boolean('status')->default(0);
-            $table->unsignedBigInteger('accepted_id');
-            $table->foreign('accepted_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('warehouseman_id')->nullable();
+            $table->foreign('warehouseman_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

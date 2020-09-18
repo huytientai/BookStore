@@ -7,7 +7,9 @@ use App\Models\Loaisach;
 use App\Models\Order;
 use App\Models\Orderdetail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class ChartController extends Controller
 {
@@ -27,6 +29,11 @@ class ChartController extends Controller
      */
     public function index()
     {
+        if (!Gate::any(['admin','staff'],Auth::user())){
+            flash('You are not authorized')->warning();
+            return back();
+        }
+
         //---------------------        Last Month           ------------------
 
         // line chart

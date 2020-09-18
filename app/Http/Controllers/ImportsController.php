@@ -30,7 +30,7 @@ class ImportsController extends Controller
             return view('imports.index')->with('imports', $imports);
         }
 
-        flash('You are not authorized');
+        flash('You are not authorized')->warning();
         return redirect()->route('home');
     }
 
@@ -44,7 +44,7 @@ class ImportsController extends Controller
             return view('imports.neededList')->with(['needed1' => $needed1, 'needed2' => $needed2]);
         }
 
-        flash('You are not authorized');
+        flash('You are not authorized')->warning();
         return back();
     }
 
@@ -80,57 +80,6 @@ class ImportsController extends Controller
      */
     public function destroy($id)
     {
-//        if (Gate::any(['admin', 'staff', 'warehouseman'], Auth::user())) {
-//            $import = $this->import->find($id);
-//
-//            if ($import == null) {
-//                flash('This Import is not existed');
-//                return redirect()->route('imports.index');
-//            }
-//
-//            if (Gate::allows('warehouseman', Auth::user())) {
-//                if ($import->user_id != Auth::id()) {
-//                    flash('This Import is not your')->error();
-//                    return back();
-//                }
-//            }
-//
-//            $import->delete();
-//
-//            flash('The import #' . $id . 'was denied')->warning();
-//            return redirect()->route('imports.index');
-//        }
-//
-//        flash('You are not authorized')->error();
-//        return redirect()->route('home');
-    }
-
-    public function accept($id)
-    {
-        if (Gate::any(['admin', 'staff'], Auth::user())) {
-            $import = $this->import->find($id);
-            if ($import->status == true) {
-                flash('This import is accepted by ' . $import->accepted->name);
-                return redirect()->back();
-            }
-            $import->status = true;
-            $import->accepted_id = Auth::id();
-            $import->save();
-
-            $book = Book::find($import->book_id);
-            $book->soluong += $import->quantity;
-            $book->save();
-
-            flash('Accepted the import');
-            return redirect()->route('imports.show', $import->id);
-        }
-
-        flash('You are not authorized')->error();
-        return redirect()->route('home');
-    }
-
-    public function denies($id)
-    {
         if (Gate::any(['admin', 'staff'], Auth::user())) {
             $import = $this->import->find($id);
 
@@ -138,9 +87,17 @@ class ImportsController extends Controller
                 flash('This Import is not existed');
                 return redirect()->route('imports.index');
             }
+
+            if (Gate::allows('staff', Auth::user())) {
+                if ($import->user_id != Auth::id()) {
+                    flash('This Import is not your')->warning();
+                    return back();
+                }
+            }
+
             $import->delete();
 
-            flash('The import #' . $id . 'was denied')->warning();
+            flash('The import #' . $id . 'was deleted')->success();
             return redirect()->route('imports.index');
         }
 
@@ -148,9 +105,36 @@ class ImportsController extends Controller
         return redirect()->route('home');
     }
 
+    public function done($id)
+    {
+        if (Gate::any(['warehouseman'], Auth::user())) {
+            $import = $this->import->find($id);
+            if ($import->status == true) {
+                flash('This import is done by ' . $import->warehouseman->name)->warning();
+                return redirect()->back();
+            }
+
+            $import->status = true;
+            $import->warehouseman_id = Auth::id();
+            $import->save();
+
+            $book = Book::find($import->book_id);
+            $book->soluong += $import->quantity;
+            $book->virtual_nums += $import->quantity;
+            $book->save();
+
+            flash('Done the Import');
+            return redirect()->route('imports.show', $import->id);
+        }
+
+        flash('You are not authorized')->error();
+        return redirect()->route('home');
+    }
+
+
     public function revert($id)
     {
-        if (Gate::any(['admin', 'staff'], Auth::user())) {
+        if (Gate::any(['admin'], Auth::user())) {
             $import = $this->import->find($id);
             if ($import == null) {
                 flash('This import is not existed');
@@ -163,11 +147,12 @@ class ImportsController extends Controller
             }
 
             $book = Book::find($import->book_id);
-            if ($book->soluong < $import->quantity) {
+            if ($book->soluong < $import->quantity || $book->virtual_nums < $import->quantity) {
                 flash('Not enough quantity to revert')->warning();
                 return redirect()->route('imports.show', $import->id);
             }
             $book->soluong -= $import->quantity;
+            $book->virtual_nums -= $import->quantity;
             $book->save();
 
             $import->status = false;

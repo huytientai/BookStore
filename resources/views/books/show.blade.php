@@ -33,7 +33,7 @@
                                             </form>
                                         @endcanany
                                     </div>
-                                    @canany(['admin','staff','warehouseman'])
+                                    @canany(['admin','staff'])
                                         <button class="btn btn-primary" data-toggle="modal" data-target="#import-modal">Import</button>
                                     @endcan
                                 </div>
@@ -449,7 +449,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-                        <button type="submit" name="" class="btn btn-primary">Send Request</button>
+                        <button type="submit" name="" class="btn btn-primary">Create Request</button>
                     </div>
                 </div>
             </form>

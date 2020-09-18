@@ -43,8 +43,7 @@ Route::resource('/tacgias', 'TacgiasController');
 Route::get('neededImports', 'ImportsController@neededList')->name('imports.needed')->middleware('auth');
 
 Route::resource('/imports', 'ImportsController')->middleware(['auth']);
-Route::get('/imports/{id}/accept', 'ImportsController@accept')->name('imports.accept')->middleware('auth');
-Route::get('/imports/{id}/denies', 'ImportsController@denies')->name('imports.denies')->middleware('auth');
+Route::get('/imports/{id}/done', 'ImportsController@done')->name('imports.done')->middleware('auth');
 Route::post('/imports/{id}/revert', 'ImportsController@revert')->name('imports.revert')->middleware('auth');
 
 Route::post('/checkout', 'CheckoutsController@index')->name('checkout.index')->middleware(['auth']);

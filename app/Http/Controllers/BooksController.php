@@ -175,7 +175,8 @@ class BooksController extends Controller
 
     public function storeImportRequest(StoreImportRequest $request, $book_id)
     {
-        if (!Gate::any(['admin', 'staff', 'warehouseman'], Auth::user())) {
+        if (!Gate::any(['admin', 'staff'], Auth::user())) {
+            flash('You are not authorized')->warning();
             return redirect()->route('books.show', $book_id);
         }
 
@@ -183,11 +184,10 @@ class BooksController extends Controller
         $data['book_id'] = $book_id;
         $data['user_id'] = Auth::id();
         $data['status'] = 0;
-        $data['accepted_id'] = 1;
 
         $this->import->create($data);
 
-        flash('Send import request succeeded');
+        flash('Create import request succeeded');
         return redirect()->route('books.show', $book_id);
     }
 }
