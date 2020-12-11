@@ -71,19 +71,26 @@
                                             <div>Returns Status: {{ \App\Models\Returns::$status[$order->returns->status] }}</div>
                                             <div class="row">
                                                 @if($order->returns->status == \App\Models\Returns::WAITING)
-                                                    <a href="{{ route('returns.check', $order->id) }}" class="btn btn-primary">Check</a>
-                                                    <form action="{{ route('returns.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit">Cancel</button>
-                                                    </form>
+                                                    @canany(['seller','staff','admin'])
+                                                        <a href="{{ route('returns.check', $order->id) }}" class="btn btn-primary">Check</a>
+                                                        <form action="{{ route('returns.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button class="btn btn-danger" type="submit">Cancel</button>
+                                                        </form>
+                                                    @endcanany
                                                 @elseif($order->returns->status == \App\Models\Returns::CHECKED)
-                                                    <a href="{{ route('returns.done',$order->id) }}" class="btn btn-primary">Done</a>
-                                                    <form action="{{ route('returns.destroy',$order->id) }}" method="post" style="margin-bottom: 0rem;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-danger" type="submit">Cancel</button>
-                                                    </form>
+                                                    @canany(['seller','staff','admin'])
+                                                        <a href="{{ route('returns.requestGetReturns', $order->id) }}" class="btn btn-primary">Request get returns</a>
+                                                    @endcan
+                                                @elseif($order->returns->status == \App\Models\Returns::REQUEST)
+                                                    @can('warehouseman')
+                                                        <a href="{{ route('returns.confirmGetReturns', $order->id) }}" class="btn btn-primary">Confirm get returns</a>
+                                                    @endcan
+                                                @elseif($order->returns->status == \App\Models\Returns::CONFIRM)
+                                                    @canany(['seller','staff','admin'])
+                                                        <a href="{{ route('returns.done',$order->id) }}" class="btn btn-primary">Done</a>
+                                                    @endcanany
                                                 @elseif($order->returns->status == \App\Models\Returns::DONE)
 
                                                 @endif

@@ -882,7 +882,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section__title text-center">
-                        <h2 class="title__be--2">Tac Gia</span></h2>
+                        <h2 class="title__be--2">Authors</span></h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered lebmid alteration in some ledmid form</p>
                     </div>
                 </div>

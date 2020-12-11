@@ -71,7 +71,7 @@ class Order extends Model
         self::HAS_RETURNS => 'Returns Request is created',
         self::ACCEPTED_RETURNS => 'Returns Request is accepted',
         self::SENT_RETURNS => 'Returns Request is sent',
-        self::DONE_RETURNS => 'Returns Request is Done',
+        self::DONE_RETURNS => 'Returns is Done',
     ];
 
 

@@ -7,7 +7,7 @@
     @include('flash::message')
 
     <div class="container">
-        <h3>Discount discount</h3>
+        <h3>Discount code</h3>
 
         <a class="btn btn-primary" style="background-color: #0b75c9" href="{{ route('discount.create') }}">Create</a>
 

@@ -1,6 +1,6 @@
 @extends('exam1.default')
 
-@section('title', 'edit tacgia')
+@section('title', 'edit author')
 
 @section('content')
     <div class="cart-main-area section-padding--lg bg--white">

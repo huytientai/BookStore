@@ -1,6 +1,6 @@
 @extends('exam1.default')
 
-@section('title', $tacgia->name . ' tacgia')
+@section('title', $tacgia->name . ' author')
 
 @section('content')
     <div class="cart-main-area section-padding--lg bg--white">

@@ -55,8 +55,10 @@
                     </form>
                     <div class="cartbox__btn">
                         <ul class="cart__btn__list d-flex flex-wrap flex-md-nowrap flex-lg-nowrap justify-content-between">
-                            <li><a href="#">Coupon Code</a></li>
-                            <li><a href="#">Apply Code</a></li>
+{{--                            <li><a href="#">Coupon Code</a></li>--}}
+{{--                            <li><a href="#">Apply Code</a></li>--}}
+                            <li></li>
+                            <li></li>
                             <li>
                                 <form action="{{ route('carts.update', 1) }}" id="update-form" method="post">
                                     @csrf

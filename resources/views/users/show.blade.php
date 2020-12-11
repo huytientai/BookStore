@@ -117,16 +117,17 @@
                                             <br>
                                             @if($order->returns_request == \App\Models\Order::NO_RETURNS)
                                                 <a href="{{ route('orders.createReturnsRequest', $order->id) }}" class="btn-sm btn-warning">Create returns request</a>
+                                                <p style="color: dodgerblue">70% Refund</p>
                                             @else
                                                 <b>{{ \App\Models\Order::$returnsRequest[$order->returns_request] }}</b>
                                                 @if($order->returns_request == \App\Models\Order::ACCEPTED_RETURNS)
                                                     <a href="{{ route('returns.create', ['order_id'=> $order->id]) }}" data-toggle="tooltip" title="After ship back returns,send ship info">
                                                         <button class="btn btn-primary">Send ship info</button>
                                                     </a>
-                                                @elseif($order->returns_request == \App\Models\Order::DONE_RETURNS)
-                                                    <a href="{{ route('returns.edit', $order->id) }}" data-toggle="tooltip" title="Edit Sent ship info">
-                                                        <button class="btn btn-primary">Edit ship info</button>
-                                                    </a>
+                                                @elseif($order->returns_request == \App\Models\Order::SENT_RETURNS && $order->returns->status == \App\Models\Returns::WAITING)
+                                                        <a href="{{ route('returns.edit', $order->id) }}" data-toggle="tooltip" title="Edit Sent ship info">
+                                                            <button class="btn btn-primary">Edit ship info</button>
+                                                        </a>
                                                 @endif
                                             @endif
                                         </div>

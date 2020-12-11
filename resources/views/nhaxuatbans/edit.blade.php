@@ -1,6 +1,6 @@
 @extends('exam1.default')
 
-@section('title', 'edit nhaxuatban')
+@section('title', 'edit Publishing Company')
 
 @section('content')
     <div class="maincontent bg--white pt--80 pb--55">

@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 Route::get('/app', function () {
     return view('app');
 });
@@ -24,12 +24,12 @@ Route::get('/linkstorage', function () {
         symlink('/home/u441737116/domains/bookstore-00.hostingerapp.com/storage/app/public', '/home/u441737116/public_html/storage');
         return 'storage link done';
     }
-    return 'It is already link';;
+    return 'It is already link';
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::resource('/users', 'UsersController')->middleware(['auth']);
 
@@ -123,4 +123,6 @@ Route::post('/vtcpay/notify', 'CheckoutsController@vtcpayNotify')->name('vtcpay.
 //--------------------------------------  Returns  --------------------------------------------
 Route::resource('/returns', 'ReturnsController')->middleware(['auth']);
 Route::get('/returns/{order_id}/check', 'ReturnsController@check')->name('returns.check')->middleware('auth');
+Route::get('/returns/{order_id}/requestGetReturns','ReturnsController@requestWarehouseman')->name('returns.requestGetReturns')->middleware('auth');
+Route::get('/returns/{order_id}/confirmGetReturns','ReturnsController@ConfirmFromWarehouseman')->name('returns.confirmGetReturns')->middleware('auth');
 Route::get('/returns/{order_id}/done', 'ReturnsController@done')->name('returns.done')->middleware('auth');

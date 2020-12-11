@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Order;
 use App\Models\Returns;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -114,7 +115,7 @@ class ReturnsController extends Controller
         $order->save();
 
         flash('Send successful');
-        return redirect()->route('returns.user_list');
+        return redirect()->route('users.show', Auth::id());
     }
 
     /**
@@ -321,6 +322,10 @@ class ReturnsController extends Controller
         $order->returns_request = Order::DONE_RETURNS;
         $order->save();
 
+        $user = User::find($order->user_id);
+        $user->point += floor(70 * $order->total_price) / 100;
+        $user->save();
+
         $returns = $this->returns->find($order_id);
         $returns->status = Returns::DONE;
         $returns->save();
@@ -347,6 +352,10 @@ class ReturnsController extends Controller
             flash('This returns is not existed');
             return back();
         }
+
+        $order = $this->order->find($id);
+        $order->returns_request = Order::DENIES_RETURNS;
+        $order->save();
 
         $returns->delete();
         flash('Cancelled succeed');
