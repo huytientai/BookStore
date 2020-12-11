@@ -43,7 +43,11 @@ class OrdersController extends Controller
     public function searchOrders($data, $role)
     {
         if ($role == User::WAREHOUSEMAN || $role == User::SHIPPER) {
-            return $this->order->where('status', '>=', Order::REQUEST)->where('status', '!=', Order::DONE)->orderBy('status')->orderBy('id')->paginate();
+            return $this->order->with(['orderdetails' => function ($query) {
+                $query->with(['book' => function ($query) {
+                    $query->withTrashed();
+                }]);
+            }])->where('status', '>=', Order::REQUEST)->where('status', '!=', Order::DONE)->orderBy('status')->orderBy('id')->paginate();
         }
 
         $builder = $this->order->with(['orderdetails' => function ($query) {
@@ -813,7 +817,7 @@ class OrdersController extends Controller
                 $orderDetails = $this->orderDetail->where('order_id', $order->id)->get();
 
                 foreach ($orderDetails as $orderDetail) {
-                    $book = Book::find($orderDetail->book_id);
+                    $book = Book::withTrashed()->find($orderDetail->book_id);
                     $book->virtual_nums += $orderDetail->quantity;
                     $book->save();
                 }
