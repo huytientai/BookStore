@@ -102,6 +102,6 @@ class Orderdetail extends Model
 
     public function book()
     {
-        return $this->belongsTo('App\Models\Book');
+        return $this->belongsTo('App\Models\Book')->withTrashed();
     }
 }

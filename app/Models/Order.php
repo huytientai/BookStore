@@ -130,7 +130,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id')->withTrashed();
     }
 
     public function orderdetails()
@@ -140,12 +140,12 @@ class Order extends Model
 
     public function discount()
     {
-        return $this->belongsTo('App\Models\Discount', 'discount_id');
+        return $this->belongsTo('App\Models\Discount', 'discount_id')->withTrashed();
     }
 
     public function seller()
     {
-        return $this->belongsTo('App\Models\User', 'seller_id');
+        return $this->belongsTo('App\Models\User', 'seller_id')->withTrashed();
     }
 
     public function returns()

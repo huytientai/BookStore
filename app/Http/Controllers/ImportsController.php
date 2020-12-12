@@ -68,8 +68,17 @@ class ImportsController extends Controller
      */
     public function show($id)
     {
-        $import = $this->import->find($id);
-        return view('imports.show')->with('import', $import);
+        if (Gate::any(['admin', 'staff', 'warehouseman'], Auth::user())) {
+            $import = $this->import->find($id);
+            if($import==null){
+                flash('Import is not existed')->warning();
+                return redirect()->route('home');
+            }
+            return view('imports.show')->with('import', $import);
+        }
+
+        flash('You are not authorized')->warning();
+        return redirect()->route('home');
     }
 
     /**
@@ -118,7 +127,7 @@ class ImportsController extends Controller
             $import->warehouseman_id = Auth::id();
             $import->save();
 
-            $book = Book::find($import->book_id);
+            $book = Book::withTrashed()->find($import->book_id);
             $book->soluong += $import->quantity;
             $book->virtual_nums += $import->quantity;
             $book->save();
@@ -146,7 +155,7 @@ class ImportsController extends Controller
                 return redirect()->route('imports.show');
             }
 
-            $book = Book::find($import->book_id);
+            $book = Book::withTrashed()->find($import->book_id);
             if ($book->soluong < $import->quantity || $book->virtual_nums < $import->quantity) {
                 flash('Not enough quantity to revert')->warning();
                 return redirect()->route('imports.show', $import->id);
@@ -162,6 +171,6 @@ class ImportsController extends Controller
         }
 
         flash('You are not authorized')->error();
-        return route('home');
+        return redirect()->route('home');
     }
 }

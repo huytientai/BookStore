@@ -78,7 +78,7 @@
                             }
                         @endphp
                         <div>
-                            <li class="orders" style="cursor: pointer;@if($order->status <= \App\Models\Order::REQUEST && $warn) background-color:yellow @endif">#Order{{ $order->id }} ({{ $order->created_at }})</li>
+                            <li class="orders" style="cursor: pointer;@if($order->status <= \App\Models\Order::REQUEST && $warn && $order->deleted_at == null) background-color:yellow @endif">#Order{{ $order->id }} ({{ $order->created_at }})</li>
                             <div class="row order-details" style="display: none">
                                 <div class="col-md-12 col-sm-12 ol-lg-12">
                                     <div class="row">

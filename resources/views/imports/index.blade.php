@@ -52,7 +52,13 @@
                 </thead>
 
                 @foreach($imports as $key => $import)
-                    <tr class="text-left">
+                    @php
+                        $warn=0;
+                        if($import->book->deleted_at != null){
+                            $warn=1;
+                        }
+                    @endphp
+                    <tr class="text-left" style="@if($warn == 1)background-color: yellow @endif">
                         <td class="text-center">
                             <a href="{{ route('imports.show',$import->id) }}">{{ $imports->firstItem() + $key }}</a>
                         </td>
@@ -62,7 +68,7 @@
                             <a href="{{ route('books.show',$import->book->id) }}">{{ $import->book->name }}</a></td>
                         <td class="text-center">{{ $import->quantity }}</td>
                         <td class="text-center">{{ $import->from }}</td>
-                        @if(strlen($import->note)<30)
+                        @if(strlen($import->note) < 30)
                             <td class="text-center">{!! $import->note !!}</td>
                         @else
                             <td class="text-center">{!! substr($import->note,0,30) . ' ...' !!}</td>

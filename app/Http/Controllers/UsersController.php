@@ -99,6 +99,12 @@ class UsersController extends Controller
     {
         if (Auth::user()->id == $id || Gate::any(['admin', 'staff', 'seller'], Auth::user())) {
             $user = $this->user->find($id);
+
+            if ($user == null) {
+                flash('This user was deleted')->warning();
+                return redirect()->route('home');
+            }
+
             $orders = $this->order->where('user_id', $id)->whereIn('status', [Order::DONE, Order::SHIPPED])->orderBy('created_at', 'desc')->get();
             return view('users.show')->with(['user' => $user, 'orders' => $orders]);
         }

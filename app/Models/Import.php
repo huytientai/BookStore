@@ -26,16 +26,16 @@ class Import extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\Models\User','user_id');
+        return $this->belongsTo('App\Models\User','user_id')->withTrashed();
     }
 
     public function warehouseman()
     {
-        return $this->belongsTo('App\Models\User','warehouseman_id');
+        return $this->belongsTo('App\Models\User','warehouseman_id')->withTrashed();
     }
 
     public function book()
     {
-        return $this->belongsTo('App\Models\Book');
+        return $this->belongsTo('App\Models\Book')->withTrashed();
     }
 }

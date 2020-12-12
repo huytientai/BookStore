@@ -41,10 +41,12 @@
                                 <p>Done by:
                                     <a href="{{ route('users.show',$import->warehouseman->id) }}">{{ $import->warehouseman->name }}</a>
                                 </p>
-                                <form action="{{ route('imports.revert',$import->id) }}" method="post">
-                                    @csrf
-                                    <button class="btn btn-danger" type="submit">Revert</button>
-                                </form>
+                                @can('admin')
+                                    <form action="{{ route('imports.revert',$import->id) }}" method="post">
+                                        @csrf
+                                        <button class="btn btn-danger" type="submit">Revert</button>
+                                    </form>
+                                @endcan
                             @else
                                 <div class="row">
                                     @can('warehouseman')
@@ -53,7 +55,7 @@
                                         </form>
                                     @endcan
 
-                                    @if(Auth::user()->role == \App\Models\User::ADMIN || Auth::id() == $import->user_id)
+                                    @if(Auth::user()->role == \App\Models\User::ADMIN || (Auth::user()->role == \App\Models\User::STAFF && Auth::id() == $import->user_id))
                                         <form action="{{ route('imports.destroy',$import->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
