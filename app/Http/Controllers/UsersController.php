@@ -184,7 +184,24 @@ class UsersController extends Controller
                 return redirect()->route('users.index');
             }
 
-            //Check if user exists before deleting
+            //Check user exist
+            $user = $this->user->find($id);
+            if ($user == null) {
+                flash('Tai khoan khong ton tai')->error();
+                return redirect()->route('users.index');
+            }
+
+            //check user had order: pay_status, CONFIRM_EXPORT
+            $orders = $this->order->where('user_id', $id)->where('status', '!=', Order::DONE)->where(function ($query) {
+                $query->where('pay_status', 1)->orWhere('status', '>=', Order::CONFIRM);
+            })->get();
+
+            if ($orders->count()) {
+                flash('Cant delete this user (This user is buying)')->warning();
+                return back();
+            }
+
+            // delete user
             if ($this->user->deleteUser($id)) {
                 flash('Xoa thanh cong')->success();
             } else {

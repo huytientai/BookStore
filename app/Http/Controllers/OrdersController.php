@@ -637,7 +637,7 @@ class OrdersController extends Controller
                 $user = Auth::user();
                 $user->point += ceil(0.9 * $order->total_price * 10) / 10;
                 $user->save();
-                flash('Cancel Order successful')->warning();
+                flash('Cancel Order successful');
                 return back();
             }
 
@@ -810,6 +810,8 @@ class OrdersController extends Controller
                 return back();
             }
 
+
+            // cancel truoc khi xuat kho
             if ($order->status < Order::CONFIRM) {
                 $order->seller_id = Auth::id();
                 $order->save();
@@ -822,11 +824,59 @@ class OrdersController extends Controller
                     $book->save();
                 }
 
-                $order->delete();
-                flash('Order #' . $id . 'is canceled');
-                return redirect()->route('orders.index');
+                if ($order->pay_status == true) {
+                    if ($order->payback == true) {
+                        flash('Something went wrong.Please contact to admin for more detail ')->warning();
+                        return redirect()->route('orders.index');
+                    }
+
+                    // MoMo
+                    if ($order->payment == 'MoMo') {
+                        $response = \MoMoAIO::refund([
+                            'orderId' => $order->id,
+                            'requestId' => $order->id,
+                            'transId' => $order->transId,
+                            'amount' => 0.9 * 20000 * $order->amount,
+                        ])->send();
+
+                        if ($response->isSuccessful()) {
+                            $order->payback = true;
+                            $order->delete();
+                            flash('Cancel Order#' . $order->id . ' succeed');
+                            return redirect()->route('orders.index');
+                        } else {
+                            flash($response->getMessage())->error();
+                            return back();
+                        }
+                    }
+
+                    // VNPay
+                    if ($order->payment == 'VNPay') {
+                        flash('Cant payback by VNPay ')->warning();
+                        return redirect()->route('carts.index');
+                    }
+
+                    if ($order->payment == 'point') {
+                        $order->payback = true;
+                        $order->delete();
+                        $user = Auth::user();
+                        $user->point += ceil(0.9 * $order->total_price * 10) / 10;
+                        $user->save();
+                        flash('Cancel Order successful');
+                        return redirect()->route('orders.index');
+                    }
+
+                    flash('Something went wrong!Please contact to admin')->warning();
+                    return back();
+                } else {
+                    //offline
+                    $order->delete();
+                    flash('Cancel Order#' . $order->id . ' succeed');
+                    return redirect()->route('orders.index');
+                }
             }
 
+            //cancel sau khi xuat kho
             $order->status = Order::CANCEL_AFTER_EXPORT;
             $order->seller_id = Auth::id();
             $order->save();

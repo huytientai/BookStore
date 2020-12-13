@@ -116,14 +116,13 @@ class TacgiasController extends Controller
         }
 
         if ($author->books_count) {
-            flash('Cannot delete(' . $author->books_count . ' books exist)')->error();
+            flash('Cannot delete(' . $author->books_count . ' books exist)')->warning();
             return back();
         }
 
 		$author->delete();
 
-        flash('delete successful')->error();
-
+        flash('delete successful');
         return redirect()->route('tacgias.index');
     }
 }
