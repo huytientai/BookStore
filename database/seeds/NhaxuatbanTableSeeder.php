@@ -14,6 +14,7 @@ class NhaxuatbanTableSeeder extends Seeder
         //
         \App\Models\Nhaxuatban::truncate();
         //factory(\App\Models\Nhaxuatban::class, 10)->create();
+
         \App\Models\Nhaxuatban::create([
             'id' => '1',
             'name' => 'nhà xuất bản chính trị quốc gia',

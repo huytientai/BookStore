@@ -9,7 +9,7 @@
 
             @canany(['admin','staff'])
                 <br><br>
-                <div class="row" style="text-align: center;padding-left: 15px"">
+                <div class="row" style="text-align: center;padding-left: 15px">
                 {{--                    <h1>{{ $main_loaisach->name }}</h1>--}}
                 <div class="col-lg-3"></div>
                 <div class="row col-lg-9">
