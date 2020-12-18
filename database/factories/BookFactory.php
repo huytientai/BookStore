@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Book::class, function (Faker $faker) {
     return [
-        'name' => $faker->text(15),
+        'name' => $faker->unique()->text(15),
         'desc' => $faker->paragraph,
         'loaisach_id' => $faker->randomElement([11, 12, 13, 14]),
         'price' => $faker->randomFloat(0.5, 10, 100),
