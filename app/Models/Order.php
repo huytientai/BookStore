@@ -82,7 +82,7 @@ class Order extends Model
      */
     public function scopeFindOrderId($query, $order_id)
     {
-        return $query->where('order_id', $order_id);
+        return $query->where('id', $order_id);
     }
 
     public function scopeFindName($query, $name)
