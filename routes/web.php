@@ -18,6 +18,10 @@ Route::get('/app', function () {
     return view('app');
 });
 
+Route::get('/facade', function () {
+    return \App\Facad\Animal::say();
+});
+
 // for server
 Route::get('/linkstorage', function () {
     if (!is_dir('/home/u441737116/public_html/storage')) {
