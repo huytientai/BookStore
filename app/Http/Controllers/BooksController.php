@@ -73,7 +73,7 @@ class BooksController extends Controller
         }
 
         $book = $this->book->saveBook($request);
-        $this->tableOfContents->saveTableOfContents($request,$book->id);
+        $this->tableOfContents->saveTableOfContents($request, $book->id);
 
         flash('add success')->success();
 
