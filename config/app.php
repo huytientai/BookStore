@@ -177,6 +177,7 @@ return [
 
         Unisharp\Ckeditor\ServiceProvider::class,
         \App\Providers\AnimalProvider::class,
+        \App\Providers\HelperServiceProvider::class,
     ],
 
     /*

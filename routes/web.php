@@ -18,9 +18,12 @@ Route::get('/app', function () {
     return view('app');
 });
 
-Route::get('/facade', function () {
-    return \App\Facad\Animal::say();
+Route::get('/test', function () {
+    $facade = 'Facde: ' . \App\Facad\Animal::say();     //  \App\Facad\Animal = animal
+    $helper = 'Helper: ' . upper('hello world');
+    dd($facade . "\n" . $helper);
 });
+
 
 // for server
 Route::get('/linkstorage', function () {
@@ -127,6 +130,6 @@ Route::post('/vtcpay/notify', 'CheckoutsController@vtcpayNotify')->name('vtcpay.
 //--------------------------------------  Returns  --------------------------------------------
 Route::resource('/returns', 'ReturnsController')->middleware(['auth']);
 Route::get('/returns/{order_id}/check', 'ReturnsController@check')->name('returns.check')->middleware('auth');
-Route::get('/returns/{order_id}/requestGetReturns','ReturnsController@requestWarehouseman')->name('returns.requestGetReturns')->middleware('auth');
-Route::get('/returns/{order_id}/confirmGetReturns','ReturnsController@ConfirmFromWarehouseman')->name('returns.confirmGetReturns')->middleware('auth');
+Route::get('/returns/{order_id}/requestGetReturns', 'ReturnsController@requestWarehouseman')->name('returns.requestGetReturns')->middleware('auth');
+Route::get('/returns/{order_id}/confirmGetReturns', 'ReturnsController@ConfirmFromWarehouseman')->name('returns.confirmGetReturns')->middleware('auth');
 Route::get('/returns/{order_id}/done', 'ReturnsController@done')->name('returns.done')->middleware('auth');
